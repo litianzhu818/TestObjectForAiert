@@ -7,6 +7,7 @@
 //
 
 #import "BaseViewController.h"
+#import "SegmentedControl.h"
 
 @interface VideoHistoryViewController : BaseViewController
 

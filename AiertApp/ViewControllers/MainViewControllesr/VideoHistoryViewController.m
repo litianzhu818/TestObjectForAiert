@@ -9,6 +9,13 @@
 #import "VideoHistoryViewController.h"
 
 @interface VideoHistoryViewController ()
+{
+    SegmentedControl *segmentControl;
+    BOOL remoteTag;
+}
+
+@property(assign, nonatomic) BOOL remoteTag;
+@property(strong, nonatomic) SegmentedControl *segmentControl;
 
 @end
 
@@ -54,11 +61,45 @@
     [self.navigationController.navigationBar setBackgroundImage:PNG_NAME(@"6") forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationItem.titleView setTintColor:[UIColor whiteColor]];
     
+    self.navigationItem.titleView = self.segmentControl;
 }
 
 -(void)initializationData
 {
     //Here initialization your data parameters
+}
+
+- (SegmentedControl *)segmentControl
+{
+    if (!segmentControl) {
+        segmentControl = [[SegmentedControl alloc] initWithItems:@[@"本地", @"远程"]];
+        segmentControl.titleTextColor = [UIColor colorWithRed:0.38f green:0.68f blue:0.93f alpha:1.0f];
+        segmentControl.selectedTitleTextColor = [UIColor whiteColor];
+        segmentControl.selectedTitleFont = [UIFont systemFontOfSize:18.0f];
+        segmentControl.segmentIndicatorBackgroundColor = [UIColor colorWithRed:0.38f green:0.68f blue:0.93f alpha:1.0f];
+        segmentControl.backgroundColor = [UIColor colorWithRed:0.31f green:0.53f blue:0.72f alpha:1.0f];
+        segmentControl.borderWidth = 0.0f;
+        segmentControl.segmentIndicatorBorderWidth = 0.0f;
+        segmentControl.segmentIndicatorInset = 1.0f;
+        segmentControl.segmentIndicatorBorderColor = self.view.backgroundColor;
+        [segmentControl sizeToFit];
+        segmentControl.cornerRadius = CGRectGetHeight(segmentControl.frame) / 2.0f;
+        
+        [segmentControl addTarget:self action:@selector(segmentSelected:) forControlEvents:UIControlEventValueChanged];
+    }
+    
+    return segmentControl;
+}
+
+- (BOOL)remoteTag
+{
+    return (self.segmentControl.selectedSegmentIndex > 0);
+}
+
+
+- (void)segmentSelected:(id)sender
+{
+    self.remoteTag ? LOG(@"远程"):LOG(@"本地");
 }
 
 /*

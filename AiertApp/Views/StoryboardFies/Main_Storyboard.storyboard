@@ -1027,7 +1027,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="图片" id="1lX-kL-8cf"/>
+                    <navigationItem key="navigationItem" title="图片" id="1lX-kL-8cf">
+                        <barButtonItem key="leftBarButtonItem" title="图片" id="bOp-x3-c9W"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pe8-NI-har" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1036,7 +1038,6 @@
         <!--录像-->
         <scene sceneID="W6L-Hr-2MB">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vjO-XW-X14" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="my8-vC-tFb" customClass="VideoHistoryViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jfx-Qs-QF1"/>
@@ -1047,8 +1048,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="录像" id="rXX-rZ-owv"/>
+                    <navigationItem key="navigationItem" title="录像" id="rXX-rZ-owv">
+                        <barButtonItem key="leftBarButtonItem" title="录像" id="6dQ-p9-XKU"/>
+                    </navigationItem>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vjO-XW-X14" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1165" y="1259"/>
         </scene>
@@ -1097,6 +1101,7 @@
                     <tabBarItem key="tabBarItem" title="图片" image="pic_tabar.png" id="a42-IU-VbS"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="965-lD-Azm">
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <connections>
                         <segue destination="UgT-XO-ST5" kind="relationship" relationship="rootViewController" id="QxE-ya-YZc"/>

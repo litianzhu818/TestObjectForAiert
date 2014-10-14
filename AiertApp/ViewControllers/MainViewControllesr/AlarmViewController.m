@@ -47,7 +47,7 @@
 -(void)initializationUI
 {
     //Here initialization your UI parameters
-    [self.navigationItem setTitle:@"报警"];
+    [self.navigationItem setTitle:@"报警事件"];
     UIImage *image = PNG_NAME(@"btn_big");
     image = [image stretchableImageWithLeftCapWidth:floorf(image.size.width*0.5) topCapHeight:floorf(image.size.height*0.5)];
     [self.navigationController.navigationBar setBackgroundImage:PNG_NAME(@"6") forBarMetrics:UIBarMetricsDefault];
