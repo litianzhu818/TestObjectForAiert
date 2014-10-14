@@ -1,0 +1,444 @@
+
+
+#import "DeviceListViewController.h"
+#import "Utilities.h"
+
+
+
+#define kDeviceListTableViewControllerPopupTipViewAutoDismissInterval 5.0f
+
+@interface DeviceListViewController ()
+{
+    UIImageView *emptyDataImageView;
+    //Count of tip view popuped
+    int _popupTipShowCount;
+    
+    NSFetchedResultsController *fetchedResultsController_device;
+}
+
+@property (strong, nonatomic) NSDictionary *deviceList;
+@property (strong, nonatomic) NSArray *deviceIds;
+@property (strong, nonatomic) CMPopTipView *popupTipView;
+
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController_device;
+
+@end
+
+@implementation DeviceListViewController
+
+@synthesize popupTipView;
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self initUI];
+    //[self localizedSupport];
+    
+    //self.clearsSelectionOnViewWillAppear = YES;
+    [self.tableView hideExtraCellLine];
+    
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    //self.tableView.backgroundColor = [UIColor AppThemeTableViewBackgroundColor];
+    //self.tableView.backgroundColor = [UIColor colorWithRed:124.0/255.0f green:111.0/255.0f blue:176.0/255.0f alpha:1.0];
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    _popupTipShowCount = 0;
+    
+    if (emptyDataImageView == nil) {
+        CGFloat SubHeight = 0;
+        /*if (IOS7_OR_LATER) {
+            SubHeight = (self.navigationController.navigationBar.frame.size.height +
+                         self.tabBarController.tabBar.frame.size.height);
+        }*/
+        emptyDataImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0,
+                                                                          self.tableView.frame.size.width,
+                                                                           self.tableView.bounds.size.height - SubHeight)];
+        emptyDataImageView.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
+                                               UIViewAutoresizingFlexibleHeight- 49);
+        emptyDataImageView.hidden = YES;
+        emptyDataImageView.backgroundColor = [UIColor clearColor];
+        emptyDataImageView.image = [UIImage imageNamed:@"camera_picture.png"];
+        emptyDataImageView.contentMode = UIViewContentModeCenter;
+        
+        [self.tableView addSubview:emptyDataImageView];
+    }
+    
+    self.deviceList = [AppData devices];
+    self.deviceIds = [[self.deviceList allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return (NSComparisonResult)[obj1 compare:obj2];
+    }];
+    
+    __weak DeviceListViewController *tempSelf = self;
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"DevicesUpdated"
+                                                      object:nil
+                                                       queue:[NSOperationQueue mainQueue]
+                                                  usingBlock:^(NSNotification *note) {
+                                                      
+                                                      tempSelf.deviceIds = [[tempSelf.deviceList allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+                                                          return (NSComparisonResult)[obj1 compare:obj2];
+                                                      }];
+                                                      
+                                                      [tempSelf.tableView reloadData];
+                                                  }];
+
+}
+
+-(void)initUI
+{
+    [self initStatusBar];
+    
+    [self.tableView setBackgroundColor:[UIColor clearColor]];
+    self.tableView.layer.cornerRadius = 6.0f;
+    self.tableView.layer.borderWidth = 0.2f;
+    self.tableView.layer.borderColor = [self.tableView backgroundColor].CGColor;
+    self.tableView.layer.masksToBounds = YES;
+    [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
+    
+    //iOS7 新背景图片设置方法 高度 必需是 64
+    [self.navigationController.navigationBar  setBackgroundImage:[UIImage imageNamed:@"6"] forBarPosition:UIBarPositionTopAttached barMetrics:UIBarMetricsDefault];
+    //iOS7 阴影需单独设定 UIColor clearColor 是去掉字段 1像素阴影
+    //[self.navigationController.navigationBar setShadowImage:[UIImage imageWithColor:[UIColor clearColor]]];
+    //为UINavigationBar设置半透明的背景效果:
+    [self.navigationController.navigationBar setTranslucent:YES];
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    
+    UIButton *leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0, 0.0, 40, 40)];
+    [leftButton setImage:PNG_NAME(@"left_camera") forState:UIControlStateNormal];
+    [leftButton setEnabled:NO];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    
+    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 160, 44)];
+    UILabel *softName = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 22)];
+    UILabel *complanyName  = [[UILabel alloc] initWithFrame:CGRectMake(0, 22, 160, 22)];
+    [titleView setTintColor:[UIColor whiteColor]];
+    [softName setTextColor:[UIColor whiteColor]];
+    [complanyName setTextColor:[UIColor whiteColor]];
+    [softName setFont:[UIFont systemFontOfSize:24.0]];
+    [complanyName setFont:[UIFont systemFontOfSize:12.0]];
+    [softName setText:@"aiert 安全有我"];
+    [complanyName setText:@"厦门爱尔特电子有限公司"];
+    [softName setTextAlignment:NSTextAlignmentCenter];
+    [complanyName setTextAlignment:NSTextAlignmentCenter];
+    [titleView addSubview:softName];
+    [titleView addSubview:complanyName];
+    
+    [self.navigationItem setTitleView:titleView];
+    
+//    UIButton *rightButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0, 0.0, 40, 30)];
+//    [rightButton setBackgroundImage:PNG_NAME(@"edit_btn") forState:UIControlStateNormal];
+//    [rightButton setTitle:@"编辑" forState:UIControlStateNormal];
+//    [rightButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//    [rightButton addTarget:self action:@selector(clikedOnEditButton:) forControlEvents:UIControlEventTouchUpInside];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    
+    //self.headerView.backgroundColor = [UIColor AppThemeTableViewBackgroundColor];
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    if (!self.deviceList) {
+        [self showPopupTipWhenEmpty];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    self.hidesBottomBarWhenPushed = NO;
+    
+    [popupTipView dismissAnimated:NO];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(IBAction)clikedOnEditButton:(id)sender
+{
+
+}
+
+#pragma mark - Show Popup Tip
+
+- (void)showPopupTipWhenEmpty
+{
+    if (self.deviceList.count == 0 && _popupTipShowCount <= 0) {
+        [popupTipView presentPointingAtView:self.navigationItem.rightBarButtonItem.customView
+                                     inView:self.view animated:YES];
+        _popupTipShowCount++;
+    }
+    else {
+        [popupTipView dismissAnimated:NO];
+    }
+}
+
+#pragma mark - Localized Support
+
+- (void)localizedSupport
+{
+    //self.navigationItem.title = NSLocalizedString(@"List", @"List");
+}
+
+#pragma mark - Autorotate
+
+- (NSUInteger)supportedInterfaceOrientations{
+    return UIInterfaceOrientationPortrait;
+}
+
+- (BOOL)shouldAutorotate
+{
+    return NO;
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[[self fetchedResultsController_device] sections] firstObject];
+    NSUInteger count =  sectionInfo.numberOfObjects;
+    
+    tableView.separatorStyle = (count > 0) ? UITableViewCellSeparatorStyleSingleLine : UITableViewCellSeparatorStyleNone;
+    tableView.bounces = (count > 0);
+    
+    //Show Empty Image View
+    emptyDataImageView.hidden = (count > 0);
+    
+    return count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    static NSString *CellIdentifier = @"Cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil){
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                      reuseIdentifier:CellIdentifier];
+    }
+    
+    //remove all subview into
+    for(UIView *subView in cell.contentView.subviews){
+        [subView removeFromSuperview];
+    }
+    
+    [self configureCell:cell atIndexPath:indexPath];
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+//    [self performSegueWithIdentifier:@"DeviceList2Play"
+//                              sender:@"1234567890"];
+    
+    //TODO:通往视频播放的接口
+}
+
+#pragma mark - Navigation
+
+// In a story board-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    self.hidesBottomBarWhenPushed = YES;
+
+    if ([segue.identifier isEqualToString:@"DeviceList2Play"]) {
+        PlayViewController *playController = segue.destinationViewController;
+        playController.delegatePlayViewController = self;
+        playController.device = sender;
+    }
+    
+    if ([segue.identifier isEqualToString:@"device_edit"]) {
+        EditDeviceViewController *viewController = [segue destinationViewController];
+        [viewController setValue:sender forKey:@"device"];
+    }
+}
+
+#pragma Mark PlayViewControllerDelegate
+- (void)dismissViewControllerInPlayViewControlller:(BOOL)dismiss {
+    
+    [Utilities setMyViewControllerOrientation:dismiss Orientation:UIInterfaceOrientationPortrait];
+}
+
+#pragma mark -
+#pragma mark - AiertHeaderViewDelegate Methods
+-(void)clikedOnAiertHeaderView:(AiertHeaderView *)aiertHeaderView
+{
+    [_headerView stopRefreshing];
+    //[self performSegueWithIdentifier:@"DeviceList2Add" sender:nil];
+    [self performSegueWithIdentifier:@"AddDevice" sender:nil];
+}
+
+-(void)clikedRefreshButtonOnAiertHeaderView:(AiertHeaderView *)aiertHeaderView
+{
+    //[aiertHeaderView stopRefreshing];
+}
+
+-(void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    AiertDeviceCoreDataStorageObject *device = [self.fetchedResultsController_device objectAtIndexPath:indexPath];
+    AiertDeviceInfo *deviceInfo = [[AiertDeviceInfo alloc] initWithDeviceCoraDataObject:device];
+    
+    //MARK:we should do this here ...
+    UIFont *font = [UIFont systemFontOfSize:14.0];
+    CGRect frame = cell.contentView.frame;
+    NSString *device_status = nil;
+    switch (deviceInfo.deviceStatus) {
+        case 0:
+            device_status = @"在线";
+            break;
+        case 2:
+            device_status = @"连接超时";
+            break;
+            
+        default:
+            device_status = @"不在线";
+            break;
+    }
+    
+    UILabel *deviceStatus = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_WIDTH, 0, FRAME_W(frame), FRAME_H(frame)/2)];
+    UILabel *deviceName = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_WIDTH, FRAME_H(frame)/2, FRAME_W(frame), FRAME_H(frame)/2)];
+    [deviceStatus setText:[NSString stringWithFormat:@"%@%@",@"IP Camera:",device_status]];
+    [deviceName setText:[NSString stringWithFormat:@"%@%@",@"ID:",deviceInfo.deviceID]];
+    [deviceStatus setFont:font];
+    [deviceName setFont:font];
+    [cell.contentView addSubview:deviceStatus];
+    [cell.contentView addSubview:deviceName];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setTag:indexPath.row];
+    [button setFrame:CGRectMake(0, 0, 40, 40)];
+    [button setBackgroundImage:PNG_NAME(@"video_14") forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(editDevice:) forControlEvents:UIControlEventTouchUpInside];
+    cell.accessoryView = button;
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleGray;
+}
+
+-(void)editDevice:(id)sender
+{
+    UIButton *btn = sender;
+    //TODO:这里根据得到的index做相应处理
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:btn.tag inSection:0];
+    AiertDeviceCoreDataStorageObject *device = [self.fetchedResultsController_device objectAtIndexPath:indexPath];
+    AiertDeviceInfo *deviceInfo = [[AiertDeviceInfo alloc] initWithDeviceCoraDataObject:device];
+    [self performSegueWithIdentifier:@"device_edit" sender:deviceInfo];
+    
+}
+#pragma mark -
+#pragma mark - NSFetchedResultsController Methods
+//init the NSFetchedResultsController object
+-(NSFetchedResultsController *)fetchedResultsController_device
+{
+    if (fetchedResultsController_device == Nil) {
+    
+        NSManagedObjectContext *moc = [[myAppDelegate aiertDeviceCoreDataStorage] mainThreadManagedObjectContext];
+        
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"AiertDeviceCoreDataStorageObject"
+                                                  inManagedObjectContext:moc];
+        
+        NSSortDescriptor *sd = [[NSSortDescriptor alloc] initWithKey:@"deviceName" ascending:YES];
+        
+        NSArray *sortDescriptors = [NSArray arrayWithObjects:sd, nil];
+        
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        
+        [fetchRequest setEntity:entity];
+        [fetchRequest setSortDescriptors:sortDescriptors];
+        [fetchRequest setFetchBatchSize:20];
+        
+        fetchedResultsController_device = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                                                 managedObjectContext:moc
+                                                                                   sectionNameKeyPath:nil
+                                                                                            cacheName:@"Aiert_device"];
+        NSError *error = nil;
+        if (![fetchedResultsController_device performFetch:&error]){
+            LOG(@"Unresolved error %@, %@", error, [error userInfo]);
+        }
+    }
+    [fetchedResultsController_device setDelegate:self];
+    return fetchedResultsController_device;
+}
+
+#pragma mark - NSFetchedResultsControllerDelegate methods
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView beginUpdates];
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller
+  didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+           atIndex:(NSUInteger)sectionIndex
+     forChangeType:(NSFetchedResultsChangeType)type {
+    
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+                          withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+                          withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller
+   didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath
+     forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    UITableView *tableView = self.tableView;
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray
+                                               arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray
+                                               arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView endUpdates];
+}
+
+
+@end

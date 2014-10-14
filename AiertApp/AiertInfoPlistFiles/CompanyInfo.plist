@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SoftwareName</key>
+	<string>爱尔特</string>
+	<key>SoftwareVersion</key>
+	<string>0.1</string>
+	<key>CompanyName</key>
+	<string>厦门爱尔特电子有限公司</string>
+</dict>
+</plist>
