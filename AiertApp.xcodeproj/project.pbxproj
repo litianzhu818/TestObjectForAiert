@@ -264,6 +264,9 @@
 		3659F2A318F4E6180043AEE3 /* CAStreamBasicDescription.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3659F29E18F4E6180043AEE3 /* CAStreamBasicDescription.cpp */; };
 		3659F2A418F4E6180043AEE3 /* CAXException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3659F2A018F4E6180043AEE3 /* CAXException.cpp */; };
 		36E54E3A18E9593D00050C37 /* PingLocalNetWorkProtocal.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E54E3918E9593D00050C37 /* PingLocalNetWorkProtocal.m */; };
+		E7323AC319ED27DD00FEBF38 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = E7323ABE19ED27DD00FEBF38 /* Segment.m */; };
+		E7323AC419ED27DD00FEBF38 /* SegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = E7323AC019ED27DD00FEBF38 /* SegmentedControl.m */; };
+		E7323AC519ED27DD00FEBF38 /* SegmentIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = E7323AC219ED27DD00FEBF38 /* SegmentIndicator.m */; };
 		E7419DAB19E64DC500B5B764 /* CompanyInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = E7419DAA19E64DC500B5B764 /* CompanyInfo.plist */; };
 		E7419DF219E653D700B5B764 /* 10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E7419DAD19E653D700B5B764 /* 10@2x.png */; };
 		E7419DF319E653D700B5B764 /* 12@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E7419DAE19E653D700B5B764 /* 12@2x.png */; };
@@ -927,6 +930,12 @@
 		3659F2A118F4E6180043AEE3 /* CAXException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAXException.h; sourceTree = "<group>"; };
 		36E54E3818E9593D00050C37 /* PingLocalNetWorkProtocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PingLocalNetWorkProtocal.h; sourceTree = "<group>"; };
 		36E54E3918E9593D00050C37 /* PingLocalNetWorkProtocal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PingLocalNetWorkProtocal.m; sourceTree = "<group>"; };
+		E7323ABD19ED27DD00FEBF38 /* Segment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Segment.h; sourceTree = "<group>"; };
+		E7323ABE19ED27DD00FEBF38 /* Segment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Segment.m; sourceTree = "<group>"; };
+		E7323ABF19ED27DD00FEBF38 /* SegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentedControl.h; sourceTree = "<group>"; };
+		E7323AC019ED27DD00FEBF38 /* SegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SegmentedControl.m; sourceTree = "<group>"; };
+		E7323AC119ED27DD00FEBF38 /* SegmentIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentIndicator.h; sourceTree = "<group>"; };
+		E7323AC219ED27DD00FEBF38 /* SegmentIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SegmentIndicator.m; sourceTree = "<group>"; };
 		E7419DA719E64DB700B5B764 /* AllHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllHeader.h; sourceTree = "<group>"; };
 		E7419DA819E64DB700B5B764 /* DefineValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefineValues.h; sourceTree = "<group>"; };
 		E7419DAA19E64DC500B5B764 /* CompanyInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CompanyInfo.plist; sourceTree = "<group>"; };
@@ -2191,6 +2200,19 @@
 			path = PingLocalNetWorkProtocal;
 			sourceTree = "<group>";
 		};
+		E7323ABC19ED27DD00FEBF38 /* SegmentedControl */ = {
+			isa = PBXGroup;
+			children = (
+				E7323ABD19ED27DD00FEBF38 /* Segment.h */,
+				E7323ABE19ED27DD00FEBF38 /* Segment.m */,
+				E7323ABF19ED27DD00FEBF38 /* SegmentedControl.h */,
+				E7323AC019ED27DD00FEBF38 /* SegmentedControl.m */,
+				E7323AC119ED27DD00FEBF38 /* SegmentIndicator.h */,
+				E7323AC219ED27DD00FEBF38 /* SegmentIndicator.m */,
+			);
+			path = SegmentedControl;
+			sourceTree = "<group>";
+		};
 		E7419DA619E64DB700B5B764 /* UtilityHeaderFiles */ = {
 			isa = PBXGroup;
 			children = (
@@ -2573,6 +2595,7 @@
 		E7AF4BB219EA507300699BA1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E7323ABC19ED27DD00FEBF38 /* SegmentedControl */,
 				E7AF4C4A19EA50AA00699BA1 /* PlayViewBottom */,
 				E7AF4BB319EA507300699BA1 /* StoryboardFies */,
 				E7AF4BB619EA507300699BA1 /* ViewHelper */,
@@ -3530,6 +3553,7 @@
 				E7AF4C4719EA507300699BA1 /* UITextFieldEx.m in Sources */,
 				3641E63918EC035A005527C7 /* UIImage+GIF.m in Sources */,
 				3641E5E618EBAC69005527C7 /* buffer.cpp in Sources */,
+				E7323AC419ED27DD00FEBF38 /* SegmentedControl.m in Sources */,
 				362006CC18DB14F600E54160 /* SVProgressHUD.m in Sources */,
 				3641E5ED18EBAC69005527C7 /* list.cpp in Sources */,
 				E7AF4C4819EA507300699BA1 /* UnderLineButton.m in Sources */,
@@ -3561,6 +3585,7 @@
 				E7423B7A19E7BCA300604129 /* AiertDevice.xcdatamodeld in Sources */,
 				3659F2A218F4E6180043AEE3 /* CADebugMacros.cpp in Sources */,
 				E7AF4B4219EA4E8300699BA1 /* AddCameraViewController.m in Sources */,
+				E7323AC519ED27DD00FEBF38 /* SegmentIndicator.m in Sources */,
 				E7AF4B9919EA4F1C00699BA1 /* MessageInfo.m in Sources */,
 				E7423B7519E7B48900604129 /* AiertDeviceInfo.m in Sources */,
 				E7AF4B6619EA4E8300699BA1 /* StorageMoreView.m in Sources */,
@@ -3592,6 +3617,7 @@
 				352E2F7F1887EBD3009324A3 /* LFGlassView.m in Sources */,
 				E7AF4C2F19EA507300699BA1 /* UIGroupCellBackgroundView.m in Sources */,
 				E7AF49AB19EA3C0D00699BA1 /* CoreDataStorage.m in Sources */,
+				E7323AC319ED27DD00FEBF38 /* Segment.m in Sources */,
 				E7AF4B7B19EA4F0200699BA1 /* P2PConnection.mm in Sources */,
 				3641E5E918EBAC69005527C7 /* channel.cpp in Sources */,
 				36E54E3A18E9593D00050C37 /* PingLocalNetWorkProtocal.m in Sources */,
