@@ -458,6 +458,7 @@
 		E7AF4C4919EA507300699BA1 /* UINavigationController+Rotation.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF4C1C19EA507300699BA1 /* UINavigationController+Rotation.m */; };
 		E7AF4C4D19EA50AA00699BA1 /* PlayBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF4C4C19EA50AA00699BA1 /* PlayBottomView.m */; };
 		E7AF4C5019EA54F300699BA1 /* AiertDeviceCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF4C4F19EA54F300699BA1 /* AiertDeviceCoreDataManager.m */; };
+		E7B186BF19EE47420091685F /* VideoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B186BE19EE47420091685F /* VideoPlayerViewController.m */; };
 		E7E3054019ECB94900F80D06 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E3052F19ECB94900F80D06 /* libavcodec.a */; };
 		E7E3054119ECB94900F80D06 /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E3053019ECB94900F80D06 /* libavdevice.a */; };
 		E7E3054219ECB94900F80D06 /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E3053119ECB94900F80D06 /* libavfilter.a */; };
@@ -1232,6 +1233,8 @@
 		E7AF4C4C19EA50AA00699BA1 /* PlayBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayBottomView.m; sourceTree = "<group>"; };
 		E7AF4C4E19EA54F300699BA1 /* AiertDeviceCoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AiertDeviceCoreDataManager.h; sourceTree = "<group>"; };
 		E7AF4C4F19EA54F300699BA1 /* AiertDeviceCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AiertDeviceCoreDataManager.m; sourceTree = "<group>"; };
+		E7B186BD19EE47420091685F /* VideoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPlayerViewController.h; sourceTree = "<group>"; };
+		E7B186BE19EE47420091685F /* VideoPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoPlayerViewController.m; sourceTree = "<group>"; };
 		E7E304D819ECB94900F80D06 /* avcodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = avcodec.h; sourceTree = "<group>"; };
 		E7E304D919ECB94900F80D06 /* avfft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = avfft.h; sourceTree = "<group>"; };
 		E7E304DA19ECB94900F80D06 /* dxva2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dxva2.h; sourceTree = "<group>"; };
@@ -2375,6 +2378,7 @@
 		E7AF4AE719EA4E8300699BA1 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E7B186BC19EE471B0091685F /* VideoPlayerViewControllers */,
 				E7E3055919ECC4CB00F80D06 /* EditDeviceViewControllers */,
 				E7AF4AE819EA4E8300699BA1 /* AddDeviceViewControllers */,
 				E7AF4AF119EA4E8300699BA1 /* BaseViewController */,
@@ -2881,6 +2885,15 @@
 				E7AF4C4C19EA50AA00699BA1 /* PlayBottomView.m */,
 			);
 			path = PlayViewBottom;
+			sourceTree = "<group>";
+		};
+		E7B186BC19EE471B0091685F /* VideoPlayerViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				E7B186BD19EE47420091685F /* VideoPlayerViewController.h */,
+				E7B186BE19EE47420091685F /* VideoPlayerViewController.m */,
+			);
+			path = VideoPlayerViewControllers;
 			sourceTree = "<group>";
 		};
 		E7E304D519ECB94900F80D06 /* ffmpeg2.1 */ = {
@@ -3613,6 +3626,7 @@
 				E7AF4B7A19EA4F0200699BA1 /* LibCoreWrap.m in Sources */,
 				3641E63618EC035A005527C7 /* SDWebImageManager.m in Sources */,
 				3641E5EA18EBAC69005527C7 /* common.cpp in Sources */,
+				E7B186BF19EE47420091685F /* VideoPlayerViewController.m in Sources */,
 				E7AF4C3619EA507300699BA1 /* CXAlertViewEx.m in Sources */,
 				352E2F7F1887EBD3009324A3 /* LFGlassView.m in Sources */,
 				E7AF4C2F19EA507300699BA1 /* UIGroupCellBackgroundView.m in Sources */,
