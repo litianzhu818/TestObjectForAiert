@@ -54,6 +54,11 @@
     //Here initialization your data parameters
 }
 
+-(void)testMethod
+{
+    LOG(@"This a test file here!");
+}
+
 /*
 #pragma mark - Navigation
 
