@@ -3186,7 +3186,7 @@
 				ORGANIZATIONNAME = "爱尔特电子有限公司";
 				TargetAttributes = {
 					35ED8FE91883B61500943961 = {
-						DevelopmentTeam = 7Z44G3Z4UU;
+						DevelopmentTeam = PAS524E8WG;
 					};
 				};
 			};
@@ -3828,8 +3828,8 @@
 				);
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: LI TIANZHU (7S8PFGQXM2)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Andrew Xie (SZ5LSSE5W5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AiertApp/AiertApp-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -3855,7 +3855,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = AiertApp;
-				PROVISIONING_PROFILE = "C7FCB759-F27B-4A1A-B4A0-74F6CAF88098";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
@@ -3872,8 +3872,8 @@
 				);
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: LI TIANZHU (7S8PFGQXM2)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Andrew Xie (SZ5LSSE5W5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AiertApp/AiertApp-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -3899,7 +3899,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = AiertApp;
-				PROVISIONING_PROFILE = "C7FCB759-F27B-4A1A-B4A0-74F6CAF88098";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
