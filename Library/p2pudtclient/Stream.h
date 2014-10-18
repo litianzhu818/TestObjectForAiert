@@ -2,7 +2,8 @@
 #define __STREAM_H__
 
 #include "ZUtility.h"
-#include "protocol.h"
+//#include "protocol.h"
+#include "AiertProtocol.h"
 
 class Stream;
 class CUserData

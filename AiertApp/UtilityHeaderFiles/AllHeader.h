@@ -25,6 +25,6 @@
 
 #import "AiertDeviceInfo.h"
 
-//#import "AiertProtocol.h"
+#import "AiertProtocol.h"
 
 #endif

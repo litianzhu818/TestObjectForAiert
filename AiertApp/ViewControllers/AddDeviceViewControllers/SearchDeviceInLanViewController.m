@@ -425,7 +425,7 @@
 - (void)didFindTheDevice:(NSDictionary *)devInfoDict
 {
     NSString *tempId = [devInfoDict objectForKey:kDeviceID];
-    LOG(@"已经发现设备，设备ID:%@",tempId);
+    LOG(@"已经发现设备，设备ID:%@字典信息%@",tempId,devInfoDict);
     needStopSearchViews = NO;
     if (![self.deviceList containsObject:tempId]) {
         

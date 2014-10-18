@@ -931,6 +931,7 @@
 		3659F2A118F4E6180043AEE3 /* CAXException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAXException.h; sourceTree = "<group>"; };
 		36E54E3818E9593D00050C37 /* PingLocalNetWorkProtocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PingLocalNetWorkProtocal.h; sourceTree = "<group>"; };
 		36E54E3918E9593D00050C37 /* PingLocalNetWorkProtocal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PingLocalNetWorkProtocal.m; sourceTree = "<group>"; };
+		E715532A19F2699F00BF17D0 /* AiertProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AiertProtocol.h; sourceTree = "<group>"; };
 		E7323ABD19ED27DD00FEBF38 /* Segment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Segment.h; sourceTree = "<group>"; };
 		E7323ABE19ED27DD00FEBF38 /* Segment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Segment.m; sourceTree = "<group>"; };
 		E7323ABF19ED27DD00FEBF38 /* SegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentedControl.h; sourceTree = "<group>"; };
@@ -2313,6 +2314,7 @@
 			isa = PBXGroup;
 			children = (
 				E7AF4B7E19EA4F1C00699BA1 /* Define */,
+				E715532A19F2699F00BF17D0 /* AiertProtocol.h */,
 				E7423B7119E7B48900604129 /* AiertDeviceInfo.h */,
 				E7423B7219E7B48900604129 /* AiertDeviceInfo.m */,
 				E7423B7319E7B48900604129 /* AiertUserInfo.h */,

@@ -16,7 +16,7 @@
 @interface PingLocalNetWorkProtocal ()
 {
     GCDAsyncUdpSocket *udpPingSocket;
-    Header header;
+    ZXA_HEADER header;
 }
 @property(nonatomic, strong)NSData *pingData;
 @property(nonatomic, strong)NSMutableData *setLocalNetworkData;
@@ -69,7 +69,7 @@
     size_t ipaddrSize = sizeof(ipaddrTmp);
     memset(&ipaddrTmp, 0, ipaddrSize);
     
-    header.head = 0xaaaa5555;
+    header.head = ZXAHEADER;
     header.length = ipaddrSize;
     header.type = 1;
     header.commd = CMD_PING;
@@ -154,9 +154,40 @@
       fromAddress:(NSData *)address
 withFilterContext:(id)filterContext
 {
-    if (256 != [data length]) {
+    LOG(@"返回字节%@",data.description);
+    
+    if (272 != [data length]) {
         return;
     }
+    
+    PING_DEVICE_INFO deviceInfo;
+    [data getBytes:&deviceInfo length:sizeof(deviceInfo)];
+    LOG(@"位数:%ld",sizeof(deviceInfo));
+    
+    NSString *deviceID = [NSString stringWithUTF8String:deviceInfo.deviceID];
+    
+    LOG(@"设备ID:%@",deviceID);
+    
+    
+//    Header header;
+//    [data getBytes:&header range:NSMakeRange(0, 12)];
+//    
+//    TYPE_DEVICE_INFO typeDeviceInfo;
+//    [data getBytes:&typeDeviceInfo range:NSMakeRange(12, 152)];
+    
+//    devTypeInfo devTypeinfo;
+//    [data getBytes:&devTypeinfo range:NSMakeRange(152, 160)];
+//    
+//    ipaddr_tmp ip_address_temp;
+//    [data getBytes:&ip_address_temp range:NSMakeRange(160, 240)];
+    
+//    char deviceid[32];
+//    [data getBytes:&deviceid range:NSMakeRange(240, 271)];
+//    
+//    
+//     NSString *deviceID = [NSString stringWithUTF8String:deviceid];
+    
+    
     
     char devId[16];
     [data getBytes:devId range:NSMakeRange(sizeof(header)+sizeof(ipaddr_tmp)+sizeof(TYPE_DEVICE_INFO)+sizeof(devTypeInfo), 16)];
@@ -164,7 +195,7 @@ withFilterContext:(id)filterContext
     NSString *aDeviceId = [NSString stringWithUTF8String:devId];
     
     if (![Utilities checkRegFormat:aDeviceId patternString:kRegDeviceIdFormat]) {
-        return;
+//        return;
     }
     
     if (nil == self.deviceId) {
