@@ -948,7 +948,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GOG-eP-fNz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2206" y="-2130"/>
+            <point key="canvasLocation" x="2260" y="-1754"/>
         </scene>
         <!--二维码扫描-->
         <scene sceneID="JEW-KC-9qS">
@@ -1012,7 +1012,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W4i-mb-0ZK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2206" y="-2681"/>
+            <point key="canvasLocation" x="2260" y="-2371"/>
         </scene>
         <!--图片-->
         <scene sceneID="50c-6X-z3T">

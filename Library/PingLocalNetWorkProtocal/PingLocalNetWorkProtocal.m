@@ -48,7 +48,7 @@
 }
 - (void)composePingPacket
 {
-    header.head = 0xaaaa5555;
+    header.head = 0xaaaa5555;//ZXAGEADER=0xaaaa5555
     header.length = 0;
     header.type = 0;
     header.commd = CMD_ID_PING;

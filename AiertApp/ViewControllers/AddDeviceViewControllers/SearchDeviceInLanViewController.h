@@ -27,6 +27,5 @@
 - (IBAction)background_TouchDown:(id)sender;
 - (IBAction)cameraIdField_PressDone:(id)sender;
 - (IBAction)refreshButton_TouchUpInside:(id)sender;
-//- (IBAction)backButton_TouchUpInside:(id)sender;
 
 @end
