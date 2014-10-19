@@ -264,6 +264,7 @@
 		3659F2A318F4E6180043AEE3 /* CAStreamBasicDescription.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3659F29E18F4E6180043AEE3 /* CAStreamBasicDescription.cpp */; };
 		3659F2A418F4E6180043AEE3 /* CAXException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3659F2A018F4E6180043AEE3 /* CAXException.cpp */; };
 		36E54E3A18E9593D00050C37 /* PingLocalNetWorkProtocal.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E54E3918E9593D00050C37 /* PingLocalNetWorkProtocal.m */; };
+		E715532D19F36CAB00BF17D0 /* DeviceAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = E715532C19F36CAB00BF17D0 /* DeviceAddition.m */; };
 		E7323AC319ED27DD00FEBF38 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = E7323ABE19ED27DD00FEBF38 /* Segment.m */; };
 		E7323AC419ED27DD00FEBF38 /* SegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = E7323AC019ED27DD00FEBF38 /* SegmentedControl.m */; };
 		E7323AC519ED27DD00FEBF38 /* SegmentIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = E7323AC219ED27DD00FEBF38 /* SegmentIndicator.m */; };
@@ -932,6 +933,8 @@
 		36E54E3818E9593D00050C37 /* PingLocalNetWorkProtocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PingLocalNetWorkProtocal.h; sourceTree = "<group>"; };
 		36E54E3918E9593D00050C37 /* PingLocalNetWorkProtocal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PingLocalNetWorkProtocal.m; sourceTree = "<group>"; };
 		E715532A19F2699F00BF17D0 /* AiertProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AiertProtocol.h; sourceTree = "<group>"; };
+		E715532B19F36CAB00BF17D0 /* DeviceAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceAddition.h; sourceTree = "<group>"; };
+		E715532C19F36CAB00BF17D0 /* DeviceAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceAddition.m; sourceTree = "<group>"; };
 		E7323ABD19ED27DD00FEBF38 /* Segment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Segment.h; sourceTree = "<group>"; };
 		E7323ABE19ED27DD00FEBF38 /* Segment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Segment.m; sourceTree = "<group>"; };
 		E7323ABF19ED27DD00FEBF38 /* SegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentedControl.h; sourceTree = "<group>"; };
@@ -2333,6 +2336,8 @@
 				E7423B7F19E7C02B00604129 /* AiertDeviceCoreDataStorage.m */,
 				E7AF4C4E19EA54F300699BA1 /* AiertDeviceCoreDataManager.h */,
 				E7AF4C4F19EA54F300699BA1 /* AiertDeviceCoreDataManager.m */,
+				E715532B19F36CAB00BF17D0 /* DeviceAddition.h */,
+				E715532C19F36CAB00BF17D0 /* DeviceAddition.m */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -3637,6 +3642,7 @@
 				E7AF4B7B19EA4F0200699BA1 /* P2PConnection.mm in Sources */,
 				3641E5E918EBAC69005527C7 /* channel.cpp in Sources */,
 				36E54E3A18E9593D00050C37 /* PingLocalNetWorkProtocal.m in Sources */,
+				E715532D19F36CAB00BF17D0 /* DeviceAddition.m in Sources */,
 				358500631889BCA500EED5CC /* SevenSwitch.m in Sources */,
 				E7AF4B6719EA4E8300699BA1 /* PlayVideoAndImageViewController.m in Sources */,
 				3641E65718EC1091005527C7 /* PullTableView.m in Sources */,

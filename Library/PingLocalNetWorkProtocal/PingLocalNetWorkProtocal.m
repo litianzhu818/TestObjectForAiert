@@ -154,19 +154,20 @@
       fromAddress:(NSData *)address
 withFilterContext:(id)filterContext
 {
-    LOG(@"返回字节%@",data.description);
-    
     if (272 != [data length]) {
         return;
     }
     
     PING_DEVICE_INFO deviceInfo;
     [data getBytes:&deviceInfo length:sizeof(deviceInfo)];
-    LOG(@"位数:%ld",sizeof(deviceInfo));
-    
+//    LOG(@"位数:%ld",sizeof(deviceInfo));
     NSString *deviceID = [NSString stringWithUTF8String:deviceInfo.deviceID];
     
-    LOG(@"设备ID:%@",deviceID);
+    if (!deviceID) {
+        return;
+    }
+    
+    
     
     
 //    Header header;
