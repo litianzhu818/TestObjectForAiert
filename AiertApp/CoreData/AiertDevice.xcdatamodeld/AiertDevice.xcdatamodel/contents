@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6244" systemVersion="14A343f" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6244" systemVersion="13F34" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="AiertDeviceCoreDataStorageObject" representedClassName="AiertDeviceCoreDataObject" syncable="YES">
+        <attribute name="deviceAdditionInfo" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="deviceID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="deviceName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="deviceStatus" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -8,6 +9,6 @@
         <attribute name="userPassword" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="AiertDeviceCoreDataStorageObject" positionX="-63" positionY="-18" width="128" height="120"/>
+        <element name="AiertDeviceCoreDataStorageObject" positionX="-63" positionY="-18" width="128" height="135"/>
     </elements>
 </model>

@@ -10,11 +10,49 @@
 
 @implementation DeviceAddition
 
+#pragma mark - public methods
+-(instancetype)initWithPingStructObject:(PING_DEVICE_INFO)deviceInfo
+{
+    self = [super init];
+    if (self) {
+       
+        [self setDeviceInfo:deviceInfo];
+        
+    }
+    
+    return self;
+}
+
+-(void)setDeviceInfo:(PING_DEVICE_INFO)deviceInfo
+{
+    self.IP =[NSString stringWithUTF8String:deviceInfo.ip_address_temp.ipaddr];
+    self.port = deviceInfo.devTypeInformation.videoPort;
+    self.deviceType = deviceInfo.typeDeviceInfo.DeviceType;
+    self.serialNumber = [NSString stringWithUTF8String:deviceInfo.ip_address_temp.mac];
+    self.hardWareVersion = [NSString stringWithUTF8String:deviceInfo.typeDeviceInfo.HardWareVersion];
+    self.softWareVersion = [NSString stringWithUTF8String:deviceInfo.typeDeviceInfo.SoftWareVersion];
+    self.videoNum = [[NSNumber numberWithChar:deviceInfo.typeDeviceInfo.VideoNum] integerValue];
+    self.audioNum = [[NSNumber numberWithChar:deviceInfo.typeDeviceInfo.AudioNum] integerValue];
+    self.alarmInNum = [[NSNumber numberWithChar:deviceInfo.typeDeviceInfo.AlarmInNum] integerValue];
+    self.alarmOutNum = [[NSNumber numberWithChar:deviceInfo.typeDeviceInfo.AlarmOutNum] integerValue];
+    self.supportAudioTalk = [[NSNumber numberWithChar:deviceInfo.typeDeviceInfo.SupportAudioTalk] integerValue];
+    self.supportStore = [[NSNumber numberWithChar:deviceInfo.typeDeviceInfo.SupportStore] integerValue];
+    self.supportWiFi = [[NSNumber numberWithChar:deviceInfo.typeDeviceInfo.SupportWifi] integerValue];
+    self.resver = deviceInfo.devTypeInformation.recver;
+}
+
+-(void)modifiedDeviceInfoWith:(PING_DEVICE_INFO)deviceInfo
+{
+    [self setDeviceInfo:deviceInfo];
+}
+
 -(NSString *)description
 {
     //Add your code here
     //Such as the code here
-    return [NSString stringWithFormat:@"\nDeviceAddition={\n\t \
+    return [NSString stringWithFormat:@"DeviceAddition={\n\t \
+            deviceIP=%@\n\t                 \
+            devicePort=%d\n\t               \
             deviceType=%d\n\t               \
             serialNumber=%@\n\t             \
             hardWareVersion=%@\n\t          \
@@ -27,7 +65,7 @@
             supportStore=%@\n\t             \
             supportWiFi=%@\n\t              \
             resver=%@\n}",
-            self.deviceType,self.serialNumber,self.hardWareVersion,self.softWareVersion,self.videoNum,self.audioNum,self.alarmInNum,self.alarmOutNum,((self.supportAudioTalk > 0) ? @"YES":@"NO"),((self.supportStore > 0) ? @"YES":@"NO"),((self.supportWiFi > 0) ? @"YES":@"NO"),((self.resver > 0) ? @"YES":@"NO")];
+            self.IP,self.port,self.deviceType,self.serialNumber,self.hardWareVersion,self.softWareVersion,self.videoNum,self.audioNum,self.alarmInNum,self.alarmOutNum,((self.supportAudioTalk > 0) ? @"YES":@"NO"),((self.supportStore > 0) ? @"YES":@"NO"),((self.supportWiFi > 0) ? @"YES":@"NO"),((self.resver > 0) ? @"YES":@"NO")];
 }
 
 
@@ -38,6 +76,8 @@
     DeviceAddition *newObject = [[[self class] allocWithZone:zone] init];
     //Here is a sample for using the NScoding method
     //Add your code here
+    [newObject setIP:self.IP];
+    [newObject setPort:self.port];
     [newObject setDeviceType:self.deviceType];
     [newObject setSerialNumber:self.serialNumber];
     [newObject setHardWareVersion:self.hardWareVersion];
@@ -60,6 +100,8 @@
 {
     //Here is a sample for using the NScoding method
     //Add your code here
+    [aCoder encodeObject:self.IP forKey:@"IP"];
+    [aCoder encodeObject:[NSNumber numberWithInteger:self.self.port] forKey:@"port"];
     [aCoder encodeObject:[NSNumber numberWithInteger:self.deviceType] forKey:@"deviceType"];
     [aCoder encodeObject:self.serialNumber forKey:@"serialNumber"];
     [aCoder encodeObject:[NSNumber numberWithInteger:self.hardWareVersion] forKey:@"hardWareVersion"];
@@ -79,6 +121,8 @@
     if (self = [super init]) {
         //Here is a sample for using the NScoding method
         //Add your code here
+        self.IP = [aDecoder decodeObjectForKey:@"IP"];
+        self.port = [((NSNumber *)[aDecoder decodeObjectForKey:@"port"]) integerValue];
         self.deviceType = [((NSNumber *)[aDecoder decodeObjectForKey:@"deviceType"]) integerValue];
         self.serialNumber = [aDecoder decodeObjectForKey:@"serialNumber"];
         self.hardWareVersion = [aDecoder decodeObjectForKey:@"hardWareVersion"];
@@ -91,7 +135,6 @@
         self.supportStore = [((NSNumber *)[aDecoder decodeObjectForKey:@"supportStore"]) integerValue];
         self.supportWiFi = [((NSNumber *)[aDecoder decodeObjectForKey:@"supportWiFi"]) integerValue];
         self.resver = [((NSNumber *)[aDecoder decodeObjectForKey:@"resver"]) integerValue];
-        
     }
     return  self;
 }

@@ -76,10 +76,24 @@ static AiertDeviceCoreDataStorage *sharedInstance;
 {
     NSDictionary *dictionary = [dic copy];
     
+    NSString *deviceID = [dictionary objectForKey:@"deviceID"];
+    
+    if (dictionary == NULL) return nil;
+    if (deviceID == nil) return nil;
+    
     [self scheduleBlock:^{
         
         NSManagedObjectContext *moc = [self managedObjectContext];
-        [AiertDeviceCoreDataStorageObject insertInManagedObjectContext:moc withDictionary:dictionary];
+        AiertDeviceCoreDataStorageObject *device = [self deviceForID:deviceID managedObjectContext:moc];
+        
+        if (device) {//存在则修改信息，覆盖原来信息
+            [device setDeviceName:[dic objectForKey:@"deviceName"]];
+            [device setUserName:[dic objectForKey:@"userName"]];
+            [device setUserPassword:[dic objectForKey:@"userPassword"]];
+            [device setDeviceAdditionInfo:[dic objectForKey:@"deviceAdditionInfo"]];
+        }else{//不存在，则创建并添加信息
+            [AiertDeviceCoreDataStorageObject insertInManagedObjectContext:moc withDictionary:dictionary];
+        }
         
     }];
     return YES;
@@ -119,6 +133,7 @@ static AiertDeviceCoreDataStorage *sharedInstance;
             [device setDeviceName:[dic objectForKey:@"deviceName"]];
             [device setUserName:[dic objectForKey:@"userName"]];
             [device setUserPassword:[dic objectForKey:@"userPassword"]];
+            [device setDeviceAdditionInfo:[dic objectForKey:@"deviceAdditionInfo"]];
         }
     }];
     

@@ -190,6 +190,9 @@ Single_implementation(AiertDeviceCoreDataManager);
         [dic setObject:[NSNumber numberWithInt:aiertDevice.deviceStatus] forKey:@"deviceStatus"];
         [dic setObject:aiertDevice.userInfo.userName forKey:@"userName"];
         [dic setObject:aiertDevice.userInfo.userPassword forKey:@"userPassword"];
+        if (aiertDevice.deviceAdditionInfo) {
+            [dic setObject:aiertDevice.deviceAdditionInfo forKey:@"deviceAdditionInfo"];
+        }
         
         [self addDeviceWithDictionary:dic];
         [multicastDelegate aiertDeviceCoreDataManager:self willAddDeviceWithDictionary:dic];
@@ -238,11 +241,14 @@ Single_implementation(AiertDeviceCoreDataManager);
         [dic setObject:[NSNumber numberWithInt:aiertDevice.deviceStatus] forKey:@"deviceStatus"];
         [dic setObject:aiertDevice.userInfo.userName forKey:@"userName"];
         [dic setObject:aiertDevice.userInfo.userPassword forKey:@"userPassword"];
+        if (aiertDevice.deviceAdditionInfo) {
+            [dic setObject:aiertDevice.deviceAdditionInfo forKey:@"deviceAdditionInfo"];
+        }
         
         [self editDeviceWithDeviceInfoDictionary:dic];
         //TODO:这里可以增加一个回掉方法
         
-    }
+        }
     };
     
     if (dispatch_get_specific(moduleQueueTag))

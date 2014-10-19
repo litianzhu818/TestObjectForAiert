@@ -101,10 +101,11 @@
     self.deviceName = nil;
     self.deviceID = nil;
     self.userInfo = nil;
+    self.deviceAdditionInfo = nil;
 }
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"Device:\n{\ndeviceName=%@\ndeviceID=%@\nuserInfo=%@\nisOnLine=%@\ndeviceStatus=%@\n}", self.deviceName,self.deviceID,self.userInfo.description,(self.isONLine ? @"YES":@"NO"),((self.deviceStatus == 1)? @"DeviceStatusOffline":(self.deviceStatus == 0) ? @"DeviceStatusOnline":@"DeviceStatusConnectTimeout")];
+    return [NSString stringWithFormat:@"Device={\n\tdeviceName=%@\n\tdeviceID=%@\n\tuserInfo=%@\n\tisOnLine=%@\n\tdeviceStatus=%@\n\t%@\n}", self.deviceName,self.deviceID,self.userInfo.description,(self.isONLine ? @"YES":@"NO"),((self.deviceStatus == 1)? @"DeviceStatusOffline":(self.deviceStatus == 0) ? @"DeviceStatusOnline":@"DeviceStatusConnectTimeout"),self.deviceAdditionInfo.description];
 }
 
 #pragma mark -
@@ -118,6 +119,7 @@
     [newInfo setUserInfo:self.userInfo];
     [newInfo setIsONLine:self.isONLine];
     [newInfo setDeviceStatus:self.deviceStatus];
+    [newInfo setDeviceAdditionInfo:self.deviceAdditionInfo];
     
     return newInfo;
 }
@@ -131,6 +133,7 @@
     [aCoder encodeObject:self.userInfo forKey:@"userInfo"];
     [aCoder encodeObject:(self.isONLine ? @"YES":@"NO") forKey:@"isONLine"];
     [aCoder encodeObject:((self.deviceStatus == 1)? @"DeviceStatusOffline":(self.deviceStatus == 0) ? @"DeviceStatusOnline":@"DeviceStatusConnectTimeout") forKey:@"deviceStatus"];
+    [aCoder encodeObject:self.deviceAdditionInfo forKey:@"deviceAdditionInfo"];
 }
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -141,6 +144,7 @@
         self.userInfo = [aDecoder decodeObjectForKey:@"userInfo"];
         self.isONLine = ([[aDecoder decodeObjectForKey:@"isONLine"] isEqualToString:@"YES"] ? YES:NO);
         self.deviceStatus = ([[aDecoder decodeObjectForKey:@"deviceStatus"] isEqualToString:@"DeviceStatusOnline"] ? 0:([[aDecoder decodeObjectForKey:@"deviceStatus"] isEqualToString:@"DeviceStatusOffline"] ? 1:2));
+        self.deviceAdditionInfo = [aDecoder decodeObjectForKey:@"deviceAdditionInfo"];
         
     }
     return  self;

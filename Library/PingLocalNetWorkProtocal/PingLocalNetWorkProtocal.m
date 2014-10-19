@@ -12,6 +12,7 @@
 #import "Utilities.h"
 #import "LocalNetworkInfo.h"
 #import "BasicDefine.h"
+#import "DeviceAddition.h"
 
 @interface PingLocalNetWorkProtocal ()
 {
@@ -162,10 +163,22 @@ withFilterContext:(id)filterContext
     [data getBytes:&deviceInfo length:sizeof(deviceInfo)];
 //    LOG(@"位数:%ld",sizeof(deviceInfo));
     NSString *deviceID = [NSString stringWithUTF8String:deviceInfo.deviceID];
-    
+
     if (!deviceID) {
+#ifndef TEST
         return;
+#else
+       // deviceID =
+#endif
     }
+
+    
+    AiertDeviceInfo *device = [[AiertDeviceInfo alloc] initWithDeviceName:[NSString stringWithUTF8String:deviceInfo.typeDeviceInfo.DeviceName] deviceID:deviceID userInfo:nil];
+    
+    DeviceAddition *deviceAddition = [[DeviceAddition alloc] initWithPingStructObject:deviceInfo];
+    [device setDeviceAdditionInfo:deviceAddition];
+    
+    LOG(@"The Result is:%@",device.description);
     
     
     

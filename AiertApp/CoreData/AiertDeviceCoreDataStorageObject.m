@@ -94,6 +94,21 @@
     [self didChangeValueForKey:@"userPassword"];
 }
 
+- (DeviceAddition *)deviceAdditionInfo
+{
+    [self willAccessValueForKey:@"deviceAdditionInfo"];
+    DeviceAddition *value = [self primitiveValueForKey:@"deviceAdditionInfo"];
+    [self didAccessValueForKey:@"deviceAdditionInfo"];
+    return value;
+}
+
+- (void)setDeviceAdditionInfo:(DeviceAddition *)value
+{
+    [self willChangeValueForKey:@"deviceAdditionInfo"];
+    [self setPrimitiveValue:value forKey:@"deviceAdditionInfo"];
+    [self didChangeValueForKey:@"deviceAdditionInfo"];
+}
+
 #pragma mark -
 #pragma mark - public Methods
 
@@ -112,9 +127,21 @@
     newDevice.deviceStatus = [dic objectForKey:@"deviceStatus"];
     newDevice.userName = [dic objectForKey:@"userName"];
     newDevice.userPassword = [dic objectForKey:@"userPassword"];
+    newDevice.deviceAdditionInfo = [dic objectForKey:@"eviceAdditionInfo"];
     
     return newDevice;
 }
+
+//+ (id)insertOrUpdateManagedObjectContext:(NSManagedObjectContext *)moc
+//                          withDictionary:(NSDictionary *)dic
+//{
+//    NSString *deviceID = [dic objectForKey:@"deviceID"];
+//    
+//    if (dic == NULL) return nil;
+//    if (deviceID == nil) return nil;
+//    
+//    
+//}
 
 #pragma mark -
 #pragma mark - Private Methods
@@ -130,5 +157,6 @@
     self.deviceStatus = [dic objectForKey:@"deviceStatus"];
     self.userName = [dic objectForKey:@"userName"];
     self.userPassword = [dic objectForKey:@"userPassword"];
+    self.deviceAdditionInfo = [dic objectForKey:@"eviceAdditionInfo"];
 }
 @end

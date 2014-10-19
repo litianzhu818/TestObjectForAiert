@@ -44,6 +44,7 @@ Single_interface(AiertDeviceCoreDataManager);
 - (void)addDeviceWithDeviceInfo:(AiertDeviceInfo *)aiertDevice;
 - (void)deleteDeviceWithDeviceID:(NSString *)ID;
 - (void)editDeviceWithDeviceInfo:(AiertDeviceInfo *)aiertDevice;
+
 @end
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
