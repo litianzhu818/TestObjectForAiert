@@ -194,99 +194,99 @@ withFilterContext:(id)filterContext
     }
     
 #warning The old code here
-    char devId[16];
-    [data getBytes:devId range:NSMakeRange(sizeof(header)+sizeof(ipaddr_tmp)+sizeof(TYPE_DEVICE_INFO)+sizeof(devTypeInfo), 16)];
-    
-    NSString *aDeviceId = [NSString stringWithUTF8String:devId];
-    
-    if (![Utilities checkRegFormat:aDeviceId patternString:kRegDeviceIdFormat]) {
+//    char devId[16];
+//    [data getBytes:devId range:NSMakeRange(sizeof(header)+sizeof(ipaddr_tmp)+sizeof(TYPE_DEVICE_INFO)+sizeof(devTypeInfo), 16)];
+//    
+//    NSString *aDeviceId = [NSString stringWithUTF8String:devId];
+//    
+//    if (![Utilities checkRegFormat:aDeviceId patternString:kRegDeviceIdFormat]) {
 //        return;
-    }
-    
-    if (nil == self.deviceId) {
-        
-        UInt16 localPort;
-        [data getBytes:&localPort range:NSMakeRange(154, 2)];
-        
-        //        char devName[32];
-        //        [data getBytes:devName range:NSMakeRange(16, 32)];
-        //        DLog(@"device Name : %@",[NSString stringWithUTF8String:devName]);
-        
-        char gateway[20];
-        [data getBytes:gateway range:NSMakeRange(180, 20)];
-        NSString *aGateway = [NSString stringWithUTF8String:gateway];
-        
-        char subMask[20];
-        [data getBytes:subMask range:NSMakeRange(200, 20)];
-        NSString *aSubMask = [NSString stringWithUTF8String:subMask];
-        
-        char mac[20];
-        [data getBytes:mac range:NSMakeRange(220, 20)];
-        NSString *aMac = [NSString stringWithUTF8String:mac];
-        
-        char devType;
-        [data getBytes:&devType range:NSMakeRange(14, 1)];
-        DLog(@"%d",devType);
-        
-        char channelCount;
-        [data getBytes:&channelCount range:NSMakeRange(144, 1)];
-        DLog(@"%d",channelCount);
-        
-        char supportWifi;
-        [data getBytes:&supportWifi range:NSMakeRange(150, 1)];
-        DLog(@"%d",supportWifi);
-        
-        char supportAudioTalk;
-        [data getBytes:&supportAudioTalk range:NSMakeRange(148, 1)];
-        DLog(@"%d",supportAudioTalk);
-        
-        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:aDeviceId,kDeviceID,[NSNumber numberWithInt:localPort],kDeviceLocalPort,[GCDAsyncUdpSocket hostFromAddress:address],kDeviceLocalIp,aGateway,kDeviceGateway,aSubMask,kDeviceSubMask,aMac,kDeviceMac,[NSNumber numberWithChar:devType],kDeviceType,[NSNumber numberWithChar:channelCount],kChannelCount,[NSNumber numberWithChar:supportWifi],kSupportWifi, [NSNumber numberWithChar:supportAudioTalk],kSupportAudioTalk,nil];
-        
-        DLog(@"dict : %@",dict);
-        
-        [self.pingLocalNetWorkProtocalDelegate didFindTheDevice:dict];
-    }else
-    {
-        if ([aDeviceId isEqualToString:self.deviceId]) {
-            
-            UInt16 localPort;
-            [data getBytes:&localPort range:NSMakeRange(154, 2)];
-            
-            char gateway[20];
-            [data getBytes:gateway range:NSMakeRange(180, 20)];
-            NSString *aGateway = [NSString stringWithUTF8String:gateway];
-            
-            char subMask[20];
-            [data getBytes:subMask range:NSMakeRange(200, 20)];
-            NSString *aSubMask = [NSString stringWithUTF8String:subMask];
-            
-            char mac[20];
-            [data getBytes:mac range:NSMakeRange(220, 20)];
-            NSString *aMac = [NSString stringWithUTF8String:mac];
-            
-            char devType;
-            [data getBytes:&devType range:NSMakeRange(14, 1)];
-            DLog(@"%d",devType);
-            
-            char channelCount;
-            [data getBytes:&channelCount range:NSMakeRange(144, 1)];
-            DLog(@"%d",channelCount);
-            
-            char supportWifi;
-            [data getBytes:&supportWifi range:NSMakeRange(150, 1)];
-            DLog(@"%d",supportWifi);
-            
-            char supportAudioTalk;
-            [data getBytes:&supportAudioTalk range:NSMakeRange(148, 1)];
-            DLog(@"%d",supportAudioTalk);
-            
-            NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:aDeviceId,kDeviceID,[NSNumber numberWithInt:localPort],kDeviceLocalPort,[GCDAsyncUdpSocket hostFromAddress:address],kDeviceLocalIp,aGateway,kDeviceGateway,aSubMask,kDeviceSubMask,aMac,kDeviceMac,[NSNumber numberWithChar:devType],kDeviceType,[NSNumber numberWithChar:channelCount],kChannelCount,[NSNumber numberWithChar:supportWifi],kSupportWifi,[NSNumber numberWithChar:supportAudioTalk],kSupportAudioTalk, nil];
-            
-            DLog(@"dict : %@",dict);
-            
-            [self.pingLocalNetWorkProtocalDelegate didFindTheDevice:dict];
-        }
-    }
+//    }
+//    
+//    if (nil == self.deviceId) {
+//        
+//        UInt16 localPort;
+//        [data getBytes:&localPort range:NSMakeRange(154, 2)];
+//        
+//        //        char devName[32];
+//        //        [data getBytes:devName range:NSMakeRange(16, 32)];
+//        //        DLog(@"device Name : %@",[NSString stringWithUTF8String:devName]);
+//        
+//        char gateway[20];
+//        [data getBytes:gateway range:NSMakeRange(180, 20)];
+//        NSString *aGateway = [NSString stringWithUTF8String:gateway];
+//        
+//        char subMask[20];
+//        [data getBytes:subMask range:NSMakeRange(200, 20)];
+//        NSString *aSubMask = [NSString stringWithUTF8String:subMask];
+//        
+//        char mac[20];
+//        [data getBytes:mac range:NSMakeRange(220, 20)];
+//        NSString *aMac = [NSString stringWithUTF8String:mac];
+//        
+//        char devType;
+//        [data getBytes:&devType range:NSMakeRange(14, 1)];
+//        DLog(@"%d",devType);
+//        
+//        char channelCount;
+//        [data getBytes:&channelCount range:NSMakeRange(144, 1)];
+//        DLog(@"%d",channelCount);
+//        
+//        char supportWifi;
+//        [data getBytes:&supportWifi range:NSMakeRange(150, 1)];
+//        DLog(@"%d",supportWifi);
+//        
+//        char supportAudioTalk;
+//        [data getBytes:&supportAudioTalk range:NSMakeRange(148, 1)];
+//        DLog(@"%d",supportAudioTalk);
+//        
+//        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:aDeviceId,kDeviceID,[NSNumber numberWithInt:localPort],kDeviceLocalPort,[GCDAsyncUdpSocket hostFromAddress:address],kDeviceLocalIp,aGateway,kDeviceGateway,aSubMask,kDeviceSubMask,aMac,kDeviceMac,[NSNumber numberWithChar:devType],kDeviceType,[NSNumber numberWithChar:channelCount],kChannelCount,[NSNumber numberWithChar:supportWifi],kSupportWifi, [NSNumber numberWithChar:supportAudioTalk],kSupportAudioTalk,nil];
+//        
+//        DLog(@"dict : %@",dict);
+//        
+//        [self.pingLocalNetWorkProtocalDelegate didFindTheDevice:dict];
+//    }else
+//    {
+//        if ([aDeviceId isEqualToString:self.deviceId]) {
+//            
+//            UInt16 localPort;
+//            [data getBytes:&localPort range:NSMakeRange(154, 2)];
+//            
+//            char gateway[20];
+//            [data getBytes:gateway range:NSMakeRange(180, 20)];
+//            NSString *aGateway = [NSString stringWithUTF8String:gateway];
+//            
+//            char subMask[20];
+//            [data getBytes:subMask range:NSMakeRange(200, 20)];
+//            NSString *aSubMask = [NSString stringWithUTF8String:subMask];
+//            
+//            char mac[20];
+//            [data getBytes:mac range:NSMakeRange(220, 20)];
+//            NSString *aMac = [NSString stringWithUTF8String:mac];
+//            
+//            char devType;
+//            [data getBytes:&devType range:NSMakeRange(14, 1)];
+//            DLog(@"%d",devType);
+//            
+//            char channelCount;
+//            [data getBytes:&channelCount range:NSMakeRange(144, 1)];
+//            DLog(@"%d",channelCount);
+//            
+//            char supportWifi;
+//            [data getBytes:&supportWifi range:NSMakeRange(150, 1)];
+//            DLog(@"%d",supportWifi);
+//            
+//            char supportAudioTalk;
+//            [data getBytes:&supportAudioTalk range:NSMakeRange(148, 1)];
+//            DLog(@"%d",supportAudioTalk);
+//            
+//            NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:aDeviceId,kDeviceID,[NSNumber numberWithInt:localPort],kDeviceLocalPort,[GCDAsyncUdpSocket hostFromAddress:address],kDeviceLocalIp,aGateway,kDeviceGateway,aSubMask,kDeviceSubMask,aMac,kDeviceMac,[NSNumber numberWithChar:devType],kDeviceType,[NSNumber numberWithChar:channelCount],kChannelCount,[NSNumber numberWithChar:supportWifi],kSupportWifi,[NSNumber numberWithChar:supportAudioTalk],kSupportAudioTalk, nil];
+//            
+//            DLog(@"dict : %@",dict);
+//            
+//            [self.pingLocalNetWorkProtocalDelegate didFindTheDevice:dict];
+//        }
+//    }
 }
 
 /**

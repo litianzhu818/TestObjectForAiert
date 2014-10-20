@@ -2,6 +2,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PingLocalNetWorkProtocal.h"
+#import "AiertDeviceCoreDataManager.h"
 
 #define MARGIN_WIDTH 10.0f
 

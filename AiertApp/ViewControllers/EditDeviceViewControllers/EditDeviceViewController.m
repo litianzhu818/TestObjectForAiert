@@ -141,7 +141,7 @@
 
 - (IBAction)deleteAction:(id)sender
 {
-    [self showMessage:[NSString stringWithFormat:@"%@%@%@",@"您确定删除该设备ID为:",self.device.deviceID,@"的设备吗？"] title:@"提示" cancelButtonTitle:@"确定" cancleBlock:^{
+    [self showMessage:[NSString stringWithFormat:@"%@%@%@",@"您确定删设备ID为:",self.device.deviceID,@"的设备吗？"] title:@"提示" cancelButtonTitle:@"确定" cancleBlock:^{
         
         [[myAppDelegate aiertDeviceCoreDataManager] deleteDeviceWithDeviceID:self.device.deviceID];
         

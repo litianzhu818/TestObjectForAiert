@@ -125,6 +125,7 @@
     [self showTableView:YES];
     
     _viewHasDisappear = NO;
+    [[myAppDelegate aiertDeviceCoreDataManager] addDelegate:self delegateQueue:dispatch_get_main_queue()];
     
 }
 
@@ -144,6 +145,7 @@
     self.tableView.dataSource = nil;
     
     _viewHasDisappear = YES;
+    [[myAppDelegate aiertDeviceCoreDataManager] removeDelegate:self delegateQueue:dispatch_get_main_queue()];
 }
 
 - (void)pingLocalNetwork
@@ -198,7 +200,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 44;
+    return 65.0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -227,8 +229,8 @@
     CGRect frame = cell.contentView.frame;
     NSString *device_status = nil;
     
-    UILabel *deviceName = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_WIDTH, 0, FRAME_W(frame), FRAME_H(frame)/2)];
-    UILabel *deviceID = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_WIDTH, FRAME_H(frame)/2, FRAME_W(frame), FRAME_H(frame)/2)];
+    UILabel *deviceName = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_WIDTH, MARGIN_WIDTH, FRAME_W(frame), FRAME_H(frame)/2)];
+    UILabel *deviceID = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_WIDTH,MARGIN_WIDTH + FRAME_H(frame)/2, FRAME_W(frame), FRAME_H(frame)/2)];
     [deviceName setText:[NSString stringWithFormat:@"%@%@",@"NAME:",deviceInfo.deviceName]];
     NSString *IDTitle = [NSString stringWithFormat:@"%@%@",@"ID:",deviceInfo.deviceID];
     [deviceName setFont:font];
@@ -246,13 +248,18 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTag:indexPath.row];
     [button setFrame:CGRectMake(0, 0, 60, 40)];
-    [button setBackgroundColor:[UIColor redColor]];
     [button setTintColor:[UIColor whiteColor]];
-    if (deviceTag)
+    button.layer.borderWidth = 0.2f;
+    button.layer.cornerRadius = 6.0f;
+    button.layer.borderColor = button.backgroundColor.CGColor;
+    if (deviceTag){
+        [button setBackgroundColor:[UIColor lightGrayColor]];
         [button setTitle:@"已添加" forState:UIControlStateNormal];
-    else
+    }
+    else{
+        [button setBackgroundColor:[UIColor redColor]];
         [button setTitle:@"添加" forState:UIControlStateNormal];
-   
+    }
     [button setEnabled:!deviceTag];
     [button addTarget:self action:@selector(addDevice:) forControlEvents:UIControlEventTouchUpInside];
     cell.accessoryView = button;
@@ -267,8 +274,11 @@
     NSMutableDictionary *dictionary = [self.deviceList objectAtIndex:btn.tag];
     AiertDeviceInfo *deviceInfo = [dictionary objectForKey:@"device"];
     
+    [SVProgressHUD showWithStatus:@"正在添加..." maskType:SVProgressHUDMaskTypeBlack];
+    
     [[myAppDelegate aiertDeviceCoreDataManager] addDeviceWithDeviceInfo:deviceInfo];
     
+    [btn setBackgroundColor:[UIColor lightGrayColor]];
     [btn setTitle:@"已添加" forState:UIControlStateNormal];
     [btn setEnabled:NO];
     [dictionary setValue:[NSNumber numberWithInt:1] forKey:@"deviceTag"];
@@ -471,25 +481,30 @@
     });
     
 }
-
-#pragma mark - PingProtocol delegate
-- (void)didFindTheDevice:(NSDictionary *)devInfoDict
+- (void)aiertDeviceCoreDataManager:(AiertDeviceCoreDataManager *)aiertDeviceCoreDataManager didAddDeviceWithDictionary:(NSDictionary *)dic
 {
-    NSString *tempId = [devInfoDict objectForKey:kDeviceID];
-    LOG(@"已经发现设备，设备ID:%@字典信息%@",tempId,devInfoDict);
-    needStopSearchViews = NO;
-    if (![self.deviceList containsObject:tempId]) {
-        
-        [self.deviceList addObject:tempId];
-    }
     
-    __weak SearchDeviceInLanViewController *tempSelf = self;
+    [SVProgressHUD dismissWithSuccess:@"添加成功"];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [tempSelf showBusy:NO];
-        [tempSelf.tableView reloadData];
-    });
 }
+#pragma mark - PingProtocol delegate
+//- (void)didFindTheDevice:(NSDictionary *)devInfoDict
+//{
+//    NSString *tempId = [devInfoDict objectForKey:kDeviceID];
+//    LOG(@"已经发现设备，设备ID:%@字典信息%@",tempId,devInfoDict);
+//    needStopSearchViews = NO;
+//    if (![self.deviceList containsObject:tempId]) {
+//        
+//        [self.deviceList addObject:tempId];
+//    }
+//    
+//    __weak SearchDeviceInLanViewController *tempSelf = self;
+//    
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [tempSelf showBusy:NO];
+//        [tempSelf.tableView reloadData];
+//    });
+//}
 
 - (void)didFindTheDeviceWithInfo:(AiertDeviceInfo *)device
 {

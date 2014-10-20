@@ -177,7 +177,7 @@ Single_implementation(AiertDeviceCoreDataManager);
 #pragma mark - Action Methods
 - (void)addDeviceWithDeviceInfo:(AiertDeviceInfo *)aiertDevice
 {
-    if (!aiertDevice) {
+    if (!aiertDevice || !aiertDevice.deviceID) {
         return;
     }
     
@@ -186,10 +186,19 @@ Single_implementation(AiertDeviceCoreDataManager);
     dispatch_block_t block = ^{@autoreleasepool {
         
         [dic setObject:aiertDevice.deviceID forKey:@"deviceID"];
-        [dic setObject:aiertDevice.deviceName forKey:@"deviceName"];
-        [dic setObject:[NSNumber numberWithInt:aiertDevice.deviceStatus] forKey:@"deviceStatus"];
-        [dic setObject:aiertDevice.userInfo.userName forKey:@"userName"];
-        [dic setObject:aiertDevice.userInfo.userPassword forKey:@"userPassword"];
+        if (aiertDevice.deviceName) {
+            [dic setObject:aiertDevice.deviceName forKey:@"deviceName"];
+        }
+        if (aiertDevice.deviceStatus) {
+            [dic setObject:[NSNumber numberWithInt:aiertDevice.deviceStatus] forKey:@"deviceStatus"];
+        }
+        if (aiertDevice.userInfo.userName) {
+            [dic setObject:aiertDevice.userInfo.userName forKey:@"userName"];
+        }
+        if (aiertDevice.userInfo.userPassword) {
+            [dic setObject:aiertDevice.userInfo.userPassword forKey:@"userPassword"];
+        }
+        
         if (aiertDevice.deviceAdditionInfo) {
             [dic setObject:aiertDevice.deviceAdditionInfo forKey:@"deviceAdditionInfo"];
         }
