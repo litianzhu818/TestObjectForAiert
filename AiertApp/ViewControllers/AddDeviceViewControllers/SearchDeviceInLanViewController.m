@@ -219,7 +219,7 @@
 
 -(void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *dictionary = [self.deviceList objectAtIndex:indexPath.row];
+    NSMutableDictionary *dictionary = [self.deviceList objectAtIndex:indexPath.row];
     AiertDeviceInfo *deviceInfo = [dictionary objectForKey:@"device"];
     BOOL deviceTag = [(NSNumber *)[dictionary objectForKey:@"deviceTag"] integerValue] > 0;
     
@@ -264,7 +264,7 @@
 -(void)addDevice:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
-    NSDictionary *dictionary = [self.deviceList objectAtIndex:btn.tag];
+    NSMutableDictionary *dictionary = [self.deviceList objectAtIndex:btn.tag];
     AiertDeviceInfo *deviceInfo = [dictionary objectForKey:@"device"];
     
     [[myAppDelegate aiertDeviceCoreDataManager] addDeviceWithDeviceInfo:deviceInfo];
@@ -497,15 +497,23 @@
         return;
     }
     
-    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:device,@"device",[NSNumber numberWithBool:[self deviceHasBeenAddedWithID:device.deviceID]],@"deviceTag", nil];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithObjectsAndKeys:device,@"device",[NSNumber numberWithBool:[self deviceHasBeenAddedWithID:device.deviceID]],@"deviceTag", nil];
     [self.deviceList addObject:dic];
+    
+    __weak SearchDeviceInLanViewController *tempSelf = self;
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [tempSelf showBusy:NO];
+        [tempSelf.tableView reloadData];
+    });
+
 }
 
 -(BOOL)deviceHasBeenExistWithID:(NSString *)deviceID
 {
     __block BOOL result = NO;
     [self.deviceList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSDictionary *dictionary = obj;
+        NSMutableDictionary *dictionary = obj;
         AiertDeviceInfo *deviceInfo = [dictionary objectForKey:@"device"];
         if ([deviceInfo.deviceID isEqualToString:deviceID]) {
             result = YES;
@@ -521,7 +529,7 @@
     __block BOOL result = NO;
     NSArray *array = [self getAllDeviceInfo];
     [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSDictionary *dictionary = obj;
+        NSMutableDictionary *dictionary = obj;
         AiertDeviceInfo *deviceInfo = obj;
         if ([deviceInfo.deviceID isEqualToString:deviceID]) {
             result = YES;
