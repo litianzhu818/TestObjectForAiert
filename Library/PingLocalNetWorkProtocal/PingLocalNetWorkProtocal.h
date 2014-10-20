@@ -34,4 +34,5 @@
 - (void)didScanOneDevice:(NSString *)deviceId;
 @required;
 - (void)didFindTheDevice:(NSDictionary *)devInfoDict;
+- (void)didFindTheDeviceWithInfo:(AiertDeviceInfo *)device;
 @end

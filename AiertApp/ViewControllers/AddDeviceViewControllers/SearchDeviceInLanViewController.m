@@ -93,7 +93,7 @@
 //    [self pingLocalNetwork];
     [self refreshButton_TouchUpInside:nil];
     
-    self.deviceList = [[NSMutableArray alloc] initWithCapacity:8];
+    self.deviceList = [NSMutableArray array];
     [self.tableView hideExtraCellLine];
 }
 
@@ -189,39 +189,90 @@
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    aTableView.separatorStyle = (self.deviceList.count > 0) ? UITableViewCellSeparatorStyleSingleLine : UITableViewCellSeparatorStyleNone;
+    tableView.separatorStyle = (self.deviceList.count > 0) ? UITableViewCellSeparatorStyleSingleLine : UITableViewCellSeparatorStyleNone;
     // Return the number of sections.
     return self.deviceList.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 44;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"SearchDeviceInLanCell";
-    SearchDeviceInLanCell *cell;
-    cell = [aTableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (!cell) {
-        cell = [SearchDeviceInLanCell cellFromXib];
-    }
     
-    cell.titleLabel.text = self.deviceList[indexPath.row];
-    cell.mainImageView.image = [UIImage imageNamed:@"list_ipc_offline.png"];
+    static NSString *CellIdentifier = @"Cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil){
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                      reuseIdentifier:CellIdentifier];
+    }
+
+    [self configureCell:cell atIndexPath:indexPath];
     
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    self.cameraId = self.deviceList[indexPath.row];
-    [self performSegueWithIdentifier:@"SearchInLan2InputDevicePassword" sender:self];
+    NSDictionary *dictionary = [self.deviceList objectAtIndex:indexPath.row];
+    AiertDeviceInfo *deviceInfo = [dictionary objectForKey:@"device"];
+    BOOL deviceTag = [(NSNumber *)[dictionary objectForKey:@"deviceTag"] integerValue] > 0;
+    
+    UIFont *font = [UIFont systemFontOfSize:14.0];
+    CGRect frame = cell.contentView.frame;
+    NSString *device_status = nil;
+    
+    UILabel *deviceName = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_WIDTH, 0, FRAME_W(frame), FRAME_H(frame)/2)];
+    UILabel *deviceID = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_WIDTH, FRAME_H(frame)/2, FRAME_W(frame), FRAME_H(frame)/2)];
+    [deviceName setText:[NSString stringWithFormat:@"%@%@",@"NAME:",deviceInfo.deviceName]];
+    NSString *IDTitle = [NSString stringWithFormat:@"%@%@",@"ID:",deviceInfo.deviceID];
+    [deviceName setFont:font];
+    [deviceID setFont:font];
+    
+    NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:IDTitle attributes:@{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName:font}];
+    [attributedTitle addAttribute:NSForegroundColorAttributeName
+                            value:[UIColor colorWithRed:0.122 green:0.475 blue:0.992 alpha:1.000]
+                            range:[attributedTitle.string.lowercaseString rangeOfString:deviceInfo.deviceID.lowercaseString]];
+    [deviceID setAttributedText:attributedTitle];
+    
+    [cell.contentView addSubview:deviceName];
+    [cell.contentView addSubview:deviceID];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setTag:indexPath.row];
+    [button setFrame:CGRectMake(0, 0, 60, 40)];
+    [button setBackgroundColor:[UIColor redColor]];
+    [button setTintColor:[UIColor whiteColor]];
+    if (deviceTag)
+        [button setTitle:@"已添加" forState:UIControlStateNormal];
+    else
+        [button setTitle:@"添加" forState:UIControlStateNormal];
+   
+    [button setEnabled:!deviceTag];
+    [button addTarget:self action:@selector(addDevice:) forControlEvents:UIControlEventTouchUpInside];
+    cell.accessoryView = button;
+    
+    cell.selectionStyle = UITableViewCellEditingStyleNone;
+
 }
 
+-(void)addDevice:(id)sender
+{
+    UIButton *btn = (UIButton *)sender;
+    NSDictionary *dictionary = [self.deviceList objectAtIndex:btn.tag];
+    AiertDeviceInfo *deviceInfo = [dictionary objectForKey:@"device"];
+    
+    [[myAppDelegate aiertDeviceCoreDataManager] addDeviceWithDeviceInfo:deviceInfo];
+    
+    [btn setTitle:@"已添加" forState:UIControlStateNormal];
+    [btn setEnabled:NO];
+    [dictionary setValue:[NSNumber numberWithInt:1] forKey:@"deviceTag"];
+}
 
 #pragma mark - Show and Hide Error
 - (void)showError:(NSString *)message
@@ -438,6 +489,72 @@
         [tempSelf showBusy:NO];
         [tempSelf.tableView reloadData];
     });
+}
+
+- (void)didFindTheDeviceWithInfo:(AiertDeviceInfo *)device
+{
+    if ([self deviceHasBeenExistWithID:device.deviceID]) {
+        return;
+    }
+    
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:device,@"device",[NSNumber numberWithBool:[self deviceHasBeenAddedWithID:device.deviceID]],@"deviceTag", nil];
+    [self.deviceList addObject:dic];
+}
+
+-(BOOL)deviceHasBeenExistWithID:(NSString *)deviceID
+{
+    __block BOOL result = NO;
+    [self.deviceList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSDictionary *dictionary = obj;
+        AiertDeviceInfo *deviceInfo = [dictionary objectForKey:@"device"];
+        if ([deviceInfo.deviceID isEqualToString:deviceID]) {
+            result = YES;
+            *stop = YES;
+        }
+    }];
+    
+    return result;
+}
+
+-(BOOL)deviceHasBeenAddedWithID:(NSString *)deviceID
+{
+    __block BOOL result = NO;
+    NSArray *array = [self getAllDeviceInfo];
+    [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSDictionary *dictionary = obj;
+        AiertDeviceInfo *deviceInfo = obj;
+        if ([deviceInfo.deviceID isEqualToString:deviceID]) {
+            result = YES;
+            *stop = YES;
+        }
+    }];
+    
+    return result;
+}
+
+
+-(NSArray *)getAllDeviceInfo
+{
+    AiertDeviceCoreDataStorage *aiertDeviceCoreDataStorage = [AiertDeviceCoreDataStorage sharedInstance];
+    
+    NSManagedObjectContext *moc = [aiertDeviceCoreDataStorage mainThreadManagedObjectContext];
+    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"AiertDeviceCoreDataStorageObject"
+                                              inManagedObjectContext:moc];
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    [fetchRequest setEntity:entity];
+    
+    NSError *error;
+    
+    NSArray *fetchedObjects = [moc executeFetchRequest:fetchRequest error:&error];
+    
+    if (error) {
+        LOG(@"Fetched device list error:%@",error.description);
+        return nil;
+    }
+    
+    return fetchedObjects;
 }
 
 @end

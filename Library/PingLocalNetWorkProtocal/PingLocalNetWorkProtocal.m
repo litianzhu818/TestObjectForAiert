@@ -130,6 +130,17 @@
     [udpPingSocket sendData:self.pingData toHost:@"255.255.255.255" port:8080 withTimeout:-1 tag:0];
 }
 
+-(NSString *)getUUIDString
+{
+    CFUUIDRef uuidRef =CFUUIDCreate(NULL);
+    
+    CFStringRef uuidStringRef =CFUUIDCreateString(NULL, uuidRef);
+    
+    CFRelease(uuidRef);
+    
+    return (__bridge NSString *)uuidStringRef;
+}
+
 #pragma mark -GCDAsyncUdpsocket Delegate
 /**
  * Called when the datagram with the given tag has been sent.
@@ -168,7 +179,7 @@ withFilterContext:(id)filterContext
 #ifndef TEST
         return;
 #else
-       // deviceID =
+        deviceID = [self getUUIDString];
 #endif
     }
 
@@ -178,31 +189,11 @@ withFilterContext:(id)filterContext
     DeviceAddition *deviceAddition = [[DeviceAddition alloc] initWithPingStructObject:deviceInfo];
     [device setDeviceAdditionInfo:deviceAddition];
     
-    LOG(@"The Result is:%@",device.description);
+    if (self.pingLocalNetWorkProtocalDelegate && [self.pingLocalNetWorkProtocalDelegate respondsToSelector:@selector(didFindTheDeviceWithInfo:)]) {
+        [self.pingLocalNetWorkProtocalDelegate didFindTheDeviceWithInfo:device];
+    }
     
-    
-    
-    
-//    Header header;
-//    [data getBytes:&header range:NSMakeRange(0, 12)];
-//    
-//    TYPE_DEVICE_INFO typeDeviceInfo;
-//    [data getBytes:&typeDeviceInfo range:NSMakeRange(12, 152)];
-    
-//    devTypeInfo devTypeinfo;
-//    [data getBytes:&devTypeinfo range:NSMakeRange(152, 160)];
-//    
-//    ipaddr_tmp ip_address_temp;
-//    [data getBytes:&ip_address_temp range:NSMakeRange(160, 240)];
-    
-//    char deviceid[32];
-//    [data getBytes:&deviceid range:NSMakeRange(240, 271)];
-//    
-//    
-//     NSString *deviceID = [NSString stringWithUTF8String:deviceid];
-    
-    
-    
+#warning The old code here
     char devId[16];
     [data getBytes:devId range:NSMakeRange(sizeof(header)+sizeof(ipaddr_tmp)+sizeof(TYPE_DEVICE_INFO)+sizeof(devTypeInfo), 16)];
     

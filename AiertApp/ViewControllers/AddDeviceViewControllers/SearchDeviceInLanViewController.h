@@ -3,6 +3,8 @@
 #import <UIKit/UIKit.h>
 #import "PingLocalNetWorkProtocal.h"
 
+#define MARGIN_WIDTH 10.0f
+
 @interface SearchDeviceInLanViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate ,PingLocalNetWorkProtocalDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *foundNoneDescriptionLabel;
