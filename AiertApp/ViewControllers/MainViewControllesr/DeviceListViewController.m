@@ -248,8 +248,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    [self performSegueWithIdentifier:@"DeviceList2Play"
-//                              sender:@"1234567890"];
+    AiertDeviceInfo *deviceInfo = [self.fetchedResultsController_device objectAtIndexPath:indexPath];
+    ZMDevice *device = [[ZMDevice alloc] initWithDeviceId:deviceInfo.deviceID password:deviceInfo.userInfo.userPassword deviceName:deviceInfo.deviceName channelCount:deviceInfo.deviceAdditionInfo.videoNum];
+
+    
+    [self performSegueWithIdentifier:@"DeviceList2Play"
+                              sender:device];
     
     //TODO:通往视频播放的接口
 }
