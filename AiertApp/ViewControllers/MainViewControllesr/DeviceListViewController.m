@@ -248,8 +248,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    AiertDeviceInfo *deviceInfo = [self.fetchedResultsController_device objectAtIndexPath:indexPath];
-    ZMDevice *device = [[ZMDevice alloc] initWithDeviceId:deviceInfo.deviceID password:deviceInfo.userInfo.userPassword deviceName:deviceInfo.deviceName channelCount:deviceInfo.deviceAdditionInfo.videoNum];
+    AiertDeviceCoreDataStorageObject *deviceInfo = [self.fetchedResultsController_device objectAtIndexPath:indexPath];
+    ZMDevice *device = [[ZMDevice alloc] initWithDeviceId:deviceInfo.deviceID password:deviceInfo.userPassword deviceName:deviceInfo.deviceName channelCount:deviceInfo.deviceAdditionInfo.videoNum];
 
     
     [self performSegueWithIdentifier:@"DeviceList2Play"

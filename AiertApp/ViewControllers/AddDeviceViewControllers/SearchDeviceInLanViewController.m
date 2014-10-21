@@ -488,24 +488,6 @@
     
 }
 #pragma mark - PingProtocol delegate
-//- (void)didFindTheDevice:(NSDictionary *)devInfoDict
-//{
-//    NSString *tempId = [devInfoDict objectForKey:kDeviceID];
-//    LOG(@"已经发现设备，设备ID:%@字典信息%@",tempId,devInfoDict);
-//    needStopSearchViews = NO;
-//    if (![self.deviceList containsObject:tempId]) {
-//        
-//        [self.deviceList addObject:tempId];
-//    }
-//    
-//    __weak SearchDeviceInLanViewController *tempSelf = self;
-//    
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [tempSelf showBusy:NO];
-//        [tempSelf.tableView reloadData];
-//    });
-//}
-
 - (void)didFindTheDeviceWithInfo:(AiertDeviceInfo *)device
 {
     if ([self deviceHasBeenExistWithID:device.deviceID]) {

@@ -15,12 +15,12 @@ typedef void(^FinishedBlock)(AiertDeviceInfo *deviceInfo);
 
 @interface AddCameraViewController : BaseViewController<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>
 
-@property (strong, nonatomic) IBOutlet UIView *inpuBgView;
-@property (strong, nonatomic) IBOutlet UITextField *nameField;
-@property (strong, nonatomic) IBOutlet UITextField *deviceIDField;
-@property (strong, nonatomic) IBOutlet UITextField *userNameField;
-@property (strong, nonatomic) IBOutlet UITextField *passwordField;
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *inpuBgView;
+@property (weak, nonatomic) IBOutlet UITextField *nameField;
+@property (weak, nonatomic) IBOutlet UITextField *deviceIDField;
+@property (weak, nonatomic) IBOutlet UITextField *userNameField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordField;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
 

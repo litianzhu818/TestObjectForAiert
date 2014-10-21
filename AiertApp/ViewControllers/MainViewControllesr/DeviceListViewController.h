@@ -21,9 +21,9 @@
 {
     
 }
-@property (strong, nonatomic) IBOutlet AiertHeaderView *headerView;
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *editButton;
+@property (weak, nonatomic) IBOutlet AiertHeaderView *headerView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
 
 -(IBAction)clikedOnEditButton:(id)sender;
 

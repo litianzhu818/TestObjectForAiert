@@ -10,8 +10,8 @@
 
 @interface AiertAboutViewController : BaseViewController
 
-@property (strong, nonatomic) IBOutlet UIButton *nameButton;
-@property (strong, nonatomic) IBOutlet UIButton *complanyButton;
-@property (strong, nonatomic) IBOutlet UIButton *versionButton;
+@property (weak, nonatomic) IBOutlet UIButton *nameButton;
+@property (weak, nonatomic) IBOutlet UIButton *complanyButton;
+@property (weak, nonatomic) IBOutlet UIButton *versionButton;
 
 @end

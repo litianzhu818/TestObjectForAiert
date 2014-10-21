@@ -862,7 +862,7 @@
         }
         
         dispatch_group_async(_group, _pingQueue, ^{
-            [self.pingLocalNetWorkProtocal pingLocalDevicesWithBindPort:2337];
+            [self.pingLocalNetWorkProtocal pingLocalDevicesWithBindPort:8080];
         });
         _pingCounter++;
         
@@ -875,6 +875,41 @@
 }
 
 #pragma mark - PingLocalNetwork delegate
+- (void)didFindTheDeviceWithInfo:(AiertDeviceInfo *)device
+{
+    do {
+        if (!(CameraStateActive & [AppData cameraState])) {
+            break;
+        }
+        
+        DLog(@"Aiert_ios各阶段运行状态<<======局域网内找到设备======》》");
+        _bLocalDeviceExists = YES;// 找到设备
+        
+        if (_bLock) {
+            break;
+        }
+        
+        _bLock = YES;
+        DLog(@"对局域网内找到的设备进行处理，且只处理一次，这个log只能打印一次");
+        
+        NSLog(@"Aiert_ios各阶段运行状态<<======局域网ZSP播放======》》");
+        
+        __weak LibCoreWrap *tempSelf = self;
+        
+        dispatch_group_async(_group, _streamQueue, ^{
+            [tempSelf.zspConnection startDisplayWithDeviceIp:device.deviceAdditionInfo.IP
+                                                        port:device.deviceAdditionInfo.port
+                                                     channel:device.deviceAdditionInfo.videoNum
+                                                   mediaType:1
+                                               isLocalDevice:YES];
+        });
+        
+    } while (0);
+    
+    [self.pingTimer invalidate];
+    self.pingTimer = nil;
+    
+}
 
 - (void)didFindTheDevice:(NSDictionary *)devInfoDict;
 {
