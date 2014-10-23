@@ -126,11 +126,22 @@
     self.currentChannel = channel;
     self.currentMediaType = media_type;
     
-    dispatch_group_async(_group, _streamQueue, ^{
-        [self.p2pConnection isUPNPSupport:device_id];
-    });
+//    dispatch_group_async(_group, _streamQueue, ^{
+//        [self.p2pConnection isUPNPSupport:device_id];
+//    });
+    
+    [self method2];
     
     return 0;
+}
+
+-(void)method1
+{
+    [self.zspConnection startDisplayWithDeviceIp:@"192.168.0.102" port:8000 channel:1 mediaType:0 isLocalDevice:YES];
+}
+-(void)method2
+{
+    [self.zspConnection loginWithUserName:@"admin" password:@"111111"];
 }
 
 - (void)changeChannel:(NSInteger)dstChannel
@@ -643,6 +654,7 @@
     [self.zspConnection closeCommandSocket];
         
     [AppData addCameraState:CameraStateLogin];
+    [self method1];
 }
 
 - (void)didReadAudioResponse:(NSInteger)code
@@ -862,7 +874,7 @@
         }
         
         dispatch_group_async(_group, _pingQueue, ^{
-            [self.pingLocalNetWorkProtocal pingLocalDevicesWithBindPort:8080];
+            [self.pingLocalNetWorkProtocal pingLocalDevicesWithBindPort:2337];
         });
         _pingCounter++;
         
@@ -877,74 +889,75 @@
 #pragma mark - PingLocalNetwork delegate
 - (void)didFindTheDeviceWithInfo:(AiertDeviceInfo *)device
 {
-    do {
-        if (!(CameraStateActive & [AppData cameraState])) {
-            break;
-        }
-        
-        DLog(@"Aiert_ios各阶段运行状态<<======局域网内找到设备======》》");
-        _bLocalDeviceExists = YES;// 找到设备
-        
-        if (_bLock) {
-            break;
-        }
-        
-        _bLock = YES;
-        DLog(@"对局域网内找到的设备进行处理，且只处理一次，这个log只能打印一次");
-        
-        NSLog(@"Aiert_ios各阶段运行状态<<======局域网ZSP播放======》》");
-        
-        __weak LibCoreWrap *tempSelf = self;
-        
-        dispatch_group_async(_group, _streamQueue, ^{
-            [tempSelf.zspConnection startDisplayWithDeviceIp:device.deviceAdditionInfo.IP
-                                                        port:device.deviceAdditionInfo.port
-                                                     channel:device.deviceAdditionInfo.videoNum
-                                                   mediaType:1
-                                               isLocalDevice:YES];
-        });
-        
-    } while (0);
-    
-    [self.pingTimer invalidate];
-    self.pingTimer = nil;
-    
+//    do {
+//        if (!(CameraStateActive & [AppData cameraState])) {
+//            break;
+//        }
+//        
+//        DLog(@"Aiert_ios各阶段运行状态<<======局域网内找到设备======》》");
+//        _bLocalDeviceExists = YES;// 找到设备
+//        
+//        if (_bLock) {
+//            break;
+//        }
+//        
+//        _bLock = YES;
+//        DLog(@"对局域网内找到的设备进行处理，且只处理一次，这个log只能打印一次");
+//        
+//        NSLog(@"Aiert_ios各阶段运行状态<<======局域网ZSP播放======》》");
+//        
+//        __weak LibCoreWrap *tempSelf = self;
+//        
+//        dispatch_group_async(_group, _streamQueue, ^{
+//            [tempSelf.zspConnection startDisplayWithDeviceIp:device.deviceAdditionInfo.IP
+//                                                        port:device.deviceAdditionInfo.port
+//                                                     channel:device.deviceAdditionInfo.videoNum
+//                                                   mediaType:1
+//                                               isLocalDevice:YES];
+//        });
+//        
+//    } while (0);
+//    
+//    [self.pingTimer invalidate];
+//    self.pingTimer = nil;
+    [self method1];
 }
-
-- (void)didFindTheDevice:(NSDictionary *)devInfoDict;
-{
-    do {
-        if (!(CameraStateActive&[AppData cameraState])) {
-            break;
-        }
-        
-        DLog(@"Aiert_ios各阶段运行状态<<======局域网内找到设备======》》");
-        _bLocalDeviceExists = YES;// 找到设备
-        
-        if (_bLock) {
-            break;
-        }
-        
-        _bLock = YES;
-        DLog(@"对局域网内找到的设备进行处理，且只处理一次，这个log只能打印一次");
-        
-        NSLog(@"Aiert_ios各阶段运行状态<<======局域网ZSP播放======》》");
-        
-        __weak LibCoreWrap *tempSelf = self;
-        
-        dispatch_group_async(_group, _streamQueue, ^{
-            [tempSelf.zspConnection startDisplayWithDeviceIp:[devInfoDict objectForKey:kDeviceLocalIp]
-                                                        port:[[devInfoDict objectForKey:kDeviceLocalPort] intValue]
-                                                     channel:_currentChannel
-                                                   mediaType:_currentMediaType
-                                               isLocalDevice:YES];
-        });
-
-    } while (0);
-    
-    [self.pingTimer invalidate];
-    self.pingTimer = nil;
-}
+//
+//- (void)didFindTheDevice:(NSDictionary *)devInfoDict;
+//{
+//    do {
+////        if (!(CameraStateActive&[AppData cameraState])) {
+////            break;
+////        }
+//        
+//        DLog(@"Aiert_ios各阶段运行状态<<======局域网内找到设备======》》");
+//        _bLocalDeviceExists = YES;// 找到设备
+//        
+//        if (_bLock) {
+//            break;
+//        }
+//        
+//        _bLock = YES;
+//        DLog(@"对局域网内找到的设备进行处理，且只处理一次，这个log只能打印一次");
+//        
+//        NSLog(@"Aiert_ios各阶段运行状态<<======局域网ZSP播放======》》");
+//        
+//        __weak LibCoreWrap *tempSelf = self;
+//        
+//        dispatch_group_async(_group, _streamQueue, ^{
+//            [tempSelf.zspConnection startDisplayWithDeviceIp:[devInfoDict objectForKey:kDeviceLocalIp]
+//                                                        port:[[devInfoDict objectForKey:kDeviceLocalPort] intValue]
+//                                                     channel:_currentChannel
+//                                                   mediaType:_currentMediaType
+//                                               isLocalDevice:YES];
+//        });
+//
+//    } while (0);
+//    
+//    [self.pingTimer invalidate];
+//    self.pingTimer = nil;
+//
+//}
 
 #pragma mark - currentFrame
 

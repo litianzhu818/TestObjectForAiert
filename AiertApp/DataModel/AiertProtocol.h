@@ -1,4 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 //
 //
 //
@@ -856,6 +856,15 @@ typedef struct
     char deviceID[32];
     
 }PING_DEVICE_INFO;
+/**
+ *  视频请求
+ */
+typedef struct
+{
+    ZXA_HEADER header;
+    int request;
+    
+}VIDEO_REQUEST;
 
 typedef struct 
 {
