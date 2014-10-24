@@ -157,16 +157,6 @@
     });
 }
 
-
--(void)method1
-{
-    [self.zspConnection startDisplayWithDeviceIp:@"192.168.0.102" port:8000 channel:1 mediaType:0 isLocalDevice:YES];
-}
--(void)method2
-{
-    [self.zspConnection loginWithUserName:@"admin" password:@"111111"];
-}
-
 - (void)changeChannel:(NSInteger)dstChannel
 {
     
