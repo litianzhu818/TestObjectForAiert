@@ -133,6 +133,7 @@
      */
 #warning The testMethod
     [self testmethod1];
+
     return 0;
 }
 /**
@@ -156,6 +157,7 @@
                                            isLocalDevice:YES];
     });
 }
+
 
 - (void)changeChannel:(NSInteger)dstChannel
 {
@@ -667,6 +669,7 @@
     [self.zspConnection closeCommandSocket];
         
     [AppData addCameraState:CameraStateLogin];
+
     //FIXME:这里的测试方法2需要去掉
     [self testMethod2];
 }
