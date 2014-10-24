@@ -125,6 +125,7 @@
     self.password = password;
     self.currentChannel = channel;
     self.currentMediaType = media_type;
+<<<<<<< HEAD
 
 
     /*
@@ -134,6 +135,14 @@
      */
 #warning The testMethod
     [self testmethod1];
+=======
+    
+//    dispatch_group_async(_group, _streamQueue, ^{
+//        [self.p2pConnection isUPNPSupport:device_id];
+//    });
+    
+    [self method2];
+>>>>>>> FETCH_HEAD
     
     return 0;
 }
@@ -159,6 +168,15 @@
     });
 }
 
+
+-(void)method1
+{
+    [self.zspConnection startDisplayWithDeviceIp:@"192.168.0.102" port:8000 channel:1 mediaType:0 isLocalDevice:YES];
+}
+-(void)method2
+{
+    [self.zspConnection loginWithUserName:@"admin" password:@"111111"];
+}
 
 - (void)changeChannel:(NSInteger)dstChannel
 {
@@ -670,9 +688,13 @@
     [self.zspConnection closeCommandSocket];
         
     [AppData addCameraState:CameraStateLogin];
+<<<<<<< HEAD
     
     //FIXME:这里的测试方法2需要去掉
     [self testMethod2];
+=======
+    [self method1];
+>>>>>>> FETCH_HEAD
 }
 
 - (void)didReadAudioResponse:(NSInteger)code
@@ -938,6 +960,10 @@
 //    
 //    [self.pingTimer invalidate];
 //    self.pingTimer = nil;
+<<<<<<< HEAD
+=======
+    [self method1];
+>>>>>>> FETCH_HEAD
 }
 //
 //- (void)didFindTheDevice:(NSDictionary *)devInfoDict;
