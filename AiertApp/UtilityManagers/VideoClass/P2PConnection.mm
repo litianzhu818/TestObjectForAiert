@@ -11,8 +11,7 @@
 #import "BasicDefine.h"
 #import "AppData.h"
 
-extern "C"
-{
+extern "C"{
 #include "G711Convert_HISI.h"
 }
 

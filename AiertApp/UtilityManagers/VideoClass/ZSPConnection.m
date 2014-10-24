@@ -3,6 +3,7 @@
 #import "ZSPConnection.h"
 #import "GCDAsyncSocket.h"
 #include "systemparameterdefine.h"
+#import "AiertProtocol.h"
 #include "G711Convert_HISI.h"
 #import "AppData.h"
 #import "BasicDefine.h"
@@ -50,7 +51,7 @@ typedef struct LOGIN_INFO
     Byte recvAudioBuffer[325];
     Byte recvPcmAudioBuffer[641];
     
-    Header _header;
+    ZXA_HEADER _header;
     SYSTEM_PARAMETER _sysParam;
     NSUInteger _currentMediaType;
     Byte magicBuff[4];
@@ -225,10 +226,10 @@ typedef struct LOGIN_INFO
     }
     
     if (VideoQualityTypeLD == mediaType) {
-        [self composeHeadPacketWithCommand:CMD_START_QVGA];
+        [self composeHeadPacketWithCommand:CMD_START_SUBVIDEO];//流畅视频
     }else if (VideoQualityTypeSD == mediaType)
     {
-        [self composeHeadPacketWithCommand:CMD_START_VGA];
+        [self composeHeadPacketWithCommand:CMD_START_VIDEO];
     }else if (VideoQualityTypeHD == mediaType)
     {
         [self composeHeadPacketWithCommand:CMD_START_720P];
@@ -241,10 +242,16 @@ typedef struct LOGIN_INFO
     // receive header packet
     [_asyncSocket readDataToLength:16 withTimeout:TAG_READ_VIDEO_TIMOUT_INTERVAL tag:TAG_VIDEO_HEADER];
 }
-
+//MARK:这里是登录方法
+//TODO:找到问题
 - (void)loginWithUserName:(NSString *)userName
                  password:(NSString *)password;
 {
+    _currentMediaType = 1;
+    self.currentChannel = 1;
+    self.deviceIp = @"192.168.0.102";
+    self.port = 8000;
+    _bLocalConnection = YES;
     
     self.userName = userName;
     self.password = password;
@@ -675,11 +682,17 @@ typedef struct LOGIN_INFO
         }
         case TAG_VIDEO_HEADER:
         {
-            // Get body Length
-            int nEchmcmd;
-            [data getBytes:&nEchmcmd range:NSMakeRange(12, 4)];
-            //            DLog(@"______________________________________________didReceive Video header echo: %d",nEchmcmd);
-            if (0 == nEchmcmd) {
+            VIDEO_REQUEST value;
+            
+            [data getBytes:&value length:sizeof(value)];
+            
+            LOG(@"%d",value.request);
+            
+//            // Get body Length
+//            int nEchmcmd;
+//            [data getBytes:&nEchmcmd range:NSMakeRange(12, 4)];
+//            //            DLog(@"______________________________________________didReceive Video header echo: %d",nEchmcmd);
+            if (0 == value.request) {
                 [sender readDataToLength:8 withTimeout:TAG_READ_VIDEO_TIMOUT_INTERVAL tag:TAG_FRAME_HEADER];
             }
             break;
@@ -687,9 +700,10 @@ typedef struct LOGIN_INFO
         case TAG_LOGIN_RESPONSE:
         {
             // Get echmcmd
-            int nEchmcmd;
-            [data getBytes:&nEchmcmd range:NSMakeRange(16, 4)];
-            switch (nEchmcmd) {
+            VIDEO_REQUEST value;
+            
+            [data getBytes:&value length:sizeof(value)];
+            switch (value.request) {
                 case 0:
                     DLog(@"Login success !");
                     [self.zspConnectionDelegate didLoginSuccess];

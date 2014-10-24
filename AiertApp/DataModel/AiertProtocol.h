@@ -1,4 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 //
 //
 //
@@ -744,7 +744,7 @@ typedef struct tag_playback_node
 	unsigned int		p_offset;		// 回放 - 时间偏移量  下载 - 大小偏移量(K)
 	unsigned int 		start_time;		/*文件开始时间*/
 	unsigned int 		end_time;		/* 文件结束时间*/
-	unsigned int    filesize;		/*文件大小以K为单位*/
+	unsigned int        filesize;		/*文件大小以K为单位*/
 	int							m_filetype;		//0-手动，1-定时，2-报警
 	char						d_name[96]; 	/*文件名(有路径)*/
 }playback_node;
@@ -856,6 +856,15 @@ typedef struct
     char deviceID[32];
     
 }PING_DEVICE_INFO;
+/**
+ *  视频请求
+ */
+typedef struct
+{
+    ZXA_HEADER header;
+    int request;
+    
+}VIDEO_REQUEST;
 
 typedef struct 
 {
