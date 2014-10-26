@@ -108,11 +108,11 @@ typedef struct LOGIN_INFO
 	{
         NSInteger bodyLen = [bodyData length];
         
-        _header.head = 0xaaaa5555;
+        _header.head = ZXAHEADER;
         _header.length = bodyLen;
         _header.type = type;
         _header.commd = aCommand;
-        _header.channel = self.currentChannel;//self.deviceDetail.currentChannel;
+        _header.channel = 0;//self.currentChannel;//self.deviceDetail.currentChannel;
         
         // Add packet header
         self.headData = [[NSMutableData alloc]initWithBytes:&_header length:sizeof(_header)];
@@ -202,7 +202,7 @@ typedef struct LOGIN_INFO
                    isLocalDevice:(BOOL)bLocal
 {
     _currentMediaType = mediaType;
-    self.currentChannel = channel;
+    self.currentChannel = 1;
     self.deviceIp = deviceIp;
     self.port = port;
     _bLocalConnection = bLocal;
@@ -425,7 +425,7 @@ typedef struct LOGIN_INFO
 //    DLog(@"queue %s:%@ : %@ ",dispatch_queue_get_label(dispatch_get_current_queue()),NSStringFromSelector(_cmd),self);
 //    
 //    TYPE_WIFI_LOGIN wifiLogin;
-//    _header.head = 0xaaaa5555;
+//    _header.head = ZXAHEADER;
 //    _header.length = sizeof(wifiLogin);
 //    _header.type = 0;
 //    _header.commd = CMD_S_WIFI_CONNECT;
@@ -462,7 +462,7 @@ typedef struct LOGIN_INFO
 {
 //    sysParam.m_NetWork.m_WifiConfig.WifiAddrMode.m_u8Selected = bWifiOpen;
 //    sysParam.m_NetWork.m_changeinfo |= (1 << 10);
-//    _header.head = 0xaaaa5555;
+//    _header.head = ZXAHEADER;
 //    _header.length = sizeof(sysParam);
 //    _header.type = 0;
 //    _header.commd = CMD_S_DEV_PARA;
@@ -554,7 +554,7 @@ typedef struct LOGIN_INFO
 //    memcpy(sysParam.m_Users.m_UserSet[userIndex].m_s32Passwd, cPass, passLen);
 //    sysParam.m_Users.m_changeinfo |= (1 << userIndex);
 //    
-//    _header.head = 0xaaaa5555;
+//    _header.head = ZXAHEADER;
 //    _header.length = sizeof(sysParam);
 //    _header.type = 0;
 //    _header.commd = CMD_S_DEV_PARA;
@@ -683,7 +683,7 @@ typedef struct LOGIN_INFO
         case TAG_VIDEO_HEADER:
         {
             VIDEO_REQUEST value;
-            
+            LOG(@"%d",[data length]);
             [data getBytes:&value length:sizeof(value)];
             
             LOG(@"%d",value.request);

@@ -153,7 +153,7 @@
         [tempSelf.zspConnection startDisplayWithDeviceIp:@"192.168.0.102"
                                                     port:8000
                                                  channel:1
-                                               mediaType:1
+                                               mediaType:0
                                            isLocalDevice:YES];
     });
 }
