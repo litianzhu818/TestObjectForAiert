@@ -152,7 +152,7 @@
     dispatch_group_async(_group, _streamQueue, ^{
         [tempSelf.zspConnection startDisplayWithDeviceIp:@"192.168.0.102"
                                                     port:8000
-                                                 channel:1
+                                                 channel:0
                                                mediaType:0
                                            isLocalDevice:YES];
     });

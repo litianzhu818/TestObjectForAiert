@@ -257,6 +257,8 @@
         return;
     }
     
+    AiertDeviceInfo *device1 = [[AiertDeviceInfo alloc] initWithDeviceCoraDataObject:deviceInfo];
+    
     ZMDevice *device = [[ZMDevice alloc] initWithDeviceId:deviceInfo.deviceID password:deviceInfo.userPassword deviceName:deviceInfo.deviceName channelCount:deviceInfo.deviceAdditionInfo.videoNum];
 
     [self performSegueWithIdentifier:@"DeviceList2Play"

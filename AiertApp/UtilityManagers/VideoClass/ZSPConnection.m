@@ -202,7 +202,7 @@ typedef struct LOGIN_INFO
                    isLocalDevice:(BOOL)bLocal
 {
     _currentMediaType = mediaType;
-    self.currentChannel = 1;
+    self.currentChannel = channel;
     self.deviceIp = deviceIp;
     self.port = port;
     _bLocalConnection = bLocal;

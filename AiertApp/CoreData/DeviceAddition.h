@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "AiertProtocol.h"
 
-@interface DeviceAddition : NSObject
+@interface DeviceAddition : NSObject<NSCopying, NSCoding>
 
 @property (strong, nonatomic) NSString *IP;//设备ip
 @property (assign, nonatomic) NSInteger port;//设备port

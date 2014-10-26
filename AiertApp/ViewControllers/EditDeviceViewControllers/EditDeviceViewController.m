@@ -127,11 +127,17 @@
 {
     if ([self checkData]) {
         
-        AiertDeviceInfo *deviceInfo = [[AiertDeviceInfo alloc] initWithDeviceName:self.nameTextField.text
-                                                                         deviceID:self.device.deviceID
-                                                                         userName:self.userNameTextField.text
-                                                                     userPassword:self.userPwdTextField.text];
-        [[myAppDelegate aiertDeviceCoreDataManager] editDeviceWithDeviceInfo:deviceInfo];
+        [self.device setDeviceName:self.nameTextField.text];
+        [self.device.userInfo setUserName:self.userNameTextField.text];
+        [self.device.userInfo setUserPassword:self.userPwdTextField.text];
+        
+        LOG(@"%@",self.device.deviceAdditionInfo.description);
+        
+//        AiertDeviceInfo *deviceInfo = [[AiertDeviceInfo alloc] initWithDeviceName:self.nameTextField.text
+//                                                                         deviceID:self.device.deviceID
+//                                                                         userName:self.userNameTextField.text
+//                                                                     userPassword:self.userPwdTextField.text];
+        [[myAppDelegate aiertDeviceCoreDataManager] editDeviceWithDeviceInfo:self.device];
         
     }else{
         [self showMessage:@"输入信息不能为空，请检查您的输入！" title:@"提示" cancelButtonTitle:@"提示" cancleBlock:^{
