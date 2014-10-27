@@ -357,7 +357,6 @@
 		E7AF49AC19EA3C0D00699BA1 /* GCDMulticastDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF49A719EA3C0D00699BA1 /* GCDMulticastDelegate.m */; };
 		E7AF49AD19EA3C0D00699BA1 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF49AA19EA3C0D00699BA1 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E7AF4B4219EA4E8300699BA1 /* AddCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF4AEA19EA4E8300699BA1 /* AddCameraViewController.m */; };
-		E7AF4B4319EA4E8300699BA1 /* AddDeviceMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF4AEC19EA4E8300699BA1 /* AddDeviceMainViewController.m */; };
 		E7AF4B4419EA4E8300699BA1 /* ScanQrCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF4AEE19EA4E8300699BA1 /* ScanQrCodeViewController.m */; };
 		E7AF4B4519EA4E8300699BA1 /* SearchDeviceInLanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF4AF019EA4E8300699BA1 /* SearchDeviceInLanViewController.m */; };
 		E7AF4B4619EA4E8300699BA1 /* AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF4AF319EA4E8300699BA1 /* AlertView.m */; };
@@ -1041,8 +1040,6 @@
 		E7AF49AA19EA3C0D00699BA1 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		E7AF4AE919EA4E8300699BA1 /* AddCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCameraViewController.h; sourceTree = "<group>"; };
 		E7AF4AEA19EA4E8300699BA1 /* AddCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddCameraViewController.m; sourceTree = "<group>"; };
-		E7AF4AEB19EA4E8300699BA1 /* AddDeviceMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddDeviceMainViewController.h; sourceTree = "<group>"; };
-		E7AF4AEC19EA4E8300699BA1 /* AddDeviceMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddDeviceMainViewController.m; sourceTree = "<group>"; };
 		E7AF4AED19EA4E8300699BA1 /* ScanQrCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanQrCodeViewController.h; sourceTree = "<group>"; };
 		E7AF4AEE19EA4E8300699BA1 /* ScanQrCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanQrCodeViewController.m; sourceTree = "<group>"; };
 		E7AF4AEF19EA4E8300699BA1 /* SearchDeviceInLanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchDeviceInLanViewController.h; sourceTree = "<group>"; };
@@ -2402,8 +2399,6 @@
 			children = (
 				E7AF4AE919EA4E8300699BA1 /* AddCameraViewController.h */,
 				E7AF4AEA19EA4E8300699BA1 /* AddCameraViewController.m */,
-				E7AF4AEB19EA4E8300699BA1 /* AddDeviceMainViewController.h */,
-				E7AF4AEC19EA4E8300699BA1 /* AddDeviceMainViewController.m */,
 				E7AF4AED19EA4E8300699BA1 /* ScanQrCodeViewController.h */,
 				E7AF4AEE19EA4E8300699BA1 /* ScanQrCodeViewController.m */,
 				E7AF4AEF19EA4E8300699BA1 /* SearchDeviceInLanViewController.h */,
@@ -3564,7 +3559,6 @@
 				3659F29818F4E2EA0043AEE3 /* AQRecorder.mm in Sources */,
 				3641E5EB18EBAC69005527C7 /* core.cpp in Sources */,
 				E7AF4B5B19EA4E8300699BA1 /* DeviceListViewController.m in Sources */,
-				E7AF4B4319EA4E8300699BA1 /* AddDeviceMainViewController.m in Sources */,
 				E7AF4BA119EA4F1C00699BA1 /* ZMUser.m in Sources */,
 				3659F29018F4E27E0043AEE3 /* g711.c in Sources */,
 				3641E5E318EBAC69005527C7 /* zsip.cpp in Sources */,
