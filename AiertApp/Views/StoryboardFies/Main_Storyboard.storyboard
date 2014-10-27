@@ -855,61 +855,6 @@
                                         <rect key="frame" x="0.0" y="100" width="320" height="1"/>
                                         <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GEb-gM-djX">
-                                        <rect key="frame" x="48" y="138" width="224" height="34"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <state key="normal" title=" [Scan QR code]" image="adddevice_botton_QR.png" backgroundImage="adddevice_botton.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted" image="adddevice_botton_QR.png" backgroundImage="adddevice_botton_pressed.png"/>
-                                    </button>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="[Enter camera ID]" minimumFontSize="17" background="adddevice_putfield.png" translatesAutoresizingMaskIntoConstraints="NO" id="2NG-hp-xvR" customClass="UITextFieldEx">
-                                        <rect key="frame" x="48" y="185" width="191" height="34"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad" returnKeyType="search"/>
-                                        <connections>
-                                            <action selector="cameraIdField_PressDone:" destination="yRQ-Iy-Jiz" eventType="editingDidEndOnExit" id="bBn-qK-XXe"/>
-                                        </connections>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BxO-PI-Qpr">
-                                        <rect key="frame" x="237" y="185" width="35" height="34"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <state key="normal" image="adddevice_botton_search.png" backgroundImage="adddevice_botton_search_bg.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted" image="adddevice_botton_search.png" backgroundImage="adddevice_botton_search_bg_pressed.png"/>
-                                        <connections>
-                                            <action selector="searchCameraIdButton_TouchUpInside:" destination="yRQ-Iy-Jiz" eventType="touchUpInside" id="Ea3-oW-jw0"/>
-                                        </connections>
-                                    </button>
-                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Error.png" translatesAutoresizingMaskIntoConstraints="NO" id="GdG-zo-Hoc">
-                                        <rect key="frame" x="48" y="235" width="14" height="14"/>
-                                    </imageView>
-                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="[Error Message]" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z1P-PC-Qs2">
-                                        <rect key="frame" x="70" y="231" width="202" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s78-dr-CGV">
-                                        <rect key="frame" x="237" y="185" width="35" height="34"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y7v-Xr-HvY">
-                                                <rect key="frame" x="0.0" y="0.0" width="35" height="34"/>
-                                                <state key="normal" backgroundImage="adddevice_botton_search_bg.png">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <state key="highlighted" backgroundImage="adddevice_botton_search_bg_pressed.png"/>
-                                            </button>
-                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="pZW-0h-2ZT">
-                                                <rect key="frame" x="8" y="7" width="20" height="20"/>
-                                                <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            </activityIndicatorView>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -945,15 +890,8 @@
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="activityIndicatorView" destination="pZW-0h-2ZT" id="SWq-1D-qYH"/>
-                        <outlet property="busyView" destination="s78-dr-CGV" id="a9q-PR-roE"/>
-                        <outlet property="cameraIdField" destination="2NG-hp-xvR" id="2Zr-KM-wKy"/>
-                        <outlet property="errorImageView" destination="GdG-zo-Hoc" id="cUr-M2-Bvi"/>
-                        <outlet property="errorLabel" destination="Z1P-PC-Qs2" id="fOJ-8u-R3d"/>
                         <outlet property="foundNoneDescriptionLabel" destination="aWC-Ud-N2z" id="eub-Zk-VZY"/>
                         <outlet property="refreshButton" destination="3Mh-iN-A9r" id="PTe-Ji-jO3"/>
-                        <outlet property="scanQrCodeButton" destination="GEb-gM-djX" id="NbT-WZ-b8N"/>
-                        <outlet property="searchCameraIdButton" destination="BxO-PI-Qpr" id="Vrd-Zs-tMz"/>
                         <outlet property="subView" destination="DJG-rg-ClY" id="jMm-wy-8A3"/>
                         <outlet property="tableView" destination="Ces-it-AYA" id="WcF-mI-g82"/>
                     </connections>
@@ -1775,12 +1713,7 @@
         <image name="Error.png" width="14" height="14"/>
         <image name="about_tabar@2x.png" width="29" height="29"/>
         <image name="adddevice_botton.png" width="219" height="34"/>
-        <image name="adddevice_botton_QR.png" width="22" height="22"/>
         <image name="adddevice_botton_pressed.png" width="219" height="34"/>
-        <image name="adddevice_botton_search.png" width="22" height="22"/>
-        <image name="adddevice_botton_search_bg.png" width="35" height="34"/>
-        <image name="adddevice_botton_search_bg_pressed.png" width="35" height="34"/>
-        <image name="adddevice_putfield.png" width="219" height="34"/>
         <image name="alarmblue-alarml.png" width="22" height="13"/>
         <image name="alarmblue-alarmv.png" width="22" height="13"/>
         <image name="alarmblue1.png" width="84" height="39"/>
