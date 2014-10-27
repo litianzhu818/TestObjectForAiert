@@ -6,6 +6,8 @@
 
 #define MARGIN_WIDTH 10.0f
 
+@protocol SearchDeviceInLanDelegate;
+
 @interface SearchDeviceInLanViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate ,PingLocalNetWorkProtocalDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *foundNoneDescriptionLabel;
@@ -27,8 +29,18 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
 
+@property (assign, nonatomic) id<SearchDeviceInLanDelegate> delegate;
+
 - (IBAction)background_TouchDown:(id)sender;
 - (IBAction)cameraIdField_PressDone:(id)sender;
 - (IBAction)refreshButton_TouchUpInside:(id)sender;
+
+@end
+
+@protocol SearchDeviceInLanDelegate <NSObject>
+
+@optional
+
+-(void)searchDeviceInLanController:(SearchDeviceInLanViewController *)controller didAddDevice:(AiertDeviceInfo *)device;
 
 @end

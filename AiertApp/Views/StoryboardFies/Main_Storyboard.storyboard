@@ -1608,7 +1608,7 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="这里输入名称" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FEp-S9-FOn">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="这里输入名称" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FEp-S9-FOn">
                                         <rect key="frame" x="122" y="20" width="138" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="Pvt-6c-MxF"/>
@@ -1710,9 +1710,12 @@
                                     <constraint firstItem="jpM-3F-rSK" firstAttribute="top" secondItem="2fY-Ag-L4B" secondAttribute="top" constant="20" id="9Rg-7m-fj8"/>
                                     <constraint firstItem="FEp-S9-FOn" firstAttribute="top" secondItem="2fY-Ag-L4B" secondAttribute="top" constant="20" id="EQ6-JU-QUE"/>
                                     <constraint firstItem="PGE-b3-mJF" firstAttribute="width" secondItem="Eu6-cr-7SE" secondAttribute="width" id="IEz-6a-vpk"/>
+                                    <constraint firstItem="4oK-os-5K5" firstAttribute="leading" secondItem="Fas-Z4-HHl" secondAttribute="trailing" constant="8" id="IRz-B3-7ow"/>
+                                    <constraint firstItem="FEp-S9-FOn" firstAttribute="leading" secondItem="Eu6-cr-7SE" secondAttribute="trailing" constant="8" id="IlH-Gp-JGT"/>
                                     <constraint firstItem="PJf-hf-ug6" firstAttribute="width" secondItem="COZ-Om-mX1" secondAttribute="width" id="LFa-ek-Kgl"/>
                                     <constraint firstAttribute="trailing" secondItem="PJf-hf-ug6" secondAttribute="trailing" constant="20" id="MNJ-9K-SMB"/>
                                     <constraint firstAttribute="bottom" secondItem="Qp2-2g-ehj" secondAttribute="bottom" constant="20" id="Nw9-VU-kaa"/>
+                                    <constraint firstItem="COZ-Om-mX1" firstAttribute="leading" secondItem="PGE-b3-mJF" secondAttribute="trailing" constant="8" id="TPZ-Dk-1QY"/>
                                     <constraint firstItem="x33-8P-fy1" firstAttribute="leading" secondItem="2fY-Ag-L4B" secondAttribute="leading" constant="20" id="XV8-MS-5CP"/>
                                     <constraint firstItem="Fas-Z4-HHl" firstAttribute="leading" secondItem="c5g-bl-iOQ" secondAttribute="trailing" constant="8" id="Y4e-SL-BH0"/>
                                     <constraint firstAttribute="trailing" secondItem="COZ-Om-mX1" secondAttribute="trailing" constant="20" id="am4-em-ROB"/>
@@ -1721,6 +1724,7 @@
                                     <constraint firstItem="8uz-g8-BpA" firstAttribute="leading" secondItem="x33-8P-fy1" secondAttribute="trailing" constant="8" id="eoC-za-Awx"/>
                                     <constraint firstAttribute="bottom" secondItem="COZ-Om-mX1" secondAttribute="bottom" constant="20" id="kPA-uq-4XY"/>
                                     <constraint firstItem="c5g-bl-iOQ" firstAttribute="leading" secondItem="2fY-Ag-L4B" secondAttribute="leading" constant="20" id="mHK-uv-UPK"/>
+                                    <constraint firstItem="PJf-hf-ug6" firstAttribute="leading" secondItem="8uz-g8-BpA" secondAttribute="trailing" constant="8" id="md1-kR-oEE"/>
                                     <constraint firstItem="PGE-b3-mJF" firstAttribute="width" secondItem="Fas-Z4-HHl" secondAttribute="width" id="oVR-Qi-eJL"/>
                                     <constraint firstItem="PJf-hf-ug6" firstAttribute="width" secondItem="4oK-os-5K5" secondAttribute="width" id="qu3-YW-0g9"/>
                                     <constraint firstItem="PJf-hf-ug6" firstAttribute="width" secondItem="FEp-S9-FOn" secondAttribute="width" id="sBI-kN-VSL"/>

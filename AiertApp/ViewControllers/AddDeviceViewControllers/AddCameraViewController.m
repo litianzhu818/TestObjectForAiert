@@ -7,8 +7,9 @@
 //
 
 #import "AddCameraViewController.h"
+#import "SearchDeviceInLanViewController.h"
 
-@interface AddCameraViewController ()
+@interface AddCameraViewController ()<SearchDeviceInLanDelegate>
 
 @end
 
@@ -86,11 +87,11 @@
     [self hidenKeyboard];
     
     if ([self checkUserInputData]) {
-        self.deviceInfo = [[AiertDeviceInfo alloc] initWithDeviceName:self.nameField.text
-                                                             deviceID:self.deviceIDField.text
-                                                             userName:self.userNameField.text
-                                                         userPassword:self.passwordField.text];
-        LOG(@"%@",self.deviceInfo);
+        [self.deviceInfo setDeviceName:self.nameField.text];
+        [self.deviceInfo setDeviceID:self.deviceIDField.text];
+        AiertUserInfo *userInfo = [[AiertUserInfo alloc] initWithUserName:self.userNameField.text userPassword:self.passwordField.text];
+        [self.deviceInfo setUserInfo:userInfo];
+        
         if (self.finishedBlock) {
             self.finishedBlock(self.deviceInfo);
         }
@@ -210,6 +211,7 @@
         if (deviceInfo.userInfo.userPassword) {
             [self.passwordField setText:deviceInfo.userInfo.userPassword];
         }
+        [self setDeviceInfo:deviceInfo];
     });
 }
 
@@ -285,6 +287,19 @@
             [self refreshUIWithDeviceInfo:deviceInfo];
         }];
     }
+    
+    if ([segue.identifier isEqualToString:@"SEARCH"]) {
+        SearchDeviceInLanViewController *controller = [segue destinationViewController];
+        [controller setDelegate:self];
+    }
+
+}
+
+#pragma mark -
+#pragma mark - searchDeviceInLanDelegate Methods
+- (void)searchDeviceInLanController:(SearchDeviceInLanViewController *)controller didAddDevice:(AiertDeviceInfo *)device
+{
+    [self refreshUIWithDeviceInfo:device];
 }
 
 

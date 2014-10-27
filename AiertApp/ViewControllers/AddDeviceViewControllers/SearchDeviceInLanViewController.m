@@ -282,6 +282,10 @@
     [btn setTitle:@"已添加" forState:UIControlStateNormal];
     [btn setEnabled:NO];
     [dictionary setValue:[NSNumber numberWithInt:1] forKey:@"deviceTag"];
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(searchDeviceInLanController:didAddDevice:)]) {
+        [_delegate searchDeviceInLanController:self didAddDevice:deviceInfo];
+    }
 }
 
 #pragma mark - Show and Hide Error

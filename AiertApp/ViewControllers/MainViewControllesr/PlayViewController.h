@@ -38,7 +38,7 @@
     BOOL   _showSomeMenu;
 }
 
-@property (strong, nonatomic) ZMDevice *device;
+@property (strong, nonatomic) AiertDeviceInfo *device;
 
 @property (weak, nonatomic) IBOutlet UILabel *cameraNameLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;

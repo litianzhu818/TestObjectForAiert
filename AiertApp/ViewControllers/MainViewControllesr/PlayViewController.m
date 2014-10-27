@@ -74,15 +74,15 @@
     _enableSound = NO;
     _enableMicrophone = NO;
     
-    [self.livePageControl setNumberOfPages:self.device.channelCount];
+    [self.livePageControl setNumberOfPages:self.device.deviceAdditionInfo.videoNum];
     
-    if (1 == self.device.channelCount) {
+    if (1 == self.device.deviceAdditionInfo.videoNum) {
         [self.livePageControl setHidden:YES];
     }
     
     [self.scrollView setBackgroundColor:[UIColor blackColor]];
     self.scrollView.pagingEnabled = YES;
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.device.channelCount,
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.device.deviceAdditionInfo.videoNum,
                                              self.scrollView.frame.size.height);
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
@@ -90,9 +90,9 @@
 
     self.scrollView.delegate = self;
     
-    self.views = [[NSMutableArray alloc] initWithCapacity:self.device.channelCount];
+    self.views = [[NSMutableArray alloc] initWithCapacity:self.device.deviceAdditionInfo.videoNum];
     
-    for (int i=0; i<self.device.channelCount; ++i) {
+    for (int i=0; i<self.device.deviceAdditionInfo.videoNum; ++i) {
         
         DisplayImageView *view = [[DisplayImageView alloc] initWithFrame:CGRectOffset(self.scrollView.frame,
                                                                                       self.scrollView.frame.size.width * i,
@@ -133,10 +133,10 @@
                                                   streamObserver:self];
     
    
-    [[LibCoreWrap sharedCore] startRealPlayWithDeviceId:self.device.deviceId
+    [[LibCoreWrap sharedCore] startRealPlayWithDeviceId:self.device.deviceID
                                                 channel:_currentChannel
                                               mediaType:VideoQualityTypeLD
-                                               password:self.device.password
+                                               password:self.device.userInfo.userPassword
                                                 timeout:0];
     
     
@@ -248,7 +248,7 @@
         
         //liveInfomationHolderView
         float liveInfomationHolderView_height = kLiveInfoHolderView_HorizontalScreenHeight;
-        if (self.device.channelCount > 1) {
+        if (self.device.deviceAdditionInfo.videoNum > 1) {
             liveInfomationHolderView_height = kBottomLiveBkView_HorizontalScreenHeightWithPageCtrl - origY;
         }
         float liveInfomationHolderView_OrgY = self.bkView.bounds.size.height - playBottomView_height - liveInfomationHolderView_height - origY;
@@ -308,7 +308,7 @@
 {
     if (page < 0)
         return;
-    if (page >= self.device.channelCount)
+    if (page >= self.device.deviceAdditionInfo.videoNum)
         return;
     
     UIView *view = [self.views objectAtIndex:page];
@@ -386,7 +386,7 @@
                                                            channel:0
                                                     streamObserver:self];
     
-    [[LibCoreWrap sharedCore] stopRealPlayWithDeviceId:self.device.deviceId
+    [[LibCoreWrap sharedCore] stopRealPlayWithDeviceId:self.device.deviceID
                                                channel:_currentChannel];
     
     [AppData resetCameraState];
@@ -405,13 +405,13 @@
             [AudioStreamer startPlayAudio];
         }else
         {
-            [[LibCoreWrap sharedCore] openSoundWithDeviceId:self.device.deviceId channel:_currentChannel];
+            [[LibCoreWrap sharedCore] openSoundWithDeviceId:self.device.deviceID channel:_currentChannel];
         }
 
     }else
     {
         [AudioStreamer stopPlayAudio];
-        [[LibCoreWrap sharedCore] closeSoundWithDeviceId:self.device.deviceId channel:_currentChannel];
+        [[LibCoreWrap sharedCore] closeSoundWithDeviceId:self.device.deviceID channel:_currentChannel];
     }
     
     
@@ -513,7 +513,7 @@
         if (viewController) {
             //TODO Set Device Name
             //Test
-            viewController.deviceId = self.device.deviceId;
+            viewController.deviceId = self.device.deviceID;
         }
     }
 }
@@ -625,7 +625,7 @@
             
             currentDateTime = [NSString stringWithFormat:@"%@%@",date,[self timeFromVideoFrame]];
             
-            self.fileIndexItem = [[ZMRecorderFileIndex alloc] initWithRecordDeviceId:self.device.deviceId
+            self.fileIndexItem = [[ZMRecorderFileIndex alloc] initWithRecordDeviceId:self.device.deviceID
                                                                              channel:self.currentChannel
                                                                            startTime:currentDateTime
                                                                        fileExtension:@"h264"
@@ -812,7 +812,7 @@
             }
             
             if ([ZMRecorderFileIndexManage saveScreenShotImage:image 
-                                                      deviceId:self.device.deviceId 
+                                                      deviceId:self.device.deviceID
                                                        channel:_currentChannel]) {
                 [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Grab Image OK",
                                                                        @"Grab Image OK")];
@@ -842,7 +842,7 @@
 - (void)didLongPressBeganInPlayBottomView:(id)aData Tag:(NSInteger)aTag {
     if (self.enableMicrophone) {
         self.talkImageView.alpha = 1.0;
-        [[LibCoreWrap sharedCore] startTalkWithDeviceId:self.device.deviceId
+        [[LibCoreWrap sharedCore] startTalkWithDeviceId:self.device.deviceID
                                                 channel:_currentChannel];
     }
     
@@ -851,7 +851,7 @@
 - (void)didLongPressEndInPlayBottomView:(id)aData Tag:(NSInteger)aTag {
     if (self.enableMicrophone) {
         self.talkImageView.alpha = 0.0;
-        [[LibCoreWrap sharedCore] stopTalkWithDeviceId:self.device.deviceId
+        [[LibCoreWrap sharedCore] stopTalkWithDeviceId:self.device.deviceID
                                                channel:_currentChannel];
     }
 }

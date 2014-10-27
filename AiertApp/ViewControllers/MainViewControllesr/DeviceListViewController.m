@@ -257,9 +257,8 @@
         return;
     }
     
-    AiertDeviceInfo *device1 = [[AiertDeviceInfo alloc] initWithDeviceCoraDataObject:deviceInfo];
     
-    ZMDevice *device = [[ZMDevice alloc] initWithDeviceId:deviceInfo.deviceID password:deviceInfo.userPassword deviceName:deviceInfo.deviceName channelCount:deviceInfo.deviceAdditionInfo.videoNum];
+    AiertDeviceInfo *device = [[AiertDeviceInfo alloc] initWithDeviceCoraDataObject:deviceInfo];
 
     [self performSegueWithIdentifier:@"DeviceList2Play"
                               sender:device];
@@ -353,7 +352,7 @@
     //TODO:这里根据得到的index做相应处理
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:btn.tag inSection:0];
     AiertDeviceCoreDataStorageObject *device = [self.fetchedResultsController_device objectAtIndexPath:indexPath];
-    LOG(@"%@",device.deviceAdditionInfo.hardWareVersion);
+//    LOG(@"%@",device.deviceAdditionInfo.hardWareVersion);
     AiertDeviceInfo *deviceInfo = [[AiertDeviceInfo alloc] initWithDeviceCoraDataObject:device];
     [self performSegueWithIdentifier:@"device_edit" sender:deviceInfo];
     
