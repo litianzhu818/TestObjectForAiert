@@ -104,6 +104,7 @@
     [aCoder encodeObject:self.serialNumber forKey:@"serialNumber"];
     [aCoder encodeObject:self.hardWareVersion forKey:@"hardWareVersion"];
     [aCoder encodeObject:self.softWareVersion forKey:@"softWareVersion"];
+    
     [aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.self.port] forKey:@"port"];
     [aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.deviceType] forKey:@"deviceType"];
     [aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.videoNum] forKey:@"videoNum"];
