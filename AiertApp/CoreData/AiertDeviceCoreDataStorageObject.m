@@ -127,7 +127,7 @@
     newDevice.deviceStatus = [dic objectForKey:@"deviceStatus"];
     newDevice.userName = [dic objectForKey:@"userName"];
     newDevice.userPassword = [dic objectForKey:@"userPassword"];
-    newDevice.deviceAdditionInfo = [dic objectForKey:@"eviceAdditionInfo"];
+    newDevice.deviceAdditionInfo = [dic objectForKey:@"deviceAdditionInfo"];
     
     return newDevice;
 }

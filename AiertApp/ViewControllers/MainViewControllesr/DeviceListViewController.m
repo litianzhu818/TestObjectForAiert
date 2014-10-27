@@ -353,6 +353,7 @@
     //TODO:这里根据得到的index做相应处理
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:btn.tag inSection:0];
     AiertDeviceCoreDataStorageObject *device = [self.fetchedResultsController_device objectAtIndexPath:indexPath];
+    LOG(@"%@",device.deviceAdditionInfo.hardWareVersion);
     AiertDeviceInfo *deviceInfo = [[AiertDeviceInfo alloc] initWithDeviceCoraDataObject:device];
     [self performSegueWithIdentifier:@"device_edit" sender:deviceInfo];
     

@@ -86,6 +86,7 @@
         self.deviceName = object.deviceName;
         self.deviceStatus = [[object deviceStatus] intValue];
         self.userInfo = [[AiertUserInfo alloc] initWithUserName:object.userName userPassword:object.userPassword];
+        self.deviceAdditionInfo = object.deviceAdditionInfo;
         if (self.deviceStatus == DeviceStatusOnline) {
             self.isONLine = YES;
         }else{
