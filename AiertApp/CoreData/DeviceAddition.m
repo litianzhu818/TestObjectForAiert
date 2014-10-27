@@ -101,19 +101,19 @@
     //Here is a sample for using the NScoding method
     //Add your code here
     [aCoder encodeObject:self.IP forKey:@"IP"];
-    [aCoder encodeObject:[NSNumber numberWithInteger:self.self.port] forKey:@"port"];
-    [aCoder encodeObject:[NSNumber numberWithInteger:self.deviceType] forKey:@"deviceType"];
     [aCoder encodeObject:self.serialNumber forKey:@"serialNumber"];
-    [aCoder encodeObject:[NSNumber numberWithInteger:self.hardWareVersion] forKey:@"hardWareVersion"];
-    [aCoder encodeObject:[NSNumber numberWithInteger:self.softWareVersion] forKey:@"softWareVersion"];
-    [aCoder encodeObject:[NSNumber numberWithInteger:self.videoNum] forKey:@"videoNum"];
-    [aCoder encodeObject:[NSNumber numberWithInteger:self.audioNum] forKey:@"audioNum"];
-    [aCoder encodeObject:[NSNumber numberWithInteger:self.alarmInNum] forKey:@"alarmInNum"];
-    [aCoder encodeObject:[NSNumber numberWithInteger:self.alarmOutNum] forKey:@"alarmOutNum"];
-    [aCoder encodeObject:[NSNumber numberWithInteger:self.supportAudioTalk] forKey:@"supportAudioTalk"];
-    [aCoder encodeObject:[NSNumber numberWithInteger:self.supportStore] forKey:@"supportStore"];
-    [aCoder encodeObject:[NSNumber numberWithInteger:self.supportWiFi] forKey:@"supportWiFi"];
-    [aCoder encodeObject:[NSNumber numberWithInteger:self.resver] forKey:@"resver"];
+    [aCoder encodeObject:self.hardWareVersion forKey:@"hardWareVersion"];
+    [aCoder encodeObject:self.softWareVersion forKey:@"softWareVersion"];
+    [aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.self.port] forKey:@"port"];
+    [aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.deviceType] forKey:@"deviceType"];
+    [aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.videoNum] forKey:@"videoNum"];
+    [aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.audioNum] forKey:@"audioNum"];
+    [aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.alarmInNum] forKey:@"alarmInNum"];
+    [aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.alarmOutNum] forKey:@"alarmOutNum"];
+    [aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.supportAudioTalk] forKey:@"supportAudioTalk"];
+    [aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.supportStore] forKey:@"supportStore"];
+    [aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.supportWiFi] forKey:@"supportWiFi"];
+    [aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.resver] forKey:@"resver"];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -122,19 +122,20 @@
         //Here is a sample for using the NScoding method
         //Add your code here
         self.IP = [aDecoder decodeObjectForKey:@"IP"];
-        self.port = [((NSNumber *)[aDecoder decodeObjectForKey:@"port"]) integerValue];
-        self.deviceType = [((NSNumber *)[aDecoder decodeObjectForKey:@"deviceType"]) integerValue];
         self.serialNumber = [aDecoder decodeObjectForKey:@"serialNumber"];
         self.hardWareVersion = [aDecoder decodeObjectForKey:@"hardWareVersion"];
         self.softWareVersion = [aDecoder decodeObjectForKey:@"softWareVersion"];
-        self.videoNum = [((NSNumber *)[aDecoder decodeObjectForKey:@"videoNum"]) integerValue];
-        self.audioNum = [((NSNumber *)[aDecoder decodeObjectForKey:@"audioNum"]) integerValue];
-        self.alarmInNum = [((NSNumber *)[aDecoder decodeObjectForKey:@"alarmInNum"]) integerValue];
-        self.alarmOutNum = [((NSNumber *)[aDecoder decodeObjectForKey:@"alarmOutNum"]) integerValue];
-        self.supportAudioTalk = [((NSNumber *)[aDecoder decodeObjectForKey:@"supportAudioTalk"]) integerValue];
-        self.supportStore = [((NSNumber *)[aDecoder decodeObjectForKey:@"supportStore"]) integerValue];
-        self.supportWiFi = [((NSNumber *)[aDecoder decodeObjectForKey:@"supportWiFi"]) integerValue];
-        self.resver = [((NSNumber *)[aDecoder decodeObjectForKey:@"resver"]) integerValue];
+
+        self.port = [((NSNumber *)[aDecoder decodeObjectForKey:@"port"]) unsignedIntegerValue];
+        self.deviceType = [((NSNumber *)[aDecoder decodeObjectForKey:@"deviceType"]) unsignedIntegerValue];
+        self.videoNum = [((NSNumber *)[aDecoder decodeObjectForKey:@"videoNum"]) unsignedIntegerValue];
+        self.audioNum = [((NSNumber *)[aDecoder decodeObjectForKey:@"audioNum"]) unsignedIntegerValue];
+        self.alarmInNum = [((NSNumber *)[aDecoder decodeObjectForKey:@"alarmInNum"]) unsignedIntegerValue];
+        self.alarmOutNum = [((NSNumber *)[aDecoder decodeObjectForKey:@"alarmOutNum"]) unsignedIntegerValue];
+        self.supportAudioTalk = [((NSNumber *)[aDecoder decodeObjectForKey:@"supportAudioTalk"]) unsignedIntegerValue];
+        self.supportStore = [((NSNumber *)[aDecoder decodeObjectForKey:@"supportStore"]) unsignedIntegerValue];
+        self.supportWiFi = [((NSNumber *)[aDecoder decodeObjectForKey:@"supportWiFi"]) unsignedIntegerValue];
+        self.resver = [((NSNumber *)[aDecoder decodeObjectForKey:@"resver"]) unsignedIntegerValue];
     }
     return  self;
 }

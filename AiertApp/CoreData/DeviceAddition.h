@@ -9,14 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "AiertProtocol.h"
 
-@interface DeviceAddition : NSObject<NSCopying, NSCoding>
+@interface DeviceAddition : NSObject<NSCoding ,NSCopying>
 
 @property (strong, nonatomic) NSString *IP;//设备ip
-@property (assign, nonatomic) NSInteger port;//设备port
-@property (assign, nonatomic) NSInteger deviceType;//设备类型
 @property (strong, nonatomic) NSString *serialNumber;//设备Mac地址32位
 @property (strong, nonatomic) NSString *hardWareVersion;//硬件版本
 @property (strong, nonatomic) NSString *softWareVersion;//软件版本
+@property (assign, nonatomic) NSUInteger port;//设备port
+@property (assign, nonatomic) NSUInteger deviceType;//设备类型
 @property (assign, nonatomic) NSUInteger videoNum;//视频通道数
 @property (assign, nonatomic) NSUInteger audioNum;//音频通道数
 @property (assign, nonatomic) NSUInteger alarmInNum;//报警输入
