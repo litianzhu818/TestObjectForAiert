@@ -353,6 +353,7 @@
 		E77FBDBE19CEC74A00D1698C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E77FBDBD19CEC74A00D1698C /* AudioToolbox.framework */; };
 		E77FBDC019CEC75900D1698C /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E77FBDBF19CEC75900D1698C /* CFNetwork.framework */; };
 		E7927B5819CEA09400588FB5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E7927B5719CEA09400588FB5 /* libz.dylib */; };
+		E7AE674819FF2B66008546EA /* PlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AE674719FF2B66008546EA /* PlayViewController.m */; };
 		E7AF49AB19EA3C0D00699BA1 /* CoreDataStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF49A319EA3C0D00699BA1 /* CoreDataStorage.m */; };
 		E7AF49AC19EA3C0D00699BA1 /* GCDMulticastDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF49A719EA3C0D00699BA1 /* GCDMulticastDelegate.m */; };
 		E7AF49AD19EA3C0D00699BA1 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF49AA19EA3C0D00699BA1 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -380,7 +381,6 @@
 		E7AF4B5C19EA4E8300699BA1 /* DeviceSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF4B2019EA4E8300699BA1 /* DeviceSettingTableViewController.m */; };
 		E7AF4B5D19EA4E8300699BA1 /* DeviceWifiSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF4B2219EA4E8300699BA1 /* DeviceWifiSettingTableViewController.m */; };
 		E7AF4B5E19EA4E8300699BA1 /* InputDeviceInfoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF4B2419EA4E8300699BA1 /* InputDeviceInfoTableViewController.m */; };
-		E7AF4B6019EA4E8300699BA1 /* PlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF4B2919EA4E8300699BA1 /* PlayViewController.m */; };
 		E7AF4B6119EA4E8300699BA1 /* MoreTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF4B2C19EA4E8300699BA1 /* MoreTableViewController.m */; };
 		E7AF4B6219EA4E8300699BA1 /* TermOfServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF4B2F19EA4E8300699BA1 /* TermOfServiceViewController.m */; };
 		E7AF4B6319EA4E8300699BA1 /* TermOfServiceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7AF4B3019EA4E8300699BA1 /* TermOfServiceViewController.xib */; };
@@ -1031,6 +1031,8 @@
 		E77FBDBD19CEC74A00D1698C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		E77FBDBF19CEC75900D1698C /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		E7927B5719CEA09400588FB5 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		E7AE674619FF2B66008546EA /* PlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayViewController.h; sourceTree = "<group>"; };
+		E7AE674719FF2B66008546EA /* PlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayViewController.m; sourceTree = "<group>"; };
 		E7AF49A219EA3C0D00699BA1 /* CoreDataStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataStorage.h; sourceTree = "<group>"; };
 		E7AF49A319EA3C0D00699BA1 /* CoreDataStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataStorage.m; sourceTree = "<group>"; };
 		E7AF49A419EA3C0D00699BA1 /* CoreDataStorageProtected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataStorageProtected.h; sourceTree = "<group>"; };
@@ -1084,8 +1086,6 @@
 		E7AF4B2219EA4E8300699BA1 /* DeviceWifiSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceWifiSettingTableViewController.m; sourceTree = "<group>"; };
 		E7AF4B2319EA4E8300699BA1 /* InputDeviceInfoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputDeviceInfoTableViewController.h; sourceTree = "<group>"; };
 		E7AF4B2419EA4E8300699BA1 /* InputDeviceInfoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputDeviceInfoTableViewController.m; sourceTree = "<group>"; };
-		E7AF4B2819EA4E8300699BA1 /* PlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayViewController.h; sourceTree = "<group>"; };
-		E7AF4B2919EA4E8300699BA1 /* PlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayViewController.m; sourceTree = "<group>"; };
 		E7AF4B2B19EA4E8300699BA1 /* MoreTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreTableViewController.h; sourceTree = "<group>"; };
 		E7AF4B2C19EA4E8300699BA1 /* MoreTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreTableViewController.m; sourceTree = "<group>"; };
 		E7AF4B2E19EA4E8300699BA1 /* TermOfServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TermOfServiceViewController.h; sourceTree = "<group>"; };
@@ -2465,8 +2465,6 @@
 				E7AF4B2219EA4E8300699BA1 /* DeviceWifiSettingTableViewController.m */,
 				E7AF4B2319EA4E8300699BA1 /* InputDeviceInfoTableViewController.h */,
 				E7AF4B2419EA4E8300699BA1 /* InputDeviceInfoTableViewController.m */,
-				E7AF4B2819EA4E8300699BA1 /* PlayViewController.h */,
-				E7AF4B2919EA4E8300699BA1 /* PlayViewController.m */,
 				E7E3055019ECC2E100F80D06 /* AlarmViewController.h */,
 				E7E3055119ECC2E100F80D06 /* AlarmViewController.m */,
 				E7E3055319ECC3F700F80D06 /* PictureViewController.h */,
@@ -2892,6 +2890,8 @@
 		E7B186BC19EE471B0091685F /* VideoPlayerViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E7AE674619FF2B66008546EA /* PlayViewController.h */,
+				E7AE674719FF2B66008546EA /* PlayViewController.m */,
 				E7B186BD19EE47420091685F /* VideoPlayerViewController.h */,
 				E7B186BE19EE47420091685F /* VideoPlayerViewController.m */,
 			);
@@ -3640,7 +3640,6 @@
 				358500631889BCA500EED5CC /* SevenSwitch.m in Sources */,
 				E7AF4B6719EA4E8300699BA1 /* PlayVideoAndImageViewController.m in Sources */,
 				3641E65718EC1091005527C7 /* PullTableView.m in Sources */,
-				E7AF4B6019EA4E8300699BA1 /* PlayViewController.m in Sources */,
 				E7AF4B5D19EA4E8300699BA1 /* DeviceWifiSettingTableViewController.m in Sources */,
 				352E2F7C1887EBD3009324A3 /* CXAlertView.m in Sources */,
 				3641E63418EC035A005527C7 /* SDWebImageDownloader.m in Sources */,
@@ -3667,6 +3666,7 @@
 				E7AF4C3D19EA507300699BA1 /* RootTabBar.m in Sources */,
 				E7E3055519ECC3F700F80D06 /* PictureViewController.m in Sources */,
 				E7AF4B5C19EA4E8300699BA1 /* DeviceSettingTableViewController.m in Sources */,
+				E7AE674819FF2B66008546EA /* PlayViewController.m in Sources */,
 				E7AF49AD19EA3C0D00699BA1 /* JSONKit.m in Sources */,
 				E7AF4BB119EA4FEA00699BA1 /* ZSWebInterface.m in Sources */,
 				352E2F7A1887EBD3009324A3 /* CXAlertButtonContainerView.m in Sources */,

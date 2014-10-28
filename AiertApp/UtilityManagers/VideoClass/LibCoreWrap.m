@@ -116,36 +116,30 @@
 - (int)startRealPlayWithDeviceId:(NSString *)device_id
                          channel:(NSInteger)channel
                        mediaType:(NSInteger)media_type
+                        userName:(NSString *)username
                         password:(NSString *)password
                          timeout:(NSInteger)timeout
 {
     
     [AppData addCameraState:CameraStateActive];
+    self.userName = username;
     self.currentDeviceId = device_id;
     self.password = password;
     self.currentChannel = channel;
     self.currentMediaType = media_type;
 
-    /*
+    
     dispatch_group_async(_group, _streamQueue, ^{
-        [self.p2pConnection isUPNPSupport:device_id];
+        [self connetToLocalDevice];
     });
-     */
+    
 #warning The testMethod
-    [self testmethod1];
+    [self loginWithDeviceId:self.currentDeviceId channel:self.currentChannel userName:self.userName password:self.password];
 
     return 0;
 }
-/**
- *  This is the test methods
- */
-//MARK:测试方法1...
--(void)testmethod1
-{
-    [self.zspConnection loginWithUserName:@"admin" password:@"111111"];
-}
 //MARK:测试方法2...
--(void)testMethod2
+-(void)playWithLocalDevice
 {
     __weak LibCoreWrap *tempSelf = self;
     
@@ -451,7 +445,10 @@
                  channel:(NSInteger)channel
                 userName:(NSString *)username
                 password:(NSString *)password
+                deviceIP:(NSString *)deviceIP
+              devicePort:(NSUInteger)port
 {
+    [self.zspConnection loginWithUserName:username password:password deviceIP:deviceIP devicePort:port];
     return 0;
     
 }
@@ -671,7 +668,7 @@
     [AppData addCameraState:CameraStateLogin];
 
     //FIXME:这里的测试方法2需要去掉
-    [self testMethod2];
+    [self playWithLocalDevice];
 }
 
 - (void)didReadAudioResponse:(NSInteger)code

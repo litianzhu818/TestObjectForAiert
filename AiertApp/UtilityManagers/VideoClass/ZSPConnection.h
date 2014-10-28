@@ -11,7 +11,9 @@
 
 
 - (void)loginWithUserName:(NSString *)userName
-                 password:(NSString *)password;
+                 password:(NSString *)password
+                 deviceIP:(NSString *)ip
+               devicePort:(NSUInteger)port;
 
 - (void)startDisplayWithDeviceIp:(NSString *)deviceIp
                             port:(NSInteger)port

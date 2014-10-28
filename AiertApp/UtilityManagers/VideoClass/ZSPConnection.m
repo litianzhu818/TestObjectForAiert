@@ -245,12 +245,14 @@ typedef struct LOGIN_INFO
 //MARK:这里是登录方法
 //TODO:找到问题
 - (void)loginWithUserName:(NSString *)userName
-                 password:(NSString *)password;
+                 password:(NSString *)password
+                 deviceIP:(NSString *)ip
+               devicePort:(NSUInteger)port
 {
-    _currentMediaType = 1;
-    self.currentChannel = 1;
-    self.deviceIp = @"192.168.0.102";
-    self.port = 8000;
+//    _currentMediaType = 1;
+//    self.currentChannel = 1;
+    self.deviceIp = ip;
+    self.port = port;
     _bLocalConnection = YES;
     
     self.userName = userName;
