@@ -39,6 +39,7 @@
 - (int)startRealPlayWithDeviceId:(NSString *)device_id
                          channel:(NSInteger)channel
                        mediaType:(NSInteger)media_type
+                        userName:(NSString *)username
                         password:(NSString *)password
                          timeout:(NSInteger)timeout;
 

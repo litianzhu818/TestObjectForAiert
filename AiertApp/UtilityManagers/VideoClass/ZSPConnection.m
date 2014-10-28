@@ -195,6 +195,53 @@ typedef struct LOGIN_INFO
     
 }
 
+- (void)startDisplayWithLocalchannel:(NSInteger)channel
+                           mediaType:(NSInteger)mediaType
+                       isLocalDevice:(BOOL)bLocal
+{
+  
+    _currentMediaType = mediaType;
+    self.currentChannel = channel;
+    _bLocalConnection = bLocal;
+    
+    DLog(@"startDisplay !");
+    
+    _asyncSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_current_queue()];
+    
+    NSError *err = nil;
+    
+    if (!self.deviceIp || self.port == 0) {
+        return;
+    }
+    
+    if (![_asyncSocket connectToHost:self.deviceIp
+                              onPort:self.port
+                         withTimeout:CONNECT_TIMEOUT_INTERVAL
+                               error:&err]) // Asynchronous!
+    {
+        // If there was an error, it's likely something like "already connected" or "no delegate set"
+        DLog(@"erro");
+    }
+    
+    if (VideoQualityTypeLD == mediaType) {
+        [self composeHeadPacketWithCommand:CMD_START_SUBVIDEO];//流畅视频
+    }else if (VideoQualityTypeSD == mediaType)
+    {
+        [self composeHeadPacketWithCommand:CMD_START_VIDEO];
+    }else if (VideoQualityTypeHD == mediaType)
+    {
+        [self composeHeadPacketWithCommand:CMD_START_720P];
+    }
+    
+    
+    // Send connect info
+    [_asyncSocket writeData:self.headData withTimeout:-1 tag:2];
+    
+    // receive header packet
+    [_asyncSocket readDataToLength:16 withTimeout:TAG_READ_VIDEO_TIMOUT_INTERVAL tag:TAG_VIDEO_HEADER];
+}
+
+
 - (void)startDisplayWithDeviceIp:(NSString *)deviceIp
                             port:(NSInteger)port
                          channel:(NSInteger)channel

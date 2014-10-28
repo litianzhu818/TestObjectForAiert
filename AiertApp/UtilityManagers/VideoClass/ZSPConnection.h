@@ -15,6 +15,11 @@
                  deviceIP:(NSString *)ip
                devicePort:(NSUInteger)port;
 
+- (void)startDisplayWithLocalchannel:(NSInteger)channel
+                           mediaType:(NSInteger)mediaType
+                       isLocalDevice:(BOOL)bLocal;
+
+
 - (void)startDisplayWithDeviceIp:(NSString *)deviceIp
                             port:(NSInteger)port
                          channel:(NSInteger)channel
