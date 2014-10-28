@@ -182,11 +182,6 @@ withFilterContext:(id)filterContext
         deviceID = [self getUUIDString];
 #endif
     }
-//???:这里需要验证对不对
-    if (![Utilities checkRegFormat:deviceID patternString:kRegDeviceIdFormat]) {
-        return;
-    }
-
     
     AiertDeviceInfo *device = [[AiertDeviceInfo alloc] initWithDeviceName:[NSString stringWithUTF8String:deviceInfo.typeDeviceInfo.DeviceName] deviceID:deviceID userInfo:nil];
     
