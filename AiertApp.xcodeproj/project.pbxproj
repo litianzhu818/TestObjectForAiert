@@ -354,7 +354,6 @@
 		E77FBDC019CEC75900D1698C /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E77FBDBF19CEC75900D1698C /* CFNetwork.framework */; };
 		E7927B5819CEA09400588FB5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E7927B5719CEA09400588FB5 /* libz.dylib */; };
 		E7AE674819FF2B66008546EA /* PlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AE674719FF2B66008546EA /* PlayViewController.m */; };
-		E7AF49AB19EA3C0D00699BA1 /* CoreDataStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF49A319EA3C0D00699BA1 /* CoreDataStorage.m */; };
 		E7AF49AC19EA3C0D00699BA1 /* GCDMulticastDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF49A719EA3C0D00699BA1 /* GCDMulticastDelegate.m */; };
 		E7AF49AD19EA3C0D00699BA1 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF49AA19EA3C0D00699BA1 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E7AF4B4219EA4E8300699BA1 /* AddCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF4AEA19EA4E8300699BA1 /* AddCameraViewController.m */; };
@@ -459,6 +458,16 @@
 		E7AF4C4D19EA50AA00699BA1 /* PlayBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF4C4C19EA50AA00699BA1 /* PlayBottomView.m */; };
 		E7AF4C5019EA54F300699BA1 /* AiertDeviceCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF4C4F19EA54F300699BA1 /* AiertDeviceCoreDataManager.m */; };
 		E7B186BF19EE47420091685F /* VideoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B186BE19EE47420091685F /* VideoPlayerViewController.m */; };
+		E7BD7FF21A01D50100D05815 /* libIOTCAPIs_ALL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7BD7FE91A01D50100D05815 /* libIOTCAPIs_ALL.a */; };
+		E7BD7FF31A01D50100D05815 /* libIOTCAPIs_ALLT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7BD7FEA1A01D50100D05815 /* libIOTCAPIs_ALLT.a */; };
+		E7BD7FF41A01D50100D05815 /* libIOTCAPIs_P2PTunnel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7BD7FEB1A01D50100D05815 /* libIOTCAPIs_P2PTunnel.a */; };
+		E7BD7FF51A01D50100D05815 /* libIOTCAPIs_P2PTunnelT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7BD7FEC1A01D50100D05815 /* libIOTCAPIs_P2PTunnelT.a */; };
+		E7BD7FF61A01D50100D05815 /* libIOTCAPIs_ALL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7BD7FEE1A01D50100D05815 /* libIOTCAPIs_ALL.a */; };
+		E7BD7FF71A01D50100D05815 /* libIOTCAPIs_ALLT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7BD7FEF1A01D50100D05815 /* libIOTCAPIs_ALLT.a */; };
+		E7BD7FF81A01D50100D05815 /* libIOTCAPIs_P2PTunnel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7BD7FF01A01D50100D05815 /* libIOTCAPIs_P2PTunnel.a */; };
+		E7BD7FF91A01D50100D05815 /* libIOTCAPIs_P2PTunnelT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7BD7FF11A01D50100D05815 /* libIOTCAPIs_P2PTunnelT.a */; };
+		E7BD7FFC1A01D5D600D05815 /* Client.m in Sources */ = {isa = PBXBuildFile; fileRef = E7BD7FFA1A01D5D600D05815 /* Client.m */; };
+		E7BD80271A01DE2C00D05815 /* libCoreDataStorage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7BD80261A01DE2C00D05815 /* libCoreDataStorage.a */; };
 		E7E3054019ECB94900F80D06 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E3052F19ECB94900F80D06 /* libavcodec.a */; };
 		E7E3054119ECB94900F80D06 /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E3053019ECB94900F80D06 /* libavdevice.a */; };
 		E7E3054219ECB94900F80D06 /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E3053119ECB94900F80D06 /* libavfilter.a */; };
@@ -1033,9 +1042,6 @@
 		E7927B5719CEA09400588FB5 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		E7AE674619FF2B66008546EA /* PlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayViewController.h; sourceTree = "<group>"; };
 		E7AE674719FF2B66008546EA /* PlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayViewController.m; sourceTree = "<group>"; };
-		E7AF49A219EA3C0D00699BA1 /* CoreDataStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataStorage.h; sourceTree = "<group>"; };
-		E7AF49A319EA3C0D00699BA1 /* CoreDataStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataStorage.m; sourceTree = "<group>"; };
-		E7AF49A419EA3C0D00699BA1 /* CoreDataStorageProtected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataStorageProtected.h; sourceTree = "<group>"; };
 		E7AF49A619EA3C0D00699BA1 /* GCDMulticastDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDMulticastDelegate.h; sourceTree = "<group>"; };
 		E7AF49A719EA3C0D00699BA1 /* GCDMulticastDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDMulticastDelegate.m; sourceTree = "<group>"; };
 		E7AF49A919EA3C0D00699BA1 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
@@ -1236,6 +1242,26 @@
 		E7AF4C4F19EA54F300699BA1 /* AiertDeviceCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AiertDeviceCoreDataManager.m; sourceTree = "<group>"; };
 		E7B186BD19EE47420091685F /* VideoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPlayerViewController.h; sourceTree = "<group>"; };
 		E7B186BE19EE47420091685F /* VideoPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoPlayerViewController.m; sourceTree = "<group>"; };
+		E7BD7FE11A01D50100D05815 /* AVAPIs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVAPIs.h; sourceTree = "<group>"; };
+		E7BD7FE21A01D50100D05815 /* AVFRAMEINFO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVFRAMEINFO.h; sourceTree = "<group>"; };
+		E7BD7FE31A01D50100D05815 /* AVIOCTRLDEFs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVIOCTRLDEFs.h; sourceTree = "<group>"; };
+		E7BD7FE41A01D50100D05815 /* IOTCAPIs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOTCAPIs.h; sourceTree = "<group>"; };
+		E7BD7FE51A01D50100D05815 /* P2PTunnelAPIs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = P2PTunnelAPIs.h; sourceTree = "<group>"; };
+		E7BD7FE61A01D50100D05815 /* platform_Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platform_Config.h; sourceTree = "<group>"; };
+		E7BD7FE71A01D50100D05815 /* RDTAPIs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDTAPIs.h; sourceTree = "<group>"; };
+		E7BD7FE91A01D50100D05815 /* libIOTCAPIs_ALL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIOTCAPIs_ALL.a; sourceTree = "<group>"; };
+		E7BD7FEA1A01D50100D05815 /* libIOTCAPIs_ALLT.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIOTCAPIs_ALLT.a; sourceTree = "<group>"; };
+		E7BD7FEB1A01D50100D05815 /* libIOTCAPIs_P2PTunnel.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIOTCAPIs_P2PTunnel.a; sourceTree = "<group>"; };
+		E7BD7FEC1A01D50100D05815 /* libIOTCAPIs_P2PTunnelT.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIOTCAPIs_P2PTunnelT.a; sourceTree = "<group>"; };
+		E7BD7FEE1A01D50100D05815 /* libIOTCAPIs_ALL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIOTCAPIs_ALL.a; sourceTree = "<group>"; };
+		E7BD7FEF1A01D50100D05815 /* libIOTCAPIs_ALLT.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIOTCAPIs_ALLT.a; sourceTree = "<group>"; };
+		E7BD7FF01A01D50100D05815 /* libIOTCAPIs_P2PTunnel.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIOTCAPIs_P2PTunnel.a; sourceTree = "<group>"; };
+		E7BD7FF11A01D50100D05815 /* libIOTCAPIs_P2PTunnelT.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIOTCAPIs_P2PTunnelT.a; sourceTree = "<group>"; };
+		E7BD7FFA1A01D5D600D05815 /* Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Client.m; sourceTree = "<group>"; };
+		E7BD7FFB1A01D5D600D05815 /* Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Client.h; sourceTree = "<group>"; };
+		E7BD80241A01DE2C00D05815 /* CoreDataStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataStorage.h; sourceTree = "<group>"; };
+		E7BD80251A01DE2C00D05815 /* CoreDataStorageProtected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataStorageProtected.h; sourceTree = "<group>"; };
+		E7BD80261A01DE2C00D05815 /* libCoreDataStorage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCoreDataStorage.a; sourceTree = "<group>"; };
 		E7E304D819ECB94900F80D06 /* avcodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = avcodec.h; sourceTree = "<group>"; };
 		E7E304D919ECB94900F80D06 /* avfft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = avfft.h; sourceTree = "<group>"; };
 		E7E304DA19ECB94900F80D06 /* dxva2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dxva2.h; sourceTree = "<group>"; };
@@ -1422,6 +1448,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7BD7FF21A01D50100D05815 /* libIOTCAPIs_ALL.a in Frameworks */,
+				E7BD7FF91A01D50100D05815 /* libIOTCAPIs_P2PTunnelT.a in Frameworks */,
 				E7419E3819E65C4700B5B764 /* CoreImage.framework in Frameworks */,
 				E77FBDC019CEC75900D1698C /* CFNetwork.framework in Frameworks */,
 				E7F1680019CFCFD500B2BED3 /* libg7221codec-arm-apple-darwin9.a in Frameworks */,
@@ -1437,12 +1465,15 @@
 				E7F1680F19CFCFD500B2BED3 /* libpjsua2-arm-apple-darwin9.a in Frameworks */,
 				E7F1681219CFCFD500B2BED3 /* libsrtp-arm-apple-darwin9.a in Frameworks */,
 				E7F1680119CFCFD500B2BED3 /* libgsmcodec-arm-apple-darwin9.a in Frameworks */,
+				E7BD7FF31A01D50100D05815 /* libIOTCAPIs_ALLT.a in Frameworks */,
 				E7E3054319ECB94900F80D06 /* libavformat.a in Frameworks */,
 				E7E3054719ECB94900F80D06 /* libswscale.a in Frameworks */,
 				E7F1680C19CFCFD500B2BED3 /* libpjsip-simple-arm-apple-darwin9.a in Frameworks */,
 				E742BA0419CD5E4100ACA06A /* libavutil.a in Frameworks */,
 				35FECEDD18859E2200CE00BB /* libiconv.dylib in Frameworks */,
 				E7F1680519CFCFD500B2BED3 /* libpjmedia-arm-apple-darwin9.a in Frameworks */,
+				E7BD7FF51A01D50100D05815 /* libIOTCAPIs_P2PTunnelT.a in Frameworks */,
+				E7BD7FF71A01D50100D05815 /* libIOTCAPIs_ALLT.a in Frameworks */,
 				35FECEDB18859E0D00CE00BB /* QuartzCore.framework in Frameworks */,
 				E7F1680D19CFCFD500B2BED3 /* libpjsip-ua-arm-apple-darwin9.a in Frameworks */,
 				35FECED918859E0200CE00BB /* CoreVideo.framework in Frameworks */,
@@ -1452,6 +1483,7 @@
 				35FECED718859DF900CE00BB /* AVFoundation.framework in Frameworks */,
 				35FECED518859DEC00CE00BB /* CoreMedia.framework in Frameworks */,
 				E742BA0219CD5E4100ACA06A /* libswscale.a in Frameworks */,
+				E7BD7FF41A01D50100D05815 /* libIOTCAPIs_P2PTunnel.a in Frameworks */,
 				E7F1681319CFCFD500B2BED3 /* libcrypto.a in Frameworks */,
 				E7F1680919CFCFD500B2BED3 /* libpjnath-arm-apple-darwin9.a in Frameworks */,
 				E742BA0519CD5E4100ACA06A /* libavcodec.a in Frameworks */,
@@ -1463,6 +1495,7 @@
 				E7F1680219CFCFD500B2BED3 /* libilbccodec-arm-apple-darwin9.a in Frameworks */,
 				E7F1681719CFCFD500B2BED3 /* libpjsua-api-arm-apple-darwin9.a in Frameworks */,
 				E7F1680E19CFCFD500B2BED3 /* libpjsua-arm-apple-darwin9.a in Frameworks */,
+				E7BD7FF61A01D50100D05815 /* libIOTCAPIs_ALL.a in Frameworks */,
 				E7E3054219ECB94900F80D06 /* libavfilter.a in Frameworks */,
 				E7F1680B19CFCFD500B2BED3 /* libpjsip-arm-apple-darwin9.a in Frameworks */,
 				E7F1681519CFCFD500B2BED3 /* libSKP_SILK_SDK.a in Frameworks */,
@@ -1472,6 +1505,8 @@
 				E7F1681119CFCFD500B2BED3 /* libspeex-arm-apple-darwin9.a in Frameworks */,
 				E7F1681419CFCFD500B2BED3 /* libssl.a in Frameworks */,
 				E7F1681019CFCFD500B2BED3 /* libresample-arm-apple-darwin9.a in Frameworks */,
+				E7BD80271A01DE2C00D05815 /* libCoreDataStorage.a in Frameworks */,
+				E7BD7FF81A01D50100D05815 /* libIOTCAPIs_P2PTunnel.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1699,6 +1734,7 @@
 		35A17A791883BDD600ABC41C /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				E7BD7FDF1A01D50100D05815 /* TUTK_TOTC */,
 				E7E304D519ECB94900F80D06 /* ffmpeg2.1 */,
 				3659F29A18F4E6180043AEE3 /* PublicUtility */,
 				3659F29318F4E2EA0043AEE3 /* AudioIO */,
@@ -2354,9 +2390,8 @@
 		E7AF49A119EA3C0D00699BA1 /* CoreDataStorage */ = {
 			isa = PBXGroup;
 			children = (
-				E7AF49A219EA3C0D00699BA1 /* CoreDataStorage.h */,
-				E7AF49A319EA3C0D00699BA1 /* CoreDataStorage.m */,
-				E7AF49A419EA3C0D00699BA1 /* CoreDataStorageProtected.h */,
+				E7BD80231A01DE2C00D05815 /* include */,
+				E7BD80261A01DE2C00D05815 /* libCoreDataStorage.a */,
 			);
 			path = CoreDataStorage;
 			sourceTree = "<group>";
@@ -2896,6 +2931,63 @@
 				E7B186BE19EE47420091685F /* VideoPlayerViewController.m */,
 			);
 			path = VideoPlayerViewControllers;
+			sourceTree = "<group>";
+		};
+		E7BD7FDF1A01D50100D05815 /* TUTK_TOTC */ = {
+			isa = PBXGroup;
+			children = (
+				E7BD7FFA1A01D5D600D05815 /* Client.m */,
+				E7BD7FFB1A01D5D600D05815 /* Client.h */,
+				E7BD7FE01A01D50100D05815 /* include */,
+				E7BD7FE81A01D50100D05815 /* Release-iphoneos */,
+				E7BD7FED1A01D50100D05815 /* Release-iphonesimulator */,
+			);
+			path = TUTK_TOTC;
+			sourceTree = "<group>";
+		};
+		E7BD7FE01A01D50100D05815 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				E7BD7FE11A01D50100D05815 /* AVAPIs.h */,
+				E7BD7FE21A01D50100D05815 /* AVFRAMEINFO.h */,
+				E7BD7FE31A01D50100D05815 /* AVIOCTRLDEFs.h */,
+				E7BD7FE41A01D50100D05815 /* IOTCAPIs.h */,
+				E7BD7FE51A01D50100D05815 /* P2PTunnelAPIs.h */,
+				E7BD7FE61A01D50100D05815 /* platform_Config.h */,
+				E7BD7FE71A01D50100D05815 /* RDTAPIs.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		E7BD7FE81A01D50100D05815 /* Release-iphoneos */ = {
+			isa = PBXGroup;
+			children = (
+				E7BD7FE91A01D50100D05815 /* libIOTCAPIs_ALL.a */,
+				E7BD7FEA1A01D50100D05815 /* libIOTCAPIs_ALLT.a */,
+				E7BD7FEB1A01D50100D05815 /* libIOTCAPIs_P2PTunnel.a */,
+				E7BD7FEC1A01D50100D05815 /* libIOTCAPIs_P2PTunnelT.a */,
+			);
+			path = "Release-iphoneos";
+			sourceTree = "<group>";
+		};
+		E7BD7FED1A01D50100D05815 /* Release-iphonesimulator */ = {
+			isa = PBXGroup;
+			children = (
+				E7BD7FEE1A01D50100D05815 /* libIOTCAPIs_ALL.a */,
+				E7BD7FEF1A01D50100D05815 /* libIOTCAPIs_ALLT.a */,
+				E7BD7FF01A01D50100D05815 /* libIOTCAPIs_P2PTunnel.a */,
+				E7BD7FF11A01D50100D05815 /* libIOTCAPIs_P2PTunnelT.a */,
+			);
+			path = "Release-iphonesimulator";
+			sourceTree = "<group>";
+		};
+		E7BD80231A01DE2C00D05815 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				E7BD80241A01DE2C00D05815 /* CoreDataStorage.h */,
+				E7BD80251A01DE2C00D05815 /* CoreDataStorageProtected.h */,
+			);
+			path = include;
 			sourceTree = "<group>";
 		};
 		E7E304D519ECB94900F80D06 /* ffmpeg2.1 */ = {
@@ -3540,6 +3632,7 @@
 			files = (
 				E7AF4C3819EA507300699BA1 /* CXAlertViewExModifyPassword.m in Sources */,
 				E7AF4B9A19EA4F1C00699BA1 /* Utilities.m in Sources */,
+				E7BD7FFC1A01D5D600D05815 /* Client.m in Sources */,
 				E7AF4B5919EA4E8300699BA1 /* AlarmListTableViewController.m in Sources */,
 				3641E63B18EC035A005527C7 /* UIImage+WebP.m in Sources */,
 				E7AF4C3B19EA507300699BA1 /* InputPasswordView.m in Sources */,
@@ -3631,7 +3724,6 @@
 				E7AF4C3619EA507300699BA1 /* CXAlertViewEx.m in Sources */,
 				352E2F7F1887EBD3009324A3 /* LFGlassView.m in Sources */,
 				E7AF4C2F19EA507300699BA1 /* UIGroupCellBackgroundView.m in Sources */,
-				E7AF49AB19EA3C0D00699BA1 /* CoreDataStorage.m in Sources */,
 				E7323AC319ED27DD00FEBF38 /* Segment.m in Sources */,
 				E7AF4B7B19EA4F0200699BA1 /* P2PConnection.mm in Sources */,
 				3641E5E918EBAC69005527C7 /* channel.cpp in Sources */,
@@ -3842,6 +3934,8 @@
 					"\"$(SRCROOT)/Library/p2pudtclient/include\"",
 					"\"$(SRCROOT)/Library/p2pudtclient\"",
 					"\"$(SRCROOT)/Library/ffmpeg2.1/include\"",
+					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)/TUTK_TOTC/include",
+					"$(PROJECT_DIR)/AiertApp/UtilityManagers/CoreDataStorage/include",
 				);
 				INFOPLIST_FILE = "AiertApp/AiertApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -3854,6 +3948,9 @@
 					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)/ZBarSDK/lib",
 					"\"$(SRCROOT)/Library/pjsipIOS/lib-all\"",
 					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)/ffmpeg2.1/lib",
+					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)/TUTK_TOTC/Release-iphoneos",
+					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)/TUTK_TOTC/Release-iphonesimulator",
+					"$(PROJECT_DIR)/AiertApp/UtilityManagers/CoreDataStorage",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = AiertApp;
@@ -3886,6 +3983,8 @@
 					"\"$(SRCROOT)/Library/p2pudtclient/include\"",
 					"\"$(SRCROOT)/Library/p2pudtclient\"",
 					"\"$(SRCROOT)/Library/ffmpeg2.1/include\"",
+					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)/TUTK_TOTC/include",
+					"$(PROJECT_DIR)/AiertApp/UtilityManagers/CoreDataStorage/include",
 				);
 				INFOPLIST_FILE = "AiertApp/AiertApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -3898,6 +3997,9 @@
 					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)/ZBarSDK/lib",
 					"\"$(SRCROOT)/Library/pjsipIOS/lib-all\"",
 					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)/ffmpeg2.1/lib",
+					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)/TUTK_TOTC/Release-iphoneos",
+					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)/TUTK_TOTC/Release-iphonesimulator",
+					"$(PROJECT_DIR)/AiertApp/UtilityManagers/CoreDataStorage",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = AiertApp;
