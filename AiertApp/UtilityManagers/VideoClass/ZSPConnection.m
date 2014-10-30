@@ -732,7 +732,6 @@ typedef struct LOGIN_INFO
         case TAG_VIDEO_HEADER:
         {
             VIDEO_REQUEST value;
-            LOG(@"%d",[data length]);
             [data getBytes:&value length:sizeof(value)];
             
             LOG(@"%d",value.request);
