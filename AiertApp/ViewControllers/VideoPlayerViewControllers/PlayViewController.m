@@ -53,11 +53,26 @@
                                                   object:nil];
 }
 
+
+#if 0
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
-   
+    // Do any additional setup after loading the view.
+    
+    P2PManager *p2pManager = [[P2PManager alloc] initWithDelegate:self];
+    [p2pManager checkConnectTypeWithDeviceID:self.device.deviceID];
+}
+#else
+
+#pragma mark -
+#pragma mark - P2PManagerDelegate Methods
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    
     self.view.backgroundColor = [UIColor AppThemeTableViewBackgroundColor];
     
     self.popupQualityView = [[CMPopTipViewQuality alloc] initWithBackgroundColor:self.alarmMessageButton.backgroundColor];
@@ -87,7 +102,7 @@
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
     self.scrollView.scrollsToTop = NO;
-
+    
     self.scrollView.delegate = self;
     
     self.views = [[NSMutableArray alloc] initWithCapacity:self.device.deviceAdditionInfo.videoNum];
@@ -106,7 +121,7 @@
     [self loadScrollViewWithPage:1];
     
     
-
+    
     UIImage *talkImage = [UIImage imageNamed:@"talk_show.png"];
     CGSize talkImageSize = talkImage.size;
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((_scrollView.bounds.size.width - talkImageSize.width) / 2 , (_scrollView.bounds.size.height - talkImageSize.height ) / 2, talkImageSize.width, talkImageSize.height)];
@@ -132,7 +147,7 @@
                                                          channel:0
                                                   streamObserver:self];
     
-   
+    
     [[LibCoreWrap sharedCore] startRealPlayWithDeviceId:self.device.deviceID
                                                 channel:_currentChannel
                                               mediaType:VideoQualityTypeLD
@@ -154,6 +169,7 @@
     self.enableSound = NO;
 }
 
+#endif
 
 - (void)didReceiveMemoryWarning
 {

@@ -3,6 +3,7 @@
 #import <Foundation/Foundation.h>
 #import "P2PConnection.h"
 #import "ZSPConnection.h"
+#import "P2PManager.h"
 
 @interface LibCoreWrap : NSObject<P2pConnectionDelegate,ZSPConnectionDelegate>
 
