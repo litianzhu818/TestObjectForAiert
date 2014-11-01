@@ -54,20 +54,6 @@
 }
 
 
-#if 0
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-    P2PManager *p2pManager = [[P2PManager alloc] initWithDelegate:self];
-    [p2pManager checkConnectTypeWithDeviceID:self.device.deviceID];
-}
-#else
-
-#pragma mark -
-#pragma mark - P2PManagerDelegate Methods
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -169,7 +155,11 @@
     self.enableSound = NO;
 }
 
-#endif
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [[LibCoreWrap sharedCore] closeConnection];
+}
+
 
 - (void)didReceiveMemoryWarning
 {

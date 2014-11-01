@@ -540,9 +540,9 @@ copy from Net_ConnectionList.h
 typedef struct Header
 {	
 	int					head; 		//0xaaaa5555					4字节
-	int					length;		//data total length		4字节
-	unsigned char		type;			//0or1  							1字节
-	unsigned char		channel;	//video&audio channel	1字节
+	int					length;		//data total length             4字节
+	unsigned char		type;		//0or1                          1字节
+	unsigned char		channel;	//video&audio channel           1字节
 	unsigned short		commd;		//control cmd					2字节
 	char				szBody[0];
 }ZXA_HEADER, *LPZXA_HEADER;

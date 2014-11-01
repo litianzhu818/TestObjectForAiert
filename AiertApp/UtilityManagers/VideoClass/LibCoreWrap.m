@@ -31,6 +31,7 @@
 @property (strong, nonatomic) NSMutableSet *eventObersvers;
 @property (strong, nonatomic) P2PConnection *p2pConnection;
 @property (strong, nonatomic) ZSPConnection *zspConnection;
+@property (strong, nonatomic) P2PManager *p2pManager;
 @property (copy, nonatomic) NSString *userName;
 @property (copy, nonatomic) NSString *password;
 @property (copy, nonatomic) NSString *currentDeviceId;
@@ -71,6 +72,8 @@
         self.videoDecoder = [VideoFrameExtractor creatVideoFrameExtractor];
         self.p2pConnection = [[P2PConnection alloc] initWithDelegate:self];
         self.zspConnection = [[ZSPConnection alloc] initWithDelegate:self];
+        self.p2pManager = [P2PManager sharedInstance];
+        [self.p2pManager setDelegate:self];
         self.streamObersvers = [[NSMutableSet alloc] init];
         self.eventObersvers = [[NSMutableSet alloc] init];
         
@@ -78,6 +81,11 @@
         
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [self.p2pManager removeDelegate];
 }
 
 - (int)initialize
@@ -131,10 +139,70 @@
     
     
     dispatch_group_async(_group, _streamQueue, ^{
-        [self connetToLocalDevice];
+//        [self connetToLocalDevice];
+        [self connectWithDevice:self.currentDeviceId];
     });
     
     return 0;
+}
+
+- (void)connectWithDevice:(NSString *)deviceID
+{
+    [self.p2pManager checkConnectTypeWithDeviceID:self.currentDeviceId];
+}
+
+- (void)closeConnection
+{
+    [self.p2pManager closeConnection];
+}
+
+- (void)p2pManager:(P2PManager *)p2pManager didConnectDeviceID:(NSString *)deviceID withType:(CONNECT_TYPE)connectType ip:(NSString *)ip port:(NSUInteger)port sid:(int)sid
+{
+    if ([deviceID isEqualToString:self.currentDeviceId]) {
+        [p2pManager startWithDeviceID:sid];
+    }
+}
+#pragma mark -
+#pragma mark - P2PManagerDelegate Methods
+- (void)p2pManager:(P2PManager *)p2pManager didReadVideoData:(NSData *)data
+{
+    //    DLog(@"Aiert_ios各阶段运行状态<<=====TCP 视频数据======》》");
+    dispatch_group_async(_group, _decodeQueue, ^{
+        @autoreleasepool {
+            int nLen = [data length]-32;
+            [data getBytes:buffer range:NSMakeRange(32, nLen)];
+            // Decode and display
+            
+            if (!(CameraStateActive&[AppData cameraState])) {
+                
+                DLog(@"------------------------------------------------------> 2 stop playing !");
+                return;
+            }
+            
+            if ([self.videoDecoder stepFrame:buffer length:[data length]-24]) {
+                
+                [self.streamObersvers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+                    if ([obj respondsToSelector:@selector(didReceiveImageData:)]) {
+                        [obj didReceiveImageData:self.videoDecoder.currentFrame];
+                    }
+                }];
+            }
+        }
+    });
+}
+
+- (void)p2pManager:(P2PManager *)p2pManager didReadAudioData:(NSData *)data
+{
+    dispatch_group_async(_group, _streamQueue, ^{
+        @autoreleasepool {
+            [self.streamObersvers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+                if ([obj respondsToSelector:@selector(didReceiveAudioData:)]) {
+                    [obj didReceiveAudioData:data];
+                }
+            }];
+        }
+    });
+ 
 }
 
 #else

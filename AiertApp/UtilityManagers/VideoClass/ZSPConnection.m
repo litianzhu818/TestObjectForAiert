@@ -657,10 +657,11 @@ typedef struct LOGIN_INFO
     switch (tag) {
         case TAG_FRAME_HEADER:
         {
+            LOG(@"%d",data.length);
             // Get body Length
             int nBodyLength;
             [data getBytes:&nBodyLength range:NSMakeRange(4, 4)];
-            
+            LOG(@"%d",data.length);
             Byte magicBuffother[4];
             [data getBytes:magicBuffother range:NSMakeRange(4, 4)];
 //            DLog(@"______________________________________________didReceive Video header echo: %d",nBodyLength);
@@ -671,7 +672,7 @@ typedef struct LOGIN_INFO
                 if (0 == memcmp(magicBuff, "00dc", 4) || 0 == memcmp(magicBuff, "01dc", 4)) {
                     // Video frame
                     
-                    [self.zspConnectionDelegate didReadRawData:data tag:RawDataTagHeader];
+                  //  [self.zspConnectionDelegate didReadRawData:data tag:RawDataTagHeader];
 
                     [sender readDataToLength:nBodyLength+24 withTimeout:TAG_READ_VIDEO_TIMOUT_INTERVAL tag:TAG_VIDEOFRAME_BODY];
                 }
@@ -679,7 +680,7 @@ typedef struct LOGIN_INFO
                     
                     DLog(@"Audio data length : %d",[data length]);
                     
-                    [self.zspConnectionDelegate didReadRawData:data tag:RawDataTagHeader];
+                   // [self.zspConnectionDelegate didReadRawData:data tag:RawDataTagHeader];
                     
                     [sender readDataToLength:nBodyLength+8 withTimeout:TAG_READ_VIDEO_TIMOUT_INTERVAL tag:TAG_AUDIOFRAME_BODY];
                     
@@ -708,7 +709,7 @@ typedef struct LOGIN_INFO
             NSData *audioData = [data subdataWithRange:NSMakeRange(8, nLen)];
             
             // Decode and play
-            [audioData getBytes:recvAudioBuffer];
+            [audioData getBytes:recvAudioBuffer length:325];
             
             //将标准的g711数据转换成pcm数据
             int nPcmLen = G711ABuf2PCMBuf_HISI((unsigned char*)recvPcmAudioBuffer,

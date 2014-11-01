@@ -5,10 +5,11 @@
 #import "ZSPConnection.h"
 #import "P2PManager.h"
 
-@interface LibCoreWrap : NSObject<P2pConnectionDelegate,ZSPConnectionDelegate>
+@interface LibCoreWrap : NSObject<P2pConnectionDelegate,ZSPConnectionDelegate,P2PManagerDelegate>
 
 + (LibCoreWrap *)sharedCore;
 
+- (void)closeConnection;
 /**
  * @brief initialize library.
  */

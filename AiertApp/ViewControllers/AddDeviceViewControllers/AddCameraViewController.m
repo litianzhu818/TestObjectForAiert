@@ -87,6 +87,7 @@
     [self hidenKeyboard];
     
     if ([self checkUserInputData]) {
+        self.deviceInfo = [[AiertDeviceInfo alloc] init];
         [self.deviceInfo setDeviceName:self.nameField.text];
         [self.deviceInfo setDeviceID:self.deviceIDField.text];
         AiertUserInfo *userInfo = [[AiertUserInfo alloc] initWithUserName:self.userNameField.text userPassword:self.passwordField.text];
