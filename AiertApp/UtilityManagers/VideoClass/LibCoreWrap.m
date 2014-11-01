@@ -113,6 +113,7 @@
     });
 }
 
+#if 1
 - (int)startRealPlayWithDeviceId:(NSString *)device_id
                          channel:(NSInteger)channel
                        mediaType:(NSInteger)media_type
@@ -127,7 +128,7 @@
     self.password = password;
     self.currentChannel = channel;
     self.currentMediaType = media_type;
-
+    
     
     dispatch_group_async(_group, _streamQueue, ^{
         [self connetToLocalDevice];
@@ -135,6 +136,33 @@
     
     return 0;
 }
+
+#else
+- (int)startRealPlayWithDeviceId:(NSString *)device_id
+                         channel:(NSInteger)channel
+                       mediaType:(NSInteger)media_type
+                        userName:(NSString *)username
+                        password:(NSString *)password
+                         timeout:(NSInteger)timeout
+{
+    
+    [AppData addCameraState:CameraStateActive];
+    self.userName = username;
+    self.currentDeviceId = device_id;
+    self.password = password;
+    self.currentChannel = channel;
+    self.currentMediaType = media_type;
+    
+    
+    dispatch_group_async(_group, _streamQueue, ^{
+        [self connetToLocalDevice];
+    });
+    
+    return 0;
+}
+
+#endif
+
 //本地播放，需要放在登录的回掉里面
 -(void)playWithLocalDevice
 {
@@ -761,6 +789,7 @@
         }
     });
 }
+//MARK:播放视频数据
 - (void)didReadVideoData:(NSData *)data
 {
 //    DLog(@"Aiert_ios各阶段运行状态<<=====TCP 视频数据======》》");

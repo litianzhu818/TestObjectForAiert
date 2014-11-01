@@ -1,0 +1,44 @@
+//
+//  P2PManager.h
+//  AiertApp
+//
+//  Created by Peter Lee on 14/10/31.
+//  Copyright (c) 2014年 爱尔特电子有限公司. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+typedef NS_ENUM(NSUInteger, CONNECT_TYPE){
+    
+    CONNECT_P2P_TYPE = 0,   //The p2p connect type
+    CONNECT_RELAY_TYPE,     //The relay connect type
+    CONNECT_LAN_TYPE        //The lan connect type
+};
+
+@protocol P2PManagerDelegate;
+
+@interface P2PManager : NSObject
+
+@property (weak, nonatomic)  id<P2PManagerDelegate> delegate;
+
+- (instancetype)initWithDelegate:(id<P2PManagerDelegate>)delegate;
+- (void)removeDelegate;
+
+/**
+ *  用设备id连接进行网络连接
+ *
+ *  @param deviceID 设备ID
+ */
+- (void)startWithDeviceID:(int)SID;
+- (void)checkConnectTypeWithDeviceID:(NSString *)deviceID;
+
+@end
+
+
+@protocol P2PManagerDelegate <NSObject>
+
+@optional
+
+- (void)p2pManager:(P2PManager *)p2pManager didConnectDeviceID:(NSString *)deviceID withType:(CONNECT_TYPE)connectType ip:(NSString *)ip port:(NSUInteger)port sid:(int)sid;
+
+@end

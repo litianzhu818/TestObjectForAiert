@@ -654,9 +654,6 @@ typedef struct LOGIN_INFO
 }
 - (void)socket:(GCDAsyncSocket *)sender didReadData:(NSData *)data withTag:(long)tag
 {
-//    DLog(@"queue %s:%@ : %@ ",dispatch_queue_get_label(dispatch_get_current_queue()),NSStringFromSelector(_cmd),self);
-//    DLog(@"didreaddata :   %ld",tag);
-//    DLog(@"data length : %d",[data length]);
     switch (tag) {
         case TAG_FRAME_HEADER:
         {
@@ -732,15 +729,10 @@ typedef struct LOGIN_INFO
         case TAG_VIDEO_HEADER:
         {
             VIDEO_REQUEST value;
-            LOG(@"%d",[data length]);
             [data getBytes:&value length:sizeof(value)];
             
             LOG(@"%d",value.request);
             
-//            // Get body Length
-//            int nEchmcmd;
-//            [data getBytes:&nEchmcmd range:NSMakeRange(12, 4)];
-//            //            DLog(@"______________________________________________didReceive Video header echo: %d",nEchmcmd);
             if (0 == value.request) {
                 [sender readDataToLength:8 withTimeout:TAG_READ_VIDEO_TIMOUT_INTERVAL tag:TAG_FRAME_HEADER];
             }
