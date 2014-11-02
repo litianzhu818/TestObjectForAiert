@@ -466,6 +466,7 @@ unsigned int _getTickCount() {
     if ((ret = avSendIOCtrl(avIndex, IOTYPE_INNER_SND_DATA_DELAY, (char *)&val, sizeof(unsigned short)) < 0))
     {
         NSLog(@"start_ipcam_stream_failed[%d]", ret);
+        IOTC_DeInitialize();
         return 0;
     }
     
@@ -544,7 +545,7 @@ unsigned int _getTickCount() {
             
             if (ret != IOTC_ER_NoERROR) {
                 LOG(@"IOTCAPIs exit...");
-                return;
+                //return;
             }
             
             // alloc 4 sessions for video and two-way audio

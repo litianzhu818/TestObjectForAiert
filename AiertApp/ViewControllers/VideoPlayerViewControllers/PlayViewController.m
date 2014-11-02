@@ -75,6 +75,13 @@
     _enableSound = NO;
     _enableMicrophone = NO;
     
+    //如果此时没有设备的videoNum信息，我们就设置位1
+    if (self.device.deviceAdditionInfo.videoNum < 1) {
+        DeviceAddition *deviceAddtion = [[DeviceAddition alloc] init];
+        [deviceAddtion setVideoNum:1];
+        [self.device setDeviceAdditionInfo:deviceAddtion];
+    }
+    
     [self.livePageControl setNumberOfPages:self.device.deviceAdditionInfo.videoNum];
     
     if (1 == self.device.deviceAdditionInfo.videoNum) {

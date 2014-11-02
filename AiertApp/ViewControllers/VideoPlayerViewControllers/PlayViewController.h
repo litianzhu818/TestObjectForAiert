@@ -39,16 +39,17 @@
 }
 
 @property (strong, nonatomic) AiertDeviceInfo *device;
-
+//暂时没有启用
 @property (weak, nonatomic) IBOutlet UILabel *cameraNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *liveSpeedLabel;
+@property (weak, nonatomic) IBOutlet UILabel *liveTotalLabel;
+@property (weak, nonatomic) IBOutlet UIView *alarmMessageButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *exitBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @property (weak, nonatomic) IBOutlet UIView *liveInformationHolderView;
-@property (weak, nonatomic) IBOutlet UILabel *liveSpeedLabel;
-@property (weak, nonatomic) IBOutlet UILabel *liveTotalLabel;
-@property (weak, nonatomic) IBOutlet UIPageControlEx *livePageControl;
 
-@property (weak, nonatomic) IBOutlet UIView *alarmMessageButton;
+@property (weak, nonatomic) IBOutlet UIPageControlEx *livePageControl;
 
 @property (strong, nonatomic) CMPopTipViewQuality *popupQualityView;
 @property (nonatomic) VideoQualityType qualityType;

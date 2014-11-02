@@ -29,7 +29,6 @@
 }
 @property (strong, nonatomic) NSMutableSet *streamObersvers;
 @property (strong, nonatomic) NSMutableSet *eventObersvers;
-@property (strong, nonatomic) P2PConnection *p2pConnection;
 @property (strong, nonatomic) ZSPConnection *zspConnection;
 @property (strong, nonatomic) P2PManager *p2pManager;
 @property (copy, nonatomic) NSString *userName;
@@ -70,7 +69,6 @@
         _recordFileQueue = dispatch_queue_create("recordFileQueue", NULL);
         
         self.videoDecoder = [VideoFrameExtractor creatVideoFrameExtractor];
-        self.p2pConnection = [[P2PConnection alloc] initWithDelegate:self];
         self.zspConnection = [[ZSPConnection alloc] initWithDelegate:self];
         self.p2pManager = [P2PManager sharedInstance];
         [self.p2pManager setDelegate:self];
@@ -158,8 +156,18 @@
 
 - (void)p2pManager:(P2PManager *)p2pManager didConnectDeviceID:(NSString *)deviceID withType:(CONNECT_TYPE)connectType ip:(NSString *)ip port:(NSUInteger)port sid:(int)sid
 {
-    if ([deviceID isEqualToString:self.currentDeviceId]) {
+    if ([deviceID isEqualToString:self.currentDeviceId] && connectType != CONNECT_LAN_TYPE) {
+        //P2P播放或者远程连接播放
         [p2pManager startWithDeviceID:sid];
+    }else if ([deviceID isEqualToString:self.currentDeviceId] && connectType == CONNECT_LAN_TYPE){
+        
+        [p2pManager closeConnection];
+        
+        //局域网播放
+        dispatch_group_async(_group, _streamQueue, ^{
+            [self connetToLocalDevice];
+        });
+
     }
 }
 #pragma mark -
@@ -175,7 +183,7 @@
             
             if (!(CameraStateActive&[AppData cameraState])) {
                 
-                DLog(@"------------------------------------------------------> 2 stop playing !");
+                DLog(@"------------------------------------------------------> 3 stop playing !");
                 return;
             }
             
@@ -258,14 +266,14 @@
         
         dispatch_group_async(_group, _streamQueue, ^{
             
-            [self.p2pConnection changeStream:_currentChannel
-                                   mediaType:0
-                                   operation:0];              // 关闭当前通道
-            
-            
-            [self.p2pConnection changeStream:dstChannel
-                                   mediaType:0
-                                   operation:1];
+//            [self.p2pConnection changeStream:_currentChannel
+//                                   mediaType:0
+//                                   operation:0];              // 关闭当前通道
+//            
+//            
+//            [self.p2pConnection changeStream:dstChannel
+//                                   mediaType:0
+//                                   operation:1];
         });
         
     }else {
@@ -297,17 +305,17 @@
         || CameraNetworkStateP2pConnected == currentConnectState) {
         
         dispatch_group_async(_group, _streamQueue, ^{
-            [self.p2pConnection changeStream:_currentChannel
-                                   mediaType:_currentMediaType
-                                   operation:0];              // 关闭当前通道
-            
-            [self.p2pConnection changeStream:_currentChannel
-                                   mediaType:dstMediaType
-                                   operation:1];
-            
-            if (CameraStateAudioPlaying&[AppData cameraState]) {
-                [self.p2pConnection enableSound:YES];
-            }
+//            [self.p2pConnection changeStream:_currentChannel
+//                                   mediaType:_currentMediaType
+//                                   operation:0];              // 关闭当前通道
+//            
+//            [self.p2pConnection changeStream:_currentChannel
+//                                   mediaType:dstMediaType
+//                                   operation:1];
+//            
+//            if (CameraStateAudioPlaying&[AppData cameraState]) {
+//                [self.p2pConnection enableSound:YES];
+//            }
 
         });
         
@@ -345,7 +353,7 @@
     
     dispatch_group_async(_group, _streamQueue, ^{
         [self.zspConnection stopRealPlay];
-        [self.p2pConnection stopRealPlay];
+        [self.p2pManager closeConnection];
         
     });
     
@@ -403,7 +411,7 @@
         
         dispatch_group_async(_group, _streamQueue, ^{
             
-            [self.p2pConnection enableSound:YES];
+//            [self.p2pConnection enableSound:YES];
         });
         
     }else {
@@ -428,7 +436,7 @@
         
         dispatch_group_async(_group, _streamQueue, ^{
             
-            [self.p2pConnection enableSound:NO];
+//            [self.p2pConnection enableSound:NO];
         });
         
     }else {
@@ -458,7 +466,7 @@
         
         dispatch_group_async(_group, _streamQueue, ^{
             
-            [self.p2pConnection enableTalk:YES];
+//            [self.p2pConnection enableTalk:YES];
         });
         
     }else {
@@ -489,7 +497,7 @@
         
         dispatch_group_async(_group, _streamQueue, ^{
             
-            [self.p2pConnection enableTalk:NO];
+//            [self.p2pConnection enableTalk:NO];
         });
         
     }else {
@@ -518,7 +526,7 @@
         
         dispatch_group_async(_group, _streamQueue, ^{
             
-            [self.p2pConnection sendTalkData:pBuffer length:nBufferLen];
+//            [self.p2pConnection sendTalkData:pBuffer length:nBufferLen];
         });
         
     }else {
@@ -553,202 +561,6 @@
     
 }
 
-#pragma mark - P2pConnectionDelegate
-
-- (void)didGetUPNPSupportInfoWithTag:(NSInteger)tag param:(id)param
-{
-    switch (tag) {
-        case UpnpQueryFailure:                                           // LocalNetwork
-        {
-            [self connetToLocalDevice];
-        }
-            break;
-        case UpnpQueryResultNotSupport:                                  // P2p
-        {
-            dispatch_group_async(_group, _streamQueue, ^{
-                [self.p2pConnection requestStream:self.currentDeviceId
-                                          channel:self.currentChannel
-                                       streamType:self.currentMediaType
-                                            isP2p:YES];
-            });
-        }
-            break;
-        case UpnpQueryResultSupport:                                     // Upnp
-        {
-            NSDictionary *dicQuerRes = [param objectForKey:@"QueryRes"];
-            
-            dispatch_group_async(_group, _streamQueue, ^{
-                
-                [self.zspConnection startDisplayWithDeviceIp:[dicQuerRes objectForKey:@"InternetIp"]
-                                                        port:[[dicQuerRes objectForKey:@"UpnpVideoPort"] intValue]
-                                                     channel:_currentChannel
-                                                   mediaType:_currentMediaType
-                                               isLocalDevice:NO];
-                
-            });
-            
-        }
-            break;
-    }
-}
-
-- (void)didRecvVideoFrameData:(NSInteger)iType streamData:(char *)pData size:(NSInteger)iSize
-{
-    
-//    DLog(@"%@,%@",NSStringFromClass([self class]),NSStringFromSelector(_cmd));
-    dispatch_group_async(_group, _decodeQueue, ^{
-        @autoreleasepool {
-            if ([self.videoDecoder stepFrame:(unsigned char *)pData length:iSize]) {
-                [self.streamObersvers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-                    if ([obj respondsToSelector:@selector(didReceiveImageData:)]) {
-                        [obj didReceiveImageData:self.videoDecoder.currentFrame];
-                    }
-                }];
-            }
-            
-        }
-    });
-}
-- (void)didRecvAudioFrameData:(char *)pData size:(NSInteger)iSize
-{
-    dispatch_group_async(_group, _streamQueue, ^{
-        @autoreleasepool {
-            [self.streamObersvers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-                if ([obj respondsToSelector:@selector(didReceiveAudioData:)]) {
-                    [obj didReceiveAudioData:[NSData dataWithBytes:pData length:iSize]];
-                }
-            }];
-        }
-    });
-}
-- (void)didRecvRawData:(char *)pData size:(NSInteger)iSize tag:(NSInteger)tag;
-{
-    if (!(CameraStateRecording&[AppData cameraState])) {
-        return;
-    }
-    
-    if (RawDataTagHeader == tag) {
-        dispatch_group_async(_group, _recordFileQueue, ^{
-            @autoreleasepool {
-                self.frameHeader = [NSData dataWithBytes:pData length:iSize];
-            }
-        });
-        
-    }else
-    {
-        dispatch_group_async(_group, _recordFileQueue, ^{
-            @autoreleasepool {
-                
-                NSMutableData *packet = [NSMutableData dataWithData:self.frameHeader];
-                [packet appendData:[NSData dataWithBytes:pData length:iSize]];
-                
-                [self.streamObersvers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-                    
-                    if ([obj respondsToSelector:@selector(didReceiveRawData:tag:)]) {
-                        [obj didReceiveRawData:packet tag:tag];
-                    }
-                }];
-            }
-            
-        });
-    }
-
-}
-
-- (void)didRecvStreamStatus:(int)iStatus
-{
-    switch (iStatus) {
-        case CameraNetworkStateP2pConnected:
-            [AppData addCameraState:CameraStateConnected];
-            [AppData setConnectionState:CameraNetworkStateP2pConnected];
-            break;
-        case CameraNetworkStateP2pConnectFailed:
-        {
-            dispatch_group_async(_group, _streamQueue, ^{
-                
-                [self.p2pConnection stopRealPlay];
-                [self.p2pConnection requestStream:self.currentDeviceId
-                                          channel:self.currentChannel
-                                       streamType:self.currentMediaType
-                                            isP2p:NO];
-            });
-
-        }
-            break;
-        case CameraNetworkStateP2pRecvFailed:
-        {
-            dispatch_group_async(_group, _streamQueue, ^{
-                [self.p2pConnection stopRealPlay];
-                [self.p2pConnection requestStream:self.currentDeviceId
-                                          channel:self.currentChannel
-                                       streamType:self.currentMediaType
-                                            isP2p:YES];
-                
-                if ([AppData cameraState]&CameraStateAudioPlaying) {
-                    [self.p2pConnection enableSound:YES];
-                }
-            });
-
-        }
-            break;
-        case CameraNetworkStateTransmitConnected:
-            [AppData addCameraState:CameraStateConnected];
-            [AppData setConnectionState:CameraNetworkStateTransmitConnected];
-            break;
-        case CameraNetworkStateTransmitConnectFailed:
-        {
-            
-            dispatch_group_async(_group, _streamQueue, ^{
-                [self.p2pConnection stopRealPlay];
-            });
-
-            [AppData setConnectionState:CameraNetworkStateTransmitConnectFailed];
-            [self connetToLocalDevice];
-        }
-            break;
-        case CameraNetworkStateTransmitRecvFailed:
-        {
-            [AppData setConnectionState:CameraNetworkStateTransmitRecvFailed];
-
-            dispatch_group_async(_group, _streamQueue, ^{
-                [self.p2pConnection stopRealPlay];
-                [self.p2pConnection requestStream:self.currentDeviceId
-                                          channel:self.currentChannel
-                                       streamType:self.currentMediaType
-                                            isP2p:NO];
-                
-                if ([AppData cameraState]&CameraStateAudioPlaying) {
-                    [self.p2pConnection enableSound:YES];
-                }
-
-            });
-        }
-            break;
-        case LibCoreEventCodeAudioResoponseFailed:
-        case LibCoreEventCodeAudioResponseSuccess:
-        case LibCoreEventCodeMicResponseFailed:
-        case LibCoreEventCodeOpenMicSuccess:
-        {
-            dispatch_group_async(_group, _talkQueue, ^{
-                [self.streamObersvers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-                    if ([obj respondsToSelector:@selector(didReceiveEvent:content:deviceId:channel:)]) {
-                        [obj didReceiveEvent:iStatus
-                                     content:nil
-                                    deviceId:self.currentDeviceId
-                                     channel:self.currentChannel];
-                    }
-                }];
-            });
-        }
-            break;
-    }
-    
-    if (LibCoreEventCodeOpenMicSuccess == iStatus) {
-        dispatch_group_async(_group, _talkQueue, ^{
-            [AQRecorderWarp startRecord];
-        });
-    }
-}
 
 #pragma mark - ZSPConnectionDelegate
 
@@ -907,10 +719,10 @@
         case CameraNetworkStateUpnpConnectFailed:
         {
             dispatch_group_async(_group, _streamQueue, ^{
-                [self.p2pConnection requestStream:self.currentDeviceId
-                                          channel:self.currentChannel
-                                       streamType:self.currentMediaType
-                                            isP2p:YES];
+//                [self.p2pConnection requestStream:self.currentDeviceId
+//                                          channel:self.currentChannel
+//                                       streamType:self.currentMediaType
+//                                            isP2p:YES];
             });
         }
             break;
