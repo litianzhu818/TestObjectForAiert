@@ -707,7 +707,9 @@
         case CameraNetworkStateLocalRecvFailed:
         {
             dispatch_group_async(_group, _streamQueue, ^{
-                [self.zspConnection reStartRealPlay];
+                //MARK:这里是一个bug，需要处理
+                //FIXME:需要解决不同情况，重新连接的问题
+//                [self.zspConnection reStartRealPlay];
                 
                 if ([AppData cameraState]&CameraStateAudioPlaying) {
                     [self.zspConnection openSound:YES];

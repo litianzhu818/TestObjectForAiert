@@ -164,7 +164,7 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    [[LibCoreWrap sharedCore] closeConnection];
+//    [[LibCoreWrap sharedCore] closeConnection];
 }
 
 

@@ -693,7 +693,7 @@ typedef struct LOGIN_INFO
         }
         case TAG_VIDEOFRAME_BODY:
         {
-            [self.zspConnectionDelegate didReadRawData:data tag:RawDataTagVideoBody];
+//            [self.zspConnectionDelegate didReadRawData:data tag:RawDataTagVideoBody];
             
             [self.zspConnectionDelegate didReadVideoData:data];
             
@@ -702,7 +702,7 @@ typedef struct LOGIN_INFO
         }
         case TAG_AUDIOFRAME_BODY:
         {
-            [self.zspConnectionDelegate didReadRawData:data tag:RawDataTagAudioBody];
+//            [self.zspConnectionDelegate didReadRawData:data tag:RawDataTagAudioBody];
             
             int nLen = [data length]-8;
             
