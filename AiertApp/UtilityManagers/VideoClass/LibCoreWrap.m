@@ -158,17 +158,18 @@
 {
     if ([deviceID isEqualToString:self.currentDeviceId] && connectType != CONNECT_LAN_TYPE) {
         //P2P播放或者远程连接播放
-        [p2pManager startWithDeviceID:sid];
-    }else if ([deviceID isEqualToString:self.currentDeviceId] && connectType == CONNECT_LAN_TYPE){
-        
-        [p2pManager closeConnection];
-        
-        //局域网播放
-        dispatch_group_async(_group, _streamQueue, ^{
-            [self connetToLocalDevice];
-        });
-
+        [p2pManager startWithSID:sid];
     }
+//    else if ([deviceID isEqualToString:self.currentDeviceId] && connectType == CONNECT_LAN_TYPE){
+//        
+//        [p2pManager closeConnection];
+//        
+//        //局域网播放
+//        dispatch_group_async(_group, _streamQueue, ^{
+//            [self connetToLocalDevice];
+//        });
+//
+//    }
 }
 #pragma mark -
 #pragma mark - P2PManagerDelegate Methods

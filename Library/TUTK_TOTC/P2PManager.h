@@ -34,7 +34,7 @@ typedef NS_ENUM(NSUInteger, CONNECT_TYPE){
  *
  *  @param deviceID 设备ID
  */
-- (void)startWithDeviceID:(int)SID;
+- (void)startWithSID:(int)SID;
 - (void)checkConnectTypeWithDeviceID:(NSString *)deviceID;
 - (void)start:(NSString *)UID;
 
@@ -53,6 +53,11 @@ typedef NS_ENUM(NSUInteger, CONNECT_TYPE){
 - (void)p2pManager:(P2PManager *)p2pManager didReadRawData:(NSData *)data tag:(NSInteger)tag;
 - (void)p2pManager:(P2PManager *)p2pManager didReadAudioResponse:(NSInteger)code;
 - (void)p2pManager:(P2PManager *)p2pManager didReadMicResponse:(NSInteger)code;
+
+- (void)p2pManager:(P2PManager *)p2pManager didStartTryToPlayerWithDeviceID:(NSString *)deviceID;
+- (void)p2pManager:(P2PManager *)p2pManager didStartPlayWithDEviceID:(NSString *)deviceID;
+- (void)p2pManager:(P2PManager *)p2pManager didStopPlayWithDEviceID:(NSString *)deviceID;
+
 - (void)didReadDataTimeOut;
 - (void)didDisconnect;
 - (void)didConnected;

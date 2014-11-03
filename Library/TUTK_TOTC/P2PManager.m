@@ -26,6 +26,7 @@
 
 @property (nonatomic, assign) int avIndex;
 @property (nonatomic, assign) int SID;
+@property (nonatomic, strong) NSString *deviceID;
 
 @end
 
@@ -34,6 +35,7 @@ static  P2PManager *sharedInstance = nil ;
 @implementation P2PManager
 @synthesize avIndex;
 @synthesize SID;
+@synthesize deviceID = _deviceID;
 
 + (P2PManager *)sharedInstance
 {
@@ -209,6 +211,39 @@ static  P2PManager *sharedInstance = nil ;
         dispatch_async(p2pManagerQueue, block);
 }
 
+- (NSString *)deviceID
+{
+    __block NSString * result = nil;
+    
+    dispatch_block_t block = ^{
+        
+        result = _deviceID;
+        
+    };
+    
+    if (dispatch_get_specific(p2pManagerQueueTag))
+        block();
+    else
+        dispatch_sync(p2pManagerQueue, block);
+    
+    return result;
+}
+
+- (void)setDeviceID:(NSString *)deviceID
+{
+    dispatch_block_t block = ^{
+        
+        _deviceID = [deviceID copy];
+        
+    };
+    
+    if (dispatch_get_specific(p2pManagerQueueTag))
+        block();
+    else
+        dispatch_async(p2pManagerQueue, block);
+}
+
+
 unsigned int _getTickCount() {
     
     struct timeval tv;
@@ -219,127 +254,13 @@ unsigned int _getTickCount() {
     return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-//void *thread_ReceiveAudio(void *arg)
-//{
-//    NSLog(@"[thread_ReceiveAudio] Starting...");
-//    
-//    int avIndex = *(int *)arg;
-//    char buf[AUDIO_BUF_SIZE];
-//    unsigned int frmNo;
-//    int ret;
-//    FRAMEINFO_t frameInfo;
-//    
-//    while (1)
-//    {
-//        ret = avCheckAudioBuf(avIndex);
-//        if (ret < 0) break;
-//        if (ret < 3) // determined by audio frame rate
-//        {
-//            usleep(120000);
-//            continue;
-//        }
-//        
-//        ret = avRecvAudioData(avIndex, buf, AUDIO_BUF_SIZE, (char *)&frameInfo, sizeof(FRAMEINFO_t), &frmNo);
-//        
-//        if(ret == AV_ER_SESSION_CLOSE_BY_REMOTE)
-//        {
-//            NSLog(@"[thread_ReceiveAudio] AV_ER_SESSION_CLOSE_BY_REMOTE");
-//            break;
-//        }
-//        else if(ret == AV_ER_REMOTE_TIMEOUT_DISCONNECT)
-//        {
-//            NSLog(@"[thread_ReceiveAudio] AV_ER_REMOTE_TIMEOUT_DISCONNECT");
-//            break;
-//        }
-//        else if(ret == IOTC_ER_INVALID_SID)
-//        {
-//            NSLog(@"[thread_ReceiveAudio] Session cant be used anymore");
-//            break;
-//        }
-//        else if (ret == AV_ER_LOSED_THIS_FRAME)
-//        {
-//            continue;
-//        }
-//        
-//        // Now the data is ready in audioBuffer[0 ... ret - 1]
-//        // Do something here
-//    }
-//    
-//    NSLog(@"[thread_ReceiveAudio] thread exit");
-//    return 0;
-//}
-//
-//void *thread_ReceiveVideo(void *arg)
-//{
-//    NSLog(@"[thread_ReceiveVideo] Starting...");
-//    
-//    int avIndex = *(int *)arg;
-//    char *receiveBuff = malloc(VIDEO_BUF_SIZE + 32);
-//    char *videoBuff = malloc(VIDEO_BUF_SIZE);
-//    unsigned int frmNo;
-//    int ret;
-//    FRAMEINFO_t frameInfo;
-//    
-//    while (1)
-//    {
-//        ret = avRecvFrameData(avIndex, receiveBuff, VIDEO_BUF_SIZE + 32, (char *)&frameInfo, sizeof(FRAMEINFO_t), &frmNo);
-//        
-//        if(ret == AV_ER_DATA_NOREADY)
-//        {
-//            usleep(30000);
-//            continue;
-//        }
-//        else if(ret == AV_ER_LOSED_THIS_FRAME)
-//        {
-//            NSLog(@"Lost video frame NO[%d]", frmNo);
-//            continue;
-//        }
-//        else if(ret == AV_ER_INCOMPLETE_FRAME)
-//        {
-//            NSLog(@"Incomplete video frame NO[%d]", frmNo);
-//            continue;
-//        }
-//        else if(ret == AV_ER_SESSION_CLOSE_BY_REMOTE)
-//        {
-//            NSLog(@"[thread_ReceiveVideo] AV_ER_SESSION_CLOSE_BY_REMOTE");
-//            break;
-//        }
-//        else if(ret == AV_ER_REMOTE_TIMEOUT_DISCONNECT)
-//        {
-//            NSLog(@"[thread_ReceiveVideo] AV_ER_REMOTE_TIMEOUT_DISCONNECT");
-//            break;
-//        }
-//        else if(ret == IOTC_ER_INVALID_SID)
-//        {
-//            NSLog(@"[thread_ReceiveVideo] Session cant be used anymore");
-//            break;
-//        }
-//        //这里是帧格式判断
-//        if(frameInfo.flags == IPC_FRAME_FLAG_IFRAME)
-//        {
-//            // got an IFrame, draw it.
-//        }
-//        
-//        if(ret > 0)
-//        {
-//            memset(videoBuff, 0, VIDEO_BUF_SIZE);
-//            memcpy(videoBuff, receiveBuff+32, VIDEO_BUF_SIZE);
-//            NSData *videoData = [NSData dataWithBytes:videoBuff length:VIDEO_BUF_SIZE];
-//            
-//            [[(__bridge P2PManager*)arg delegate] p2pManager:nil didReadVideoData:videoData];
-//        }
-//    }
-//    free(receiveBuff);
-//    free(videoBuff);
-//    NSLog(@"[thread_ReceiveVideo] thread exit");
-//    return 0;
-//}
-
-
-
 - (void)getMediaInfoWithVideoIndex:(int )arg
 {
     if (!dispatch_get_specific(p2pManagerQueueTag)) return;
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(p2pManager:didStartPlayWithDEviceID:)]) {
+        [self.delegate p2pManager:self didStartPlayWithDEviceID:[self.deviceID copy]];
+    }
     
     NSLog(@"[thread_ReceiveVideo] Starting...");
 
@@ -443,14 +364,19 @@ unsigned int _getTickCount() {
     }
     
     free(receiveBuff);
-    
-    avClientStop(self.avIndex);
+    [self stopP2PWithAvIndex:arg];
+    avClientStop(arg);
     NSLog(@"avClientStop OK");
     IOTC_Session_Close(self.SID);
     NSLog(@"IOTC_Session_Close OK");
     avDeInitialize();
     IOTC_DeInitialize();
     closeConnection = NO;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(p2pManager:didStopPlayWithDEviceID:)]) {
+        [self.delegate p2pManager:self didStopPlayWithDEviceID:[self.deviceID copy]];
+    }
+    [self setDeviceID:nil];
+    
     NSLog(@"[thread_ReceiveVideo] thread exit");
 }
 
@@ -459,6 +385,10 @@ unsigned int _getTickCount() {
     if (!dispatch_get_specific(p2pManagerQueueTag)) return 0;
     
     [self setAvIndex:avindex];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(p2pManager:didStartTryToPlayerWithDeviceID:)]) {
+        [self.delegate p2pManager:self didStartTryToPlayerWithDeviceID:[self deviceID]];
+    }
     
     int ret = 0;
     unsigned short val = 0;
@@ -487,7 +417,7 @@ unsigned int _getTickCount() {
     return 1;
 }
 
-- (void)startWithDeviceID:(int)sid
+- (void)startWithSID:(int)sid
 {
     [self setSID:sid];
     
@@ -517,12 +447,32 @@ unsigned int _getTickCount() {
     else
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block);
 }
+/**
+ *  停止播放
+ *
+ *  @param avindex 播放通道
+ *
+ *  @return 停止成功与否
+ */
+- (int)stopP2PWithAvIndex:(int)avindex
+{
+    int ret = 0;
+    SMsgAVIoctrlAVStream ioMsg;
+    memset(&ioMsg, 0, sizeof(SMsgAVIoctrlAVStream));
+    if ((ret = avSendIOCtrl(avindex, IOTYPE_USER_IPCAM_STOP, (char *)&ioMsg, sizeof(SMsgAVIoctrlAVStream)) < 0))
+    {
+        NSLog(@"stop_ipcam_stream_failed[%d]", ret);
+        return 0;
+    }
+    return 1;
+}
 
 - (void)closeConnection
 {
     if (!closeConnection) {
         if (SID == -999999) return;
         if (avIndex == -999999) return;
+        if (_deviceID == nil)  return;
         
         closeConnection = YES;
     }
@@ -537,6 +487,7 @@ unsigned int _getTickCount() {
             int ret;
             
             LOG(@"AVStream Client Start");
+            [self setDeviceID:deviceID];
             
             // use which Master base on location, port 0 means to get a random port.
             unsigned short nUdpPort = (unsigned short)(10000 + (_getTickCount() % 10000));
@@ -545,7 +496,7 @@ unsigned int _getTickCount() {
             
             if (ret != IOTC_ER_NoERROR) {
                 LOG(@"IOTCAPIs exit...");
-                //return;
+                return;
             }
             
             // alloc 4 sessions for video and two-way audio
@@ -591,78 +542,4 @@ unsigned int _getTickCount() {
         dispatch_async(p2pManagerQueue, block);
 }
 
-//- (void)start:(NSString *)UID {
-//    
-//    dispatch_block_t block = ^{
-//        
-//        @autoreleasepool {
-//            
-//            int ret, SID;
-//            NSLog(@"AVStream Client Start");
-//            
-//            // use which Master base on location, port 0 means to get a random port.
-//            unsigned short nUdpPort = (unsigned short)(10000 + (_getTickCount() % 10000));
-//            ret = IOTC_Initialize(nUdpPort, "50.19.254.134", "122.248.234.207", "m4.iotcplatform.com", "m5.iotcplatform.com");
-//            NSLog(@"IOTC_Initialize() ret = %d", ret);
-//            
-//            if (ret != IOTC_ER_NoERROR) {
-//                NSLog(@"IOTCAPIs exit...");
-//                return;
-//            }
-//            
-//            // alloc 4 sessions for video and two-way audio
-//            avInitialize(4);
-//            
-//            SID = IOTC_Connect_ByUID((char *)[UID UTF8String]);
-//            
-//            printf("Step 2: call IOTC_Connect_ByUID2(%s) ret(%d).......\n", [UID UTF8String], SID);
-//            struct st_SInfo Sinfo;
-//            ret = IOTC_Session_Check(SID, &Sinfo);
-//            
-//            if (ret >= 0)
-//            {
-//                if(Sinfo.Mode == 0)
-//                    printf("Device is from %s:%d[%s] Mode=P2P\n",Sinfo.RemoteIP, Sinfo.RemotePort, Sinfo.UID);
-//                else if (Sinfo.Mode == 1)
-//                    printf("Device is from %s:%d[%s] Mode=RLY\n",Sinfo.RemoteIP, Sinfo.RemotePort, Sinfo.UID);
-//                else if (Sinfo.Mode == 2)
-//                    printf("Device is from %s:%d[%s] Mode=LAN\n",Sinfo.RemoteIP, Sinfo.RemotePort, Sinfo.UID);
-//            }
-//
-//            
-//            unsigned long srvType;
-//            int avIndex = avClientStart(SID, "admin", "888888", 20000, &srvType, 0);
-//            printf("Step 3: call avClientStart(%d).......\n", avIndex);
-//            
-//            if(avIndex < 0)
-//            {
-//                printf("avClientStart failed[%d]\n", avIndex);
-//                return;
-//            }
-//            
-//            if ([self start_ipcam_stream:avIndex])
-//            {
-//                pthread_t ThreadVideo_ID, ThreadAudio_ID;
-//                pthread_create(&ThreadVideo_ID, NULL, &thread_ReceiveVideo, (void *)&avIndex);
-//                pthread_create(&ThreadAudio_ID, NULL, &thread_ReceiveAudio, (void *)&avIndex);
-//                pthread_join(ThreadVideo_ID, NULL);
-//                pthread_join(ThreadAudio_ID, NULL);
-//            }
-//            
-//            avClientStop(avIndex);
-//            NSLog(@"avClientStop OK");
-//            IOTC_Session_Close(SID);
-//            NSLog(@"IOTC_Session_Close OK");
-//            avDeInitialize();
-//            IOTC_DeInitialize();
-//            
-//            NSLog(@"StreamClient exit...");
-//        }
-//    };
-//    
-//    if (dispatch_get_specific(p2pManagerQueueTag))
-//        block();
-//    else
-//        dispatch_async(p2pManagerQueue, block);
-//}
 @end
