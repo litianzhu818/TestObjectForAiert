@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6244" systemVersion="13F34" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="AiertDeviceCoreDataStorageObject" representedClassName="AiertDeviceCoreDataObject" syncable="YES">
+    <entity name="AiertDeviceCoreDataStorageObject" representedClassName="AiertDeviceCoreDataStorageObject" syncable="YES">
         <attribute name="deviceAdditionInfo" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="deviceID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="deviceName" optional="YES" attributeType="String" syncable="YES"/>

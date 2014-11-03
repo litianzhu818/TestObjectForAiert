@@ -340,6 +340,7 @@
     [button setTag:indexPath.row];
     [button setFrame:CGRectMake(0, 0, 40, 40)];
     [button setBackgroundImage:PNG_NAME(@"video_14") forState:UIControlStateNormal];
+    [button setBackgroundImage:PNG_NAME(@"video_14_selected") forState:UIControlStateHighlighted];
     [button addTarget:self action:@selector(editDevice:) forControlEvents:UIControlEventTouchUpInside];
     cell.accessoryView = button;
     

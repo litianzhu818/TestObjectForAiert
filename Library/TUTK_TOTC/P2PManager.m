@@ -264,7 +264,7 @@ unsigned int _getTickCount() {
     
     NSLog(@"[thread_ReceiveVideo] Starting...");
 
-    char *receiveBuff = malloc(VIDEO_BUF_SIZE);
+//    char *receiveBuff = malloc(VIDEO_BUF_SIZE);
     Byte g711AudioBuff[325];
     Byte pcmAudioBuff[651];
     int videoBuffLength;
@@ -275,6 +275,7 @@ unsigned int _getTickCount() {
     
     while (!closeConnection)
     {
+        char *receiveBuff = malloc(VIDEO_BUF_SIZE);
         ret = avRecvFrameData(arg, receiveBuff, VIDEO_BUF_SIZE, (char *)&frameInfo, sizeof(FRAMEINFO_t), &frmNo);
         
         if(ret == AV_ER_DATA_NOREADY)
@@ -361,9 +362,11 @@ unsigned int _getTickCount() {
                 data = nil;
             }
         }
+        
+        free(receiveBuff);
     }
     
-    free(receiveBuff);
+//    free(receiveBuff);
     [self stopP2PWithAvIndex:arg];
     avClientStop(arg);
     NSLog(@"avClientStop OK");
@@ -372,9 +375,11 @@ unsigned int _getTickCount() {
     avDeInitialize();
     IOTC_DeInitialize();
     closeConnection = NO;
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(p2pManager:didStopPlayWithDEviceID:)]) {
         [self.delegate p2pManager:self didStopPlayWithDEviceID:[self.deviceID copy]];
     }
+    
     [self setDeviceID:nil];
     
     NSLog(@"[thread_ReceiveVideo] thread exit");
