@@ -154,6 +154,9 @@
     [self.p2pManager closeConnection];
 }
 
+#pragma mark -
+#pragma mark - P2PManagerDelegate Methods
+
 - (void)p2pManager:(P2PManager *)p2pManager didConnectDeviceID:(NSString *)deviceID withType:(CONNECT_TYPE)connectType ip:(NSString *)ip port:(NSUInteger)port sid:(int)sid
 {
     if ([deviceID isEqualToString:self.currentDeviceId] && connectType != CONNECT_LAN_TYPE) {
@@ -171,8 +174,7 @@
 //
 //    }
 }
-#pragma mark -
-#pragma mark - P2PManagerDelegate Methods
+
 - (void)p2pManager:(P2PManager *)p2pManager didReadVideoData:(NSData *)data
 {
     //    DLog(@"Aiert_ios各阶段运行状态<<=====TCP 视频数据======》》");
@@ -212,6 +214,48 @@
         }
     });
  
+}
+
+- (void)p2pManager:(P2PManager *)p2pManager didStartPlayWithDEviceID:(NSString *)deviceID
+{
+    if ([deviceID isEqualToString:self.currentDeviceId]) {
+        //P2P播放开始
+        dispatch_group_async(_group, _recordFileQueue, ^{
+            @autoreleasepool {
+        
+                [self.streamObersvers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+                    
+                    if ([obj respondsToSelector:@selector(didStartPlayWithDeviceID:)]) {
+                        [obj didStartPlayWithDeviceID:self.currentDeviceId];
+                    }
+                }];
+            }
+            
+        });
+
+    }
+ 
+}
+
+- (void)p2pManager:(P2PManager *)p2pManager didStopPlayWithDEviceID:(NSString *)deviceID
+{
+    if ([deviceID isEqualToString:self.currentDeviceId]) {
+        //P2P播放关闭
+        
+        dispatch_group_async(_group, _recordFileQueue, ^{
+            @autoreleasepool {
+                
+                [self.streamObersvers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+                    
+                    if ([obj respondsToSelector:@selector(didStopPlayWithDeviceID:)]) {
+                        [obj didStopPlayWithDeviceID:self.currentDeviceId];
+                    }
+                }];
+            }
+            
+        });
+        
+    }
 }
 
 #else

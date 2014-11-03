@@ -147,6 +147,7 @@
                                                userName:self.device.userInfo.userName
                                                password:self.device.userInfo.userPassword
                                                 timeout:0];
+    [SVProgressHUD showWithStatus:@"正在连接..." maskType:SVProgressHUDMaskTypeClear];
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -396,14 +397,14 @@
 
     }
     
-    [[LibCoreWrap sharedCore] unRegisterStreamObserverWithDeviceId:nil
-                                                           channel:0
-                                                    streamObserver:self];
-    
     [[LibCoreWrap sharedCore] stopRealPlayWithDeviceId:self.device.deviceID
                                                channel:_currentChannel];
     
     [AppData resetCameraState];
+    
+    if (![SVProgressHUD isVisible]) {
+        [SVProgressHUD showWithStatus:@"正在关闭..." maskType:SVProgressHUDMaskTypeClear];
+    }
     
     DLog(@"%d",[AppData cameraState]);
     
@@ -550,9 +551,9 @@
                 [_delegatePlayViewController dismissViewControllerInPlayViewControlller:_verticalScreen];
             }
             
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.navigationController popToRootViewControllerAnimated:YES];
-            });
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [self.navigationController popToRootViewControllerAnimated:YES];
+//            });
 
         }
             break;
@@ -610,6 +611,32 @@
 }
 
 #pragma mark - LibCore Stream observer
+
+- (void)didStartPlayWithDeviceID:(NSString *)deviceID
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        if ([SVProgressHUD isVisible]) {
+            [SVProgressHUD dismiss];
+        }
+        
+    });
+}
+- (void)didStopPlayWithDeviceID:(NSString *)deviceID
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [[LibCoreWrap sharedCore] unRegisterStreamObserverWithDeviceId:nil
+                                                               channel:0
+                                                        streamObserver:self];
+        
+        if ([SVProgressHUD isVisible]) {
+            [SVProgressHUD dismiss];
+        }
+        
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    });
+}
 
 - (void)didReceiveRawData:(NSData *)data tag:(NSInteger)tag;
 {

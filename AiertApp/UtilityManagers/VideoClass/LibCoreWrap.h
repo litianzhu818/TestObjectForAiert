@@ -139,9 +139,13 @@
 @end
 
 @protocol StreamObserverProtocol
+
 - (void)didReceiveRawData:(NSData *)data tag:(NSInteger)tag;
 - (void)didReceiveImageData:(id)data;
 - (void)didReceiveAudioData:(NSData *)data;
+- (void)didStartPlayWithDeviceID:(NSString *)deviceID;
+- (void)didStopPlayWithDeviceID:(NSString *)deviceID;
+
 @end
 
 @protocol EventObserverProtocol
