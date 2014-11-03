@@ -407,6 +407,9 @@ unsigned int _getTickCount() {
     
     SMsgAVIoctrlAVStream ioMsg;
     memset(&ioMsg, 0, sizeof(SMsgAVIoctrlAVStream));
+    ioMsg.channel = 0;/*QVGA*/
+    //ioMsg.channel = 1;/*VGA*/
+    //ioMsg.channel = 2;/*720*/
     if ((ret = avSendIOCtrl(avIndex, IOTYPE_USER_IPCAM_START, (char *)&ioMsg, sizeof(SMsgAVIoctrlAVStream)) < 0))
     {
         NSLog(@"start_ipcam_stream_failed[%d]", ret);
@@ -501,6 +504,7 @@ unsigned int _getTickCount() {
             
             if (ret != IOTC_ER_NoERROR) {
                 LOG(@"IOTCAPIs exit...");
+                IOTC_DeInitialize();
                 return;
             }
             
