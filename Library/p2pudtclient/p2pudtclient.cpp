@@ -33,11 +33,6 @@ bool InitZSipLib()
 #endif
 
 #if FOR_USA_SERVER
-	//root["StunIP"] = "register.zmodo.com";  //"192.241.57.101";
-	//root["StunPort"] = "8088";
-	//root["ServerIP"] =  "register.zmodo.com";  //"192.241.57.101";
-	//root["ServerPort"] = "8088";
-
 	root["StunIP"] = "192.241.57.101";  //"192.241.57.101";
 	root["StunPort"] = "8088";
 	root["ServerIP"] =  "192.241.57.101";  //"192.241.57.101";
