@@ -45,6 +45,14 @@
     [self initializationParameters];
     
 }
+-(void) viewDidAppear:(BOOL)animated
+{
+    
+    self.scrollView.frame = CGRectMake(0, 0, VIEW_W(self.view), VIEW_H(self.view));
+    
+    [self.scrollView setContentSize:CGSizeMake(VIEW_W(self.view), VIEW_H(self.view)+50)];
+    
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
