@@ -271,13 +271,16 @@ unsigned int _getTickCount() {
     int audioBuffLength;
     unsigned int frmNo;
     int ret;
+    int frame1 = 32 * 1024;
+    int frame2 = 128 * 1024;
+    int frame3 = 240;//240/480/720
     FRAMEINFO_t frameInfo;
     
     while (!closeConnection)
     {
         char *receiveBuff = malloc(VIDEO_BUF_SIZE);
-        ret = avRecvFrameData(arg, receiveBuff, VIDEO_BUF_SIZE, (char *)&frameInfo, sizeof(FRAMEINFO_t), &frmNo);
-        
+//        ret = avRecvFrameData(arg, receiveBuff, VIDEO_BUF_SIZE, (char *)&frameInfo, sizeof(FRAMEINFO_t), &frmNo);
+        ret = avRecvFrameData2(avIndex, receiveBuff, VIDEO_BUF_SIZE, &frame1, &frame2, (char *)&frameInfo, sizeof(FRAMEINFO_t), &frame3, &frmNo);
         if(ret == AV_ER_DATA_NOREADY)
         {
             usleep(30000);
