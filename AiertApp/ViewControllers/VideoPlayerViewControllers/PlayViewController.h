@@ -20,7 +20,7 @@
 @end
 
 @class ZMDevice;
-@interface PlayViewController : UIViewController <SelectQualityViewDelegate, CMPopTipViewDelegate, UIScrollViewDelegate,PlayViewControllerDelegate,PlayBottomViewDelegate>
+@interface PlayViewController : BaseViewController <SelectQualityViewDelegate, CMPopTipViewDelegate, UIScrollViewDelegate,PlayViewControllerDelegate,PlayBottomViewDelegate>
 {
     BOOL _enableSound;
     BOOL _enableMicrophone;

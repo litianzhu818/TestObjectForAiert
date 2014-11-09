@@ -611,6 +611,20 @@
 }
 
 #pragma mark - LibCore Stream observer
+- (void)didFailedPlayWithDeviceID:(NSString *)deviceID
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        if ([SVProgressHUD isVisible]) {
+            [SVProgressHUD dismiss];
+        }
+        
+        [self showMessage:@"连接失败！请检查设备连接后重试..." title:@"提示" cancelButtonTitle:@"我知道了" cancleBlock:^{
+
+        }];
+        
+    });
+}
 
 - (void)didStartPlayWithDeviceID:(NSString *)deviceID
 {

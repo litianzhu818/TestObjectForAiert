@@ -159,7 +159,7 @@
 
 - (void)p2pManager:(P2PManager *)p2pManager didConnectDeviceID:(NSString *)deviceID withType:(CONNECT_TYPE)connectType ip:(NSString *)ip port:(NSUInteger)port sid:(int)sid
 {
-    if ([deviceID isEqualToString:self.currentDeviceId] && connectType != CONNECT_LAN_TYPE) {
+    if ([deviceID isEqualToString:self.currentDeviceId] /*&& connectType != CONNECT_LAN_TYPE*/) {
         //P2P播放或者远程连接播放
         [p2pManager startWithSID:sid];
     }
@@ -173,6 +173,24 @@
 //        });
 //
 //    }
+}
+
+- (void)p2pManager:(P2PManager *)p2pManager didFailedStartPlayWithDeviceID:(NSString *)deviceID
+{
+    if ([self.currentDeviceId isEqualToString:deviceID]) {
+        dispatch_group_async(_group, _recordFileQueue, ^{
+            @autoreleasepool {
+                
+                [self.streamObersvers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+                    
+                    if ([obj respondsToSelector:@selector(didFailedPlayWithDeviceID:)]) {
+                        [obj didFailedPlayWithDeviceID: self.currentDeviceId];
+                    }
+                }];
+            }
+            
+        });
+    }
 }
 
 - (void)p2pManager:(P2PManager *)p2pManager didReadVideoData:(NSData *)data

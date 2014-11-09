@@ -145,6 +145,7 @@
 - (void)didReceiveAudioData:(NSData *)data;
 - (void)didStartPlayWithDeviceID:(NSString *)deviceID;
 - (void)didStopPlayWithDeviceID:(NSString *)deviceID;
+- (void)didFailedPlayWithDeviceID:(NSString *)deviceID;
 
 @end
 

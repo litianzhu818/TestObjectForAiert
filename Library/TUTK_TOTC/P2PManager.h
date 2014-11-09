@@ -48,6 +48,8 @@ typedef NS_ENUM(NSUInteger, CONNECT_TYPE){
 @optional
 
 - (void)p2pManager:(P2PManager *)p2pManager didConnectDeviceID:(NSString *)deviceID withType:(CONNECT_TYPE)connectType ip:(NSString *)ip port:(NSUInteger)port sid:(int)sid;
+- (void)p2pManager:(P2PManager *)p2pManager didFailedConnectDeviceID:(NSString *)deviceID;
+- (void)p2pManager:(P2PManager *)p2pManager didFailedStartPlayWithDeviceID:(NSString *)deviceID;
 - (void)p2pManager:(P2PManager *)p2pManager didReadAudioData:(NSData *)data;
 - (void)p2pManager:(P2PManager *)p2pManager didReadVideoData:(NSData *)data;
 - (void)p2pManager:(P2PManager *)p2pManager didReadRawData:(NSData *)data tag:(NSInteger)tag;
@@ -57,6 +59,8 @@ typedef NS_ENUM(NSUInteger, CONNECT_TYPE){
 - (void)p2pManager:(P2PManager *)p2pManager didStartTryToPlayerWithDeviceID:(NSString *)deviceID;
 - (void)p2pManager:(P2PManager *)p2pManager didStartPlayWithDEviceID:(NSString *)deviceID;
 - (void)p2pManager:(P2PManager *)p2pManager didStopPlayWithDEviceID:(NSString *)deviceID;
+
+- (void)p2pManager:(P2PManager *)p2pManager didPlayTimeoutWithEviceID:(NSString *)deviceID;
 
 - (void)didReadDataTimeOut;
 - (void)didDisconnect;

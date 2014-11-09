@@ -404,7 +404,19 @@ unsigned int _getTickCount() {
     if ((ret = avSendIOCtrl(avIndex, IOTYPE_INNER_SND_DATA_DELAY, (char *)&val, sizeof(unsigned short)) < 0))
     {
         NSLog(@"start_ipcam_stream_failed[%d]", ret);
+        
+        avClientStop(avIndex);
+        NSLog(@"avClientStop OK");
+        IOTC_Session_Close(self.SID);
+        NSLog(@"IOTC_Session_Close OK");
+        avDeInitialize();
         IOTC_DeInitialize();
+        closeConnection = NO;
+        
+        if(self.delegate && [self.delegate respondsToSelector:@selector(p2pManager:didFailedStartPlayWithDeviceID:)])
+        {
+            [self.delegate p2pManager:self didFailedStartPlayWithDeviceID:self.deviceID];
+        }
         return 0;
     }
     
@@ -416,12 +428,38 @@ unsigned int _getTickCount() {
     if ((ret = avSendIOCtrl(avIndex, IOTYPE_USER_IPCAM_START, (char *)&ioMsg, sizeof(SMsgAVIoctrlAVStream)) < 0))
     {
         NSLog(@"start_ipcam_stream_failed[%d]", ret);
+        
+        avClientStop(avIndex);
+        NSLog(@"avClientStop OK");
+        IOTC_Session_Close(self.SID);
+        NSLog(@"IOTC_Session_Close OK");
+        avDeInitialize();
+        IOTC_DeInitialize();
+        closeConnection = NO;
+        
+        if (self.delegate && [self.delegate respondsToSelector:@selector(p2pManager:didFailedStartPlayWithDeviceID:)]) {
+            [self.delegate p2pManager:self didFailedStartPlayWithDeviceID:self.deviceID];
+        }
+        
         return 0;
     }
     
     if ((ret = avSendIOCtrl(avIndex, IOTYPE_USER_IPCAM_AUDIOSTART, (char *)&ioMsg, sizeof(SMsgAVIoctrlAVStream)) < 0))
     {
         NSLog(@"start_ipcam_stream_failed[%d]", ret);
+        
+        avClientStop(avIndex);
+        NSLog(@"avClientStop OK");
+        IOTC_Session_Close(self.SID);
+        NSLog(@"IOTC_Session_Close OK");
+        avDeInitialize();
+        IOTC_DeInitialize();
+        closeConnection = NO;
+        
+        if (self.delegate && [self.delegate respondsToSelector:@selector(p2pManager:didFailedStartPlayWithDeviceID:)]) {
+            [self.delegate p2pManager:self didFailedStartPlayWithDeviceID:self.deviceID];
+        }
+        
         return 0;
     }
     
@@ -440,8 +478,22 @@ unsigned int _getTickCount() {
             self.avIndex = avClientStart(self.SID, "admin", "888888", 20000, &srvType, 0);
             printf("Step 3: call avClientStart(%d).......\n", avIndex);
             
+            
             if(self.avIndex < 0){
                 printf("avClientStart failed[%d]\n", avIndex);
+                
+                avClientStop(avIndex);
+                NSLog(@"avClientStop OK");
+                IOTC_Session_Close(sid);
+                NSLog(@"IOTC_Session_Close OK");
+                avDeInitialize();
+                IOTC_DeInitialize();
+                closeConnection = NO;
+                
+                if (self.delegate && [self.delegate respondsToSelector:@selector(p2pManager:didFailedStartPlayWithDeviceID:)]) {
+                    [self.delegate p2pManager:self didFailedStartPlayWithDeviceID:self.deviceID];
+                }
+                
                 return;
             }
             
