@@ -294,6 +294,10 @@
 		E77FBDC019CEC75900D1698C /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E77FBDBF19CEC75900D1698C /* CFNetwork.framework */; };
 		E7927B5819CEA09400588FB5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E7927B5719CEA09400588FB5 /* libz.dylib */; };
 		E7AE674819FF2B66008546EA /* PlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AE674719FF2B66008546EA /* PlayViewController.m */; };
+		E7AF3D5A1A108D290073116D /* PlayerTopBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF3D591A108D290073116D /* PlayerTopBar.m */; };
+		E7AF3D5D1A108DAF0073116D /* PlayerBottomBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF3D5C1A108DAF0073116D /* PlayerBottomBar.m */; };
+		E7AF3D5F1A1094D70073116D /* PlayerBottonBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7AF3D5E1A1094D70073116D /* PlayerBottonBar.xib */; };
+		E7AF3D611A1094E70073116D /* PlayerTopBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7AF3D601A1094E70073116D /* PlayerTopBar.xib */; };
 		E7AF49AC19EA3C0D00699BA1 /* GCDMulticastDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF49A719EA3C0D00699BA1 /* GCDMulticastDelegate.m */; };
 		E7AF49AD19EA3C0D00699BA1 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF49AA19EA3C0D00699BA1 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E7AF4B4219EA4E8300699BA1 /* AddCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF4AEA19EA4E8300699BA1 /* AddCameraViewController.m */; };
@@ -916,6 +920,12 @@
 		E7927B5719CEA09400588FB5 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		E7AE674619FF2B66008546EA /* PlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayViewController.h; sourceTree = "<group>"; };
 		E7AE674719FF2B66008546EA /* PlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayViewController.m; sourceTree = "<group>"; };
+		E7AF3D581A108D290073116D /* PlayerTopBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerTopBar.h; sourceTree = "<group>"; };
+		E7AF3D591A108D290073116D /* PlayerTopBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerTopBar.m; sourceTree = "<group>"; };
+		E7AF3D5B1A108DAF0073116D /* PlayerBottomBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerBottomBar.h; sourceTree = "<group>"; };
+		E7AF3D5C1A108DAF0073116D /* PlayerBottomBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerBottomBar.m; sourceTree = "<group>"; };
+		E7AF3D5E1A1094D70073116D /* PlayerBottonBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerBottonBar.xib; sourceTree = "<group>"; };
+		E7AF3D601A1094E70073116D /* PlayerTopBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerTopBar.xib; sourceTree = "<group>"; };
 		E7AF49A619EA3C0D00699BA1 /* GCDMulticastDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDMulticastDelegate.h; sourceTree = "<group>"; };
 		E7AF49A719EA3C0D00699BA1 /* GCDMulticastDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDMulticastDelegate.m; sourceTree = "<group>"; };
 		E7AF49A919EA3C0D00699BA1 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
@@ -2178,6 +2188,26 @@
 			path = CoreData;
 			sourceTree = "<group>";
 		};
+		E7AF3D561A108CE00073116D /* PlayerBottomBar */ = {
+			isa = PBXGroup;
+			children = (
+				E7AF3D5B1A108DAF0073116D /* PlayerBottomBar.h */,
+				E7AF3D5C1A108DAF0073116D /* PlayerBottomBar.m */,
+				E7AF3D5E1A1094D70073116D /* PlayerBottonBar.xib */,
+			);
+			path = PlayerBottomBar;
+			sourceTree = "<group>";
+		};
+		E7AF3D571A108CE00073116D /* PlayerTopBar */ = {
+			isa = PBXGroup;
+			children = (
+				E7AF3D581A108D290073116D /* PlayerTopBar.h */,
+				E7AF3D591A108D290073116D /* PlayerTopBar.m */,
+				E7AF3D601A1094E70073116D /* PlayerTopBar.xib */,
+			);
+			path = PlayerTopBar;
+			sourceTree = "<group>";
+		};
 		E7AF49A019EA3C0D00699BA1 /* UtilityManagers */ = {
 			isa = PBXGroup;
 			children = (
@@ -2414,6 +2444,8 @@
 		E7AF4BB219EA507300699BA1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E7AF3D561A108CE00073116D /* PlayerBottomBar */,
+				E7AF3D571A108CE00073116D /* PlayerTopBar */,
 				E7323ABC19ED27DD00FEBF38 /* SegmentedControl */,
 				E7AF4C4A19EA50AA00699BA1 /* PlayViewBottom */,
 				E7AF4BB319EA507300699BA1 /* StoryboardFies */,
@@ -3129,11 +3161,13 @@
 				3543F3F2188A7BF000107A48 /* live_stream_hd_selected@2x.png in Resources */,
 				3543F3D9188A7BF000107A48 /* live_mic_shutdown_unselected.png in Resources */,
 				3543F3ED188A7BF000107A48 /* live_stop_selected.png in Resources */,
+				E7AF3D611A1094E70073116D /* PlayerTopBar.xib in Resources */,
 				E7AF4B4A19EA4E8300699BA1 /* btn_close_selected.png in Resources */,
 				E7419E2C19E653D700B5B764 /* video_4@2x.png in Resources */,
 				3543F3B9188A7BF000107A48 /* icon_littlearrow_right.png in Resources */,
 				F47E81A819076E14003C0F1B /* live_101_sel.png in Resources */,
 				3543F41A188A7BF000107A48 /* navigationbar_setting_selected@2x.png in Resources */,
+				E7AF3D5F1A1094D70073116D /* PlayerBottonBar.xib in Resources */,
 				3543F3F1188A7BF000107A48 /* live_stream_hd_selected.png in Resources */,
 				3543F400188A7BF000107A48 /* live_stream_unselected@2x.png in Resources */,
 				3543F3AF188A7BF000107A48 /* adddevice_putfield.png in Resources */,
@@ -3390,6 +3424,7 @@
 				E7AF4B6919EA4E8300699BA1 /* StorageListViewController.m in Sources */,
 				E7E3055C19ECC4CB00F80D06 /* EditDeviceViewController.m in Sources */,
 				E7423B8019E7C02B00604129 /* AiertDeviceCoreDataStorage.m in Sources */,
+				E7AF3D5D1A108DAF0073116D /* PlayerBottomBar.m in Sources */,
 				3641E63818EC035A005527C7 /* UIButton+WebCache.m in Sources */,
 				E7AF4C3719EA507300699BA1 /* CXAlertViewExEnterPassword.m in Sources */,
 				351C3BC018879FFA00CB5215 /* CMPopTipView.m in Sources */,
@@ -3430,6 +3465,7 @@
 				E7B186BF19EE47420091685F /* VideoPlayerViewController.m in Sources */,
 				E7AF4C3619EA507300699BA1 /* CXAlertViewEx.m in Sources */,
 				352E2F7F1887EBD3009324A3 /* LFGlassView.m in Sources */,
+				E7AF3D5A1A108D290073116D /* PlayerTopBar.m in Sources */,
 				E7AF4C2F19EA507300699BA1 /* UIGroupCellBackgroundView.m in Sources */,
 				E7323AC319ED27DD00FEBF38 /* Segment.m in Sources */,
 				E7AF4B7B19EA4F0200699BA1 /* P2PConnection.mm in Sources */,
