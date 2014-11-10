@@ -14,6 +14,7 @@
     int _popupTipShowCount;
     
     NSFetchedResultsController *fetchedResultsController_device;
+    BOOL isEditing;
 }
 
 @property (strong, nonatomic) NSDictionary *deviceList;
@@ -83,6 +84,7 @@
                                                       
                                                       [tempSelf.tableView reloadData];
                                                   }];
+    isEditing = NO;
 
 }
 
@@ -127,6 +129,7 @@
     
     [self.navigationItem setTitleView:titleView];
     
+    [self.editButton setTitle:NSLocalizedString(@"编辑", @"")];
 //    UIButton *rightButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0, 0.0, 40, 30)];
 //    [rightButton setBackgroundImage:PNG_NAME(@"edit_btn") forState:UIControlStateNormal];
 //    [rightButton setTitle:@"编辑" forState:UIControlStateNormal];
@@ -157,7 +160,7 @@
     [super viewWillDisappear:animated];
     
     self.hidesBottomBarWhenPushed = NO;
-    
+    isEditing = NO;
     [popupTipView dismissAnimated:NO];
 }
 
@@ -169,7 +172,11 @@
 
 -(IBAction)clikedOnEditButton:(id)sender
 {
-
+    isEditing ? [self.editButton setTitle:@"编辑"]:[self.editButton setTitle:@"完成"];
+    
+    [self.tableView setEditing:!isEditing animated:YES];
+    
+    isEditing = !isEditing;
 }
 
 #pragma mark - Show Popup Tip
@@ -245,6 +252,17 @@
     
     return cell;
 }
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        AiertDeviceCoreDataStorageObject *deviceInfo = [self.fetchedResultsController_device objectAtIndexPath:indexPath];
+        [[myAppDelegate aiertDeviceCoreDataManager] deleteDeviceWithDeviceID:deviceInfo.deviceID];
+//        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+    }
+}
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

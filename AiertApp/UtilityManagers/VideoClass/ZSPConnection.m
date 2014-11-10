@@ -147,7 +147,26 @@ typedef struct LOGIN_INFO
 - (void)stopRealPlay
 {
     
-    DLog(@"stopDisplay !");
+//    DLog(@"stopDisplay !");
+//    [self composeHeadPacketWithCommand:CMD_STOP_VIDEO];
+//
+//    // connect to device
+//
+//   _commandSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_current_queue()];
+//
+//    NSError *err = nil;
+//
+//
+//    if (![_commandSocket connectToHost:self.deviceIp onPort:self.port withTimeout:CONNECT_TIMEOUT_INTERVAL error:&err]) // Asynchronous!
+//    {
+//        // If there was an error, it's likely something like "already connected" or "no delegate set"
+//    }
+//
+//    // Send getDevParam info
+//    [_commandSocket writeData:self.headData withTimeout:-1 tag:1];
+//
+//    // receive header packet
+//    //[_commandSocket readDataToLength:12 withTimeout:-1 tag:TAG_GET_WIFI_AP_LIST_HEADER];
     
     if (_asyncSocket) {
         [_asyncSocket setDelegate:nil];
@@ -967,7 +986,6 @@ typedef struct LOGIN_INFO
     {
         [AppData setConnectionState:_bLocalConnection ? CameraNetworkStateLocalRecvFailed : CameraNetworkStateUpnpRecvFailed];
     }
-    
     [self.zspConnectionDelegate didDisconnect];
 }
 

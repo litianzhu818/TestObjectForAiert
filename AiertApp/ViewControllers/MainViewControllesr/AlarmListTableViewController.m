@@ -232,7 +232,6 @@
 }
 
 
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MessageInfo *message = [_messageArray objectAtIndex:indexPath.row];

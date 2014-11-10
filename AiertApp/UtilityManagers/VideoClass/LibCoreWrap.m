@@ -159,7 +159,7 @@
 
 - (void)p2pManager:(P2PManager *)p2pManager didConnectDeviceID:(NSString *)deviceID withType:(CONNECT_TYPE)connectType ip:(NSString *)ip port:(NSUInteger)port sid:(int)sid
 {
-    if ([deviceID isEqualToString:self.currentDeviceId] /*&& connectType != CONNECT_LAN_TYPE*/) {
+    if ([deviceID isEqualToString:self.currentDeviceId]/* && connectType != CONNECT_LAN_TYPE*/) {
         //P2P播放或者远程连接播放
         [p2pManager startWithSID:sid];
     }
@@ -308,9 +308,24 @@
     __weak LibCoreWrap *tempSelf = self;
     
     dispatch_group_async(_group, _streamQueue, ^{
+        
         [tempSelf.zspConnection startDisplayWithLocalchannel:self.currentChannel
                                                    mediaType:self.currentChannel
                                                isLocalDevice:YES];
+        
+    });
+    
+    dispatch_group_async(_group, _recordFileQueue, ^{
+        @autoreleasepool {
+            
+            [self.streamObersvers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+                
+                if ([obj respondsToSelector:@selector(didStartPlayWithDeviceID:)]) {
+                    [obj didStartPlayWithDeviceID:self.currentDeviceId];
+                }
+            }];
+        }
+        
     });
 }
 
@@ -675,7 +690,19 @@
 
 - (void)didReadDataTimeOut
 {
-    
+    dispatch_group_async(_group, _recordFileQueue, ^{
+        @autoreleasepool {
+            
+            [self.streamObersvers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+                
+                if ([obj respondsToSelector:@selector(didFailedPlayWithDeviceID:)]) {
+                    [obj didFailedPlayWithDeviceID: self.currentDeviceId];
+                }
+            }];
+        }
+        
+    });
+
 }
 
 - (void)didReadRawData:(NSData *)data tag:(NSInteger)tag;
@@ -742,7 +769,7 @@
             [data getBytes:buffer range:NSMakeRange(24, nLen)];
             // Decode and display
             
-            if (!(CameraStateActive&[AppData cameraState])) {
+            if (!(CameraStateActive & [AppData cameraState])) {
                 
                 DLog(@"------------------------------------------------------> 2 stop playing !");
                 return;
@@ -762,6 +789,19 @@
 
 - (void)didDisconnect
 {
+    dispatch_group_async(_group, _recordFileQueue, ^{
+        @autoreleasepool {
+            
+            [self.streamObersvers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+                
+                if ([obj respondsToSelector:@selector(didFailedPlayWithDeviceID:)]) {
+                    [obj didFailedPlayWithDeviceID: self.currentDeviceId];
+                }
+            }];
+        }
+        
+    });
+
     
     NSInteger currentState = [AppData connectionState];
     
@@ -779,16 +819,6 @@
                 }
             });
 
-        }
-            break;
-        case CameraNetworkStateUpnpConnectFailed:
-        {
-            dispatch_group_async(_group, _streamQueue, ^{
-//                [self.p2pConnection requestStream:self.currentDeviceId
-//                                          channel:self.currentChannel
-//                                       streamType:self.currentMediaType
-//                                            isP2p:YES];
-            });
         }
             break;
         case CameraNetworkStateLocalConnectFailed:
@@ -899,42 +929,6 @@
     [self.pingTimer invalidate];
     self.pingTimer = nil;
 }
-//
-//- (void)didFindTheDevice:(NSDictionary *)devInfoDict;
-//{
-//    do {
-////        if (!(CameraStateActive&[AppData cameraState])) {
-////            break;
-////        }
-//        
-//        DLog(@"Aiert_ios各阶段运行状态<<======局域网内找到设备======》》");
-//        _bLocalDeviceExists = YES;// 找到设备
-//        
-//        if (_bLock) {
-//            break;
-//        }
-//        
-//        _bLock = YES;
-//        DLog(@"对局域网内找到的设备进行处理，且只处理一次，这个log只能打印一次");
-//        
-//        NSLog(@"Aiert_ios各阶段运行状态<<======局域网ZSP播放======》》");
-//        
-//        __weak LibCoreWrap *tempSelf = self;
-//        
-//        dispatch_group_async(_group, _streamQueue, ^{
-//            [tempSelf.zspConnection startDisplayWithDeviceIp:[devInfoDict objectForKey:kDeviceLocalIp]
-//                                                        port:[[devInfoDict objectForKey:kDeviceLocalPort] intValue]
-//                                                     channel:_currentChannel
-//                                                   mediaType:_currentMediaType
-//                                               isLocalDevice:YES];
-//        });
-//
-//    } while (0);
-//    
-//    [self.pingTimer invalidate];
-//    self.pingTimer = nil;
-//
-//}
 
 #pragma mark - currentFrame
 

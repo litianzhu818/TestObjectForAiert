@@ -595,6 +595,18 @@ unsigned int _getTickCount() {
                 if (self.delegate && [self.delegate respondsToSelector:@selector(p2pManager:didConnectDeviceID:withType:ip:port:sid:)]) {
                     [self.delegate p2pManager:self didConnectDeviceID:[NSString stringWithUTF8String:Sinfo.UID]withType:connectType ip:[NSString stringWithUTF8String:Sinfo.RemoteIP] port:Sinfo.RemotePort sid:SID];
                 }
+            }else{
+
+                IOTC_Session_Close(SID);
+                NSLog(@"IOTC_Session_Close OK");
+                avDeInitialize();
+                IOTC_DeInitialize();
+                closeConnection = NO;
+                
+                if (self.delegate && [self.delegate respondsToSelector:@selector(p2pManager:didFailedStartPlayWithDeviceID:)]) {
+                    [self.delegate p2pManager:self didFailedStartPlayWithDeviceID:self.deviceID];
+                }
+
             }
 
         }
