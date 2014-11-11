@@ -296,7 +296,7 @@
 		E7AE674819FF2B66008546EA /* PlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AE674719FF2B66008546EA /* PlayViewController.m */; };
 		E7AF3D5A1A108D290073116D /* PlayerTopBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF3D591A108D290073116D /* PlayerTopBar.m */; };
 		E7AF3D5D1A108DAF0073116D /* PlayerBottomBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF3D5C1A108DAF0073116D /* PlayerBottomBar.m */; };
-		E7AF3D5F1A1094D70073116D /* PlayerBottonBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7AF3D5E1A1094D70073116D /* PlayerBottonBar.xib */; };
+		E7AF3D5F1A1094D70073116D /* PlayerBottomBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7AF3D5E1A1094D70073116D /* PlayerBottomBar.xib */; };
 		E7AF3D611A1094E70073116D /* PlayerTopBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7AF3D601A1094E70073116D /* PlayerTopBar.xib */; };
 		E7AF49AC19EA3C0D00699BA1 /* GCDMulticastDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF49A719EA3C0D00699BA1 /* GCDMulticastDelegate.m */; };
 		E7AF49AD19EA3C0D00699BA1 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF49AA19EA3C0D00699BA1 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -398,6 +398,8 @@
 		E7AF4C4D19EA50AA00699BA1 /* PlayBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF4C4C19EA50AA00699BA1 /* PlayBottomView.m */; };
 		E7AF4C5019EA54F300699BA1 /* AiertDeviceCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF4C4F19EA54F300699BA1 /* AiertDeviceCoreDataManager.m */; };
 		E7B186BF19EE47420091685F /* VideoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B186BE19EE47420091685F /* VideoPlayerViewController.m */; };
+		E7B6244D1A12622A00FB7143 /* Start.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7B6244C1A12622A00FB7143 /* Start.storyboard */; };
+		E7B624511A12627B00FB7143 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B624501A12627B00FB7143 /* TestViewController.m */; };
 		E7BD7FF21A01D50100D05815 /* libIOTCAPIs_ALL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7BD7FE91A01D50100D05815 /* libIOTCAPIs_ALL.a */; };
 		E7BD7FF31A01D50100D05815 /* libIOTCAPIs_ALLT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7BD7FEA1A01D50100D05815 /* libIOTCAPIs_ALLT.a */; };
 		E7BD7FF41A01D50100D05815 /* libIOTCAPIs_P2PTunnel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7BD7FEB1A01D50100D05815 /* libIOTCAPIs_P2PTunnel.a */; };
@@ -924,7 +926,7 @@
 		E7AF3D591A108D290073116D /* PlayerTopBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerTopBar.m; sourceTree = "<group>"; };
 		E7AF3D5B1A108DAF0073116D /* PlayerBottomBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerBottomBar.h; sourceTree = "<group>"; };
 		E7AF3D5C1A108DAF0073116D /* PlayerBottomBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerBottomBar.m; sourceTree = "<group>"; };
-		E7AF3D5E1A1094D70073116D /* PlayerBottonBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerBottonBar.xib; sourceTree = "<group>"; };
+		E7AF3D5E1A1094D70073116D /* PlayerBottomBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerBottomBar.xib; sourceTree = "<group>"; };
 		E7AF3D601A1094E70073116D /* PlayerTopBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerTopBar.xib; sourceTree = "<group>"; };
 		E7AF49A619EA3C0D00699BA1 /* GCDMulticastDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDMulticastDelegate.h; sourceTree = "<group>"; };
 		E7AF49A719EA3C0D00699BA1 /* GCDMulticastDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDMulticastDelegate.m; sourceTree = "<group>"; };
@@ -1119,6 +1121,9 @@
 		E7AF4C4F19EA54F300699BA1 /* AiertDeviceCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AiertDeviceCoreDataManager.m; sourceTree = "<group>"; };
 		E7B186BD19EE47420091685F /* VideoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPlayerViewController.h; sourceTree = "<group>"; };
 		E7B186BE19EE47420091685F /* VideoPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoPlayerViewController.m; sourceTree = "<group>"; };
+		E7B6244C1A12622A00FB7143 /* Start.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Start.storyboard; sourceTree = "<group>"; };
+		E7B6244F1A12627B00FB7143 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
+		E7B624501A12627B00FB7143 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		E7BD7FE11A01D50100D05815 /* AVAPIs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVAPIs.h; sourceTree = "<group>"; };
 		E7BD7FE21A01D50100D05815 /* AVFRAMEINFO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVFRAMEINFO.h; sourceTree = "<group>"; };
 		E7BD7FE31A01D50100D05815 /* AVIOCTRLDEFs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVIOCTRLDEFs.h; sourceTree = "<group>"; };
@@ -2193,7 +2198,7 @@
 			children = (
 				E7AF3D5B1A108DAF0073116D /* PlayerBottomBar.h */,
 				E7AF3D5C1A108DAF0073116D /* PlayerBottomBar.m */,
-				E7AF3D5E1A1094D70073116D /* PlayerBottonBar.xib */,
+				E7AF3D5E1A1094D70073116D /* PlayerBottomBar.xib */,
 			);
 			path = PlayerBottomBar;
 			sourceTree = "<group>";
@@ -2250,6 +2255,7 @@
 		E7AF4AE719EA4E8300699BA1 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E7B6244E1A12626900FB7143 /* TestViewController */,
 				E7B186BC19EE471B0091685F /* VideoPlayerViewControllers */,
 				E7E3055919ECC4CB00F80D06 /* EditDeviceViewControllers */,
 				E7AF4AE819EA4E8300699BA1 /* AddDeviceViewControllers */,
@@ -2458,6 +2464,7 @@
 			isa = PBXGroup;
 			children = (
 				E7AF4BB419EA507300699BA1 /* Main_Storyboard.storyboard */,
+				E7B6244C1A12622A00FB7143 /* Start.storyboard */,
 			);
 			path = StoryboardFies;
 			sourceTree = "<group>";
@@ -2743,6 +2750,15 @@
 				E7B186BE19EE47420091685F /* VideoPlayerViewController.m */,
 			);
 			path = VideoPlayerViewControllers;
+			sourceTree = "<group>";
+		};
+		E7B6244E1A12626900FB7143 /* TestViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E7B6244F1A12627B00FB7143 /* TestViewController.h */,
+				E7B624501A12627B00FB7143 /* TestViewController.m */,
+			);
+			path = TestViewController;
 			sourceTree = "<group>";
 		};
 		E7BD7FDF1A01D50100D05815 /* TUTK_TOTC */ = {
@@ -3167,13 +3183,14 @@
 				3543F3B9188A7BF000107A48 /* icon_littlearrow_right.png in Resources */,
 				F47E81A819076E14003C0F1B /* live_101_sel.png in Resources */,
 				3543F41A188A7BF000107A48 /* navigationbar_setting_selected@2x.png in Resources */,
-				E7AF3D5F1A1094D70073116D /* PlayerBottonBar.xib in Resources */,
+				E7AF3D5F1A1094D70073116D /* PlayerBottomBar.xib in Resources */,
 				3543F3F1188A7BF000107A48 /* live_stream_hd_selected.png in Resources */,
 				3543F400188A7BF000107A48 /* live_stream_unselected@2x.png in Resources */,
 				3543F3AF188A7BF000107A48 /* adddevice_putfield.png in Resources */,
 				3543F3DF188A7BF000107A48 /* live_snapshot_unselected.png in Resources */,
 				E7419DFA19E653D700B5B764 /* 6@2x.png in Resources */,
 				E7419E0C19E653D700B5B764 /* icon_smal@2x.png in Resources */,
+				E7B6244D1A12622A00FB7143 /* Start.storyboard in Resources */,
 				E7419DF919E653D700B5B764 /* 5@2x.png in Resources */,
 				3543F3B2188A7BF000107A48 /* camera_picture@2x.png in Resources */,
 				3647098418DD7D6700BBD125 /* svSuccess@2x.png in Resources */,
@@ -3547,6 +3564,7 @@
 				362006F418DB208C00E54160 /* AFURLConnectionOperation.m in Sources */,
 				3641E5EE18EBAC69005527C7 /* md5.cpp in Sources */,
 				3641E65618EC1091005527C7 /* MessageInterceptor.m in Sources */,
+				E7B624511A12627B00FB7143 /* TestViewController.m in Sources */,
 				E7AF4B5319EA4E8300699BA1 /* UICustomAlertView.m in Sources */,
 				E7AF4C3119EA507300699BA1 /* CMPopTipView+AppTheme.m in Sources */,
 				E7AF4B5A19EA4E8300699BA1 /* AlarmMessageViewController.m in Sources */,
