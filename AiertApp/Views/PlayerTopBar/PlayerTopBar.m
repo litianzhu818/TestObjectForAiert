@@ -20,42 +20,65 @@
     [super awakeFromNib];
 }
 
-/*
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+- (IBAction)allScreenButtonCliked:(id)sender
 {
-    //your code here
-    
-    [super touchesBegan:touches withEvent:event];
-}
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    //your code here
-    
-    // check touch up inside
-    if ([self superview]) {
-        UITouch *touch = [touches anyObject];
-        CGPoint point = [touch locationInView:[self superview]];
-        //TODO:这里可以将触摸范围扩大，便于操作，例如：
-         CGRect validTouchArea = CGRectMake((self.frame.origin.x - 10),
-         (self.frame.origin.y - 10),
-         (self.frame.size.width + 10),
-         (self.frame.size.height + 10));
-        if (CGRectContainsPoint(validTouchArea, point)) {
-            //your code here
-        }
+    if (self.delegate && [self.delegate respondsToSelector:@selector(playerTopBar:didClikedOnButtonIndex:)]) {
+        [self.delegate playerTopBar:self didClikedOnButtonIndex:1];
     }
-    
-    [super touchesEnded:touches withEvent:event];
 }
-*/
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+- (IBAction)voiceButtonCliked:(id)sender
 {
-    // Drawing code
+    if (self.delegate && [self.delegate respondsToSelector:@selector(playerTopBar:didClikedOnButtonIndex:)]) {
+        [self.delegate playerTopBar:self didClikedOnButtonIndex:2];
+    }
 }
-*/
-
+- (IBAction)cameraButtonCliked:(id)sender
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(playerTopBar:didClikedOnButtonIndex:)]) {
+        [self.delegate playerTopBar:self didClikedOnButtonIndex:3];
+    }
+}
+- (IBAction)videoButtonCliked:(id)sender
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(playerTopBar:didClikedOnButtonIndex:)]) {
+        [self.delegate playerTopBar:self didClikedOnButtonIndex:4];
+    }
+}
+- (IBAction)qualityButtonCliked:(id)sender
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(playerTopBar:didClikedOnButtonIndex:)]) {
+        [self.delegate playerTopBar:self didClikedOnButtonIndex:5];
+    }
+}
+- (IBAction)button1Cliked:(id)sender
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(playerTopBar:didClikedOnButtonIndex:)]) {
+        [self.delegate playerTopBar:self didClikedOnButtonIndex:6];
+    }
+}
+- (IBAction)button2Cliked:(id)sender
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(playerTopBar:didClikedOnButtonIndex:)]) {
+        [self.delegate playerTopBar:self didClikedOnButtonIndex:7];
+    }
+}
+- (IBAction)button3Cliked:(id)sender
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(playerTopBar:didClikedOnButtonIndex:)]) {
+        [self.delegate playerTopBar:self didClikedOnButtonIndex:8];
+    }
+}
+- (IBAction)button4Cliked:(id)sender
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(playerTopBar:didClikedOnButtonIndex:)]) {
+        [self.delegate playerTopBar:self didClikedOnButtonIndex:9];
+    }
+}
+- (IBAction)voiceSliderChanged:(id)sender
+{
+    UISlider *slider = (UISlider *)sender;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(playerTopBar:didChangedVoiceValue:)]) {
+        [self.delegate playerTopBar:self didChangedVoiceValue:[slider value]];
+    }
+}
 @end
