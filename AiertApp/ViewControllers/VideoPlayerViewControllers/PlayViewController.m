@@ -33,6 +33,7 @@
 @property (strong, nonatomic) NSData *currentVideoFrame;
 @property (strong, nonatomic) PlayerTopBar *playerBottomBar;
 @property (strong, nonatomic) PlayerBottomBar *playerTopBar;
+@property (assign, nonatomic) BOOL isStopPlaying;
 
 @end
 
@@ -165,6 +166,7 @@
     self.enableSound = YES;
     
     [self initUI];
+    [self initData];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -197,7 +199,7 @@
 
 - (BOOL)shouldAutorotate
 {
-    return NO;
+    return YES;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
@@ -220,11 +222,14 @@
     [self.playerBottomBar setDelegate:self];
     [self.view addSubview:self.playerBottomBar];
 }
-
+- (void)initData
+{
+    self.isStopPlaying = YES;
+}
 - (void)setUp1
 {
     self.playerTopBar.frame = CGRectMake(0, 0, self.view.frame.size.height, 64.0);
-    self.playerBottomBar.frame = CGRectMake(0, VIEW_H(self.view) - 44, self.view.frame.size.width, 44.0);
+    self.playerBottomBar.frame = CGRectMake(0, VIEW_W(self.view) - 44, self.view.frame.size.height, 44.0);
 }
 
 - (void)setUp2
@@ -233,6 +238,18 @@
     self.playerBottomBar.frame = CGRectMake(0, VIEW_H(self.view) - 44, self.view.frame.size.width, 44.0);
 }
 
+#pragma mark - PlayerBottomBarDelegate methods
+- (void)playerBottomBar:(PlayerBottomBar *)playerBottomBar didClikedOnButtonIndex:(NSUInteger)index
+{
+    switch (index) {
+        case 1:
+            [self backButton_TouchUpInside:nil];
+            break;
+            
+        default:
+            break;
+    }
+}
 #pragma mark - /*##########################################旧代码部分##############################################*/
 
 - (void)_orientationDidChange:(NSNotification*)notify
@@ -443,10 +460,13 @@
     
     [AppData resetCameraState];
     
-    if (![SVProgressHUD isVisible]) {
+    if (![SVProgressHUD isVisible] && !self.isStopPlaying) {
         [SVProgressHUD showWithStatus:@"正在关闭..." maskType:SVProgressHUDMaskTypeClear];
     }
     
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
     DLog(@"%d",[AppData cameraState]);
     
     DLog(@"------------------------------------------------------> 1 stop playing !");
@@ -654,6 +674,7 @@
 #pragma mark - LibCore Stream observer
 - (void)didFailedPlayWithDeviceID:(NSString *)deviceID
 {
+    self.isStopPlaying = YES;
     dispatch_async(dispatch_get_main_queue(), ^{
         
         if ([SVProgressHUD isVisible]) {
@@ -669,6 +690,7 @@
 
 - (void)didStartPlayWithDeviceID:(NSString *)deviceID
 {
+    self.isStopPlaying = NO;
     dispatch_async(dispatch_get_main_queue(), ^{
         
         if ([SVProgressHUD isVisible]) {
@@ -679,6 +701,7 @@
 }
 - (void)didStopPlayWithDeviceID:(NSString *)deviceID
 {
+    self.isStopPlaying = YES;
     dispatch_async(dispatch_get_main_queue(), ^{
         
         [[LibCoreWrap sharedCore] unRegisterStreamObserverWithDeviceId:nil
