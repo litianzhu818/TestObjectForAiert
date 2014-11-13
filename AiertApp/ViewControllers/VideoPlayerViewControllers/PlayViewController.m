@@ -72,9 +72,10 @@
     self.scrollView.decelerationRate = 0.1f; //0 to 1
     
     //
-    _enableSound = NO;
+    _enableSound = YES;
     _enableMicrophone = NO;
     
+
     //如果此时没有设备的videoNum信息，我们就设置位1
     if (self.device.deviceAdditionInfo.videoNum < 1) {
         DeviceAddition *deviceAddtion = [[DeviceAddition alloc] init];
@@ -160,12 +161,31 @@
     _showSomeMenu = YES;
     _verticalScreen = YES;
     self.enableMicrophone = NO;
-    self.enableSound = NO;
+    self.enableSound = YES;
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
 //    [[LibCoreWrap sharedCore] closeConnection];
+}
+
+-(void)viewWillLayoutSubviews
+{
+    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    {
+#if 1
+        PlayerBottomBar *topBar = [PlayerBottomBar instanceFromNib];
+        topBar.frame = CGRectMake(0, 0, self.view.frame.size.height, 64.0);
+        [self.view addSubview:topBar];
+        
+        PlayerTopBar *bottomBar = [PlayerTopBar instanceFromNib];
+        bottomBar.frame = CGRectMake(0, VIEW_H(self.view) - 44, self.view.frame.size.width, 44.0);
+        [self.view addSubview:bottomBar];
+#else
+#endif
+    }else{
+        
+    }
 }
 
 
@@ -178,7 +198,7 @@
 #pragma mark - Autorotate
 
 - (NSUInteger)supportedInterfaceOrientations{
-    return UIInterfaceOrientationMaskAll ;
+    return UIInterfaceOrientationMaskLandscapeRight ;
 }
 
 - (BOOL)shouldAutorotate
@@ -235,6 +255,7 @@
         self.cameraNameLabel.textColor = [UIColor blackColor];
     }
     else {
+        
         // 横屏
         NSLog(@"----- - - -- - - - -- --横屏-");
         _verticalScreen = NO;

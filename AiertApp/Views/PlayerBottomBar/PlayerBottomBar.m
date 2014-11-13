@@ -18,6 +18,21 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
+    [self initUI];
+}
+
+- (void)initUI
+{
+    self.scrollView.frame = CGRectMake(0, 0, VIEW_W(self), VIEW_H(self));
+    self.scrollView.contentSize = self.frame.size;
+}
+
+- (void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    
+    self.scrollView.frame = frame;
+    self.scrollView.contentSize = self.frame.size;
 }
 
 /*

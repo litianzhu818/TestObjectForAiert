@@ -16,7 +16,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *turn_left_right_btn;
 @property (weak, nonatomic) IBOutlet UIButton *turn_up_down_btn;
 
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+
 + (instancetype)instanceFromNib;
+- (void)setFrame:(CGRect)frame;
 
 - (IBAction)closeAction:(id)sender;
 - (IBAction)left_rightAction:(id)sender;
