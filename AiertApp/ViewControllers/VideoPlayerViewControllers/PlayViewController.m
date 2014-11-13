@@ -31,7 +31,8 @@
 @property (strong, nonatomic) NSMutableArray *views;
 @property (strong, nonatomic) ZMRecorderFileIndex *fileIndexItem;
 @property (strong, nonatomic) NSData *currentVideoFrame;
-
+@property (strong, nonatomic) PlayerTopBar *playerBottomBar;
+@property (strong, nonatomic) PlayerBottomBar *playerTopBar;
 
 @end
 
@@ -162,6 +163,8 @@
     _verticalScreen = YES;
     self.enableMicrophone = NO;
     self.enableSound = YES;
+    
+    [self initUI];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -173,18 +176,9 @@
 {
     if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
     {
-#if 1
-        PlayerBottomBar *topBar = [PlayerBottomBar instanceFromNib];
-        topBar.frame = CGRectMake(0, 0, self.view.frame.size.height, 64.0);
-        [self.view addSubview:topBar];
-        
-        PlayerTopBar *bottomBar = [PlayerTopBar instanceFromNib];
-        bottomBar.frame = CGRectMake(0, VIEW_H(self.view) - 44, self.view.frame.size.width, 44.0);
-        [self.view addSubview:bottomBar];
-#else
-#endif
+        [self setUp1];
     }else{
-        
+        [self setUp2];
     }
 }
 
@@ -214,6 +208,32 @@
     
 }
 
+- (void)initUI
+{
+    self.playerTopBar = [PlayerBottomBar instanceFromNib];
+    self.playerTopBar.frame = CGRectMake(0, 0, self.view.frame.size.height, 64.0);
+    [self.playerTopBar setDelegate:self];
+    [self.view addSubview:self.playerTopBar];
+    
+    self.playerBottomBar = [PlayerTopBar instanceFromNib];
+    self.playerBottomBar.frame = CGRectMake(0, VIEW_H(self.view) - 44, self.view.frame.size.width, 44.0);
+    [self.playerBottomBar setDelegate:self];
+    [self.view addSubview:self.playerBottomBar];
+}
+
+- (void)setUp1
+{
+    self.playerTopBar.frame = CGRectMake(0, 0, self.view.frame.size.height, 64.0);
+    self.playerBottomBar.frame = CGRectMake(0, VIEW_H(self.view) - 44, self.view.frame.size.width, 44.0);
+}
+
+- (void)setUp2
+{
+    self.playerTopBar.frame = CGRectMake(0, 0, self.view.frame.size.width, 64.0);
+    self.playerBottomBar.frame = CGRectMake(0, VIEW_H(self.view) - 44, self.view.frame.size.width, 44.0);
+}
+
+#pragma mark - /*##########################################旧代码部分##############################################*/
 
 - (void)_orientationDidChange:(NSNotification*)notify
 {
