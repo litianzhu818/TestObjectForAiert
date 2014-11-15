@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <development version="5100" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="PlayerTopBar">
             <rect key="frame" x="0.0" y="0.0" width="521" height="44"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -26,6 +27,9 @@
                             <state key="normal" backgroundImage="video_5.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="allScreenButtonCliked:" destination="iN0-l3-epB" eventType="touchDown" id="Be6-SD-EGo"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hf0-fa-aun">
                             <rect key="frame" x="48" y="8" width="36" height="28"/>
@@ -36,6 +40,9 @@
                             <state key="normal" backgroundImage="video_6.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="voiceButtonCliked:" destination="iN0-l3-epB" eventType="touchDown" id="i9t-SI-2kf"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VAr-6S-XWS">
                             <rect key="frame" x="92" y="8" width="36" height="28"/>
@@ -46,6 +53,9 @@
                             <state key="normal" backgroundImage="video_7.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="cameraButtonCliked:" destination="iN0-l3-epB" eventType="touchDown" id="W0o-xT-9so"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kYr-ke-ZRm">
                             <rect key="frame" x="136" y="8" width="36" height="28"/>
@@ -56,6 +66,9 @@
                             <state key="normal" backgroundImage="video_8.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="videoButtonCliked:" destination="iN0-l3-epB" eventType="touchDown" id="sw6-cP-G98"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Yp-3X-ngX">
                             <rect key="frame" x="180" y="8" width="36" height="28"/>
@@ -66,6 +79,9 @@
                             <state key="normal" backgroundImage="video_9.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="qualityButtonCliked:" destination="iN0-l3-epB" eventType="touchDown" id="o8K-Ab-Gd6"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3BR-TM-oCY">
                             <rect key="frame" x="224" y="8" width="36" height="28"/>
@@ -76,6 +92,9 @@
                             <state key="normal" backgroundImage="video_10.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="button1Cliked:" destination="iN0-l3-epB" eventType="touchDown" id="Q3O-wk-ttR"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cOL-Xr-wKa">
                             <rect key="frame" x="312" y="8" width="36" height="28"/>
@@ -86,6 +105,9 @@
                             <state key="normal" backgroundImage="video_12.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="button3Cliked:" destination="iN0-l3-epB" eventType="touchDown" id="RZe-mU-39V"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f6f-1c-Vli">
                             <rect key="frame" x="356" y="8" width="36" height="28"/>
@@ -95,6 +117,9 @@
                             <state key="normal" backgroundImage="video_13.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="button4Cliked:" destination="iN0-l3-epB" eventType="touchDown" id="ObE-MZ-K6L"/>
+                            </connections>
                         </button>
                         <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="daV-73-wCw">
                             <rect key="frame" x="398" y="6" width="118" height="31"/>
@@ -102,6 +127,9 @@
                                 <constraint firstAttribute="width" constant="114" id="BSB-qW-tQA"/>
                                 <constraint firstAttribute="height" constant="30" id="DF6-PD-db2"/>
                             </constraints>
+                            <connections>
+                                <action selector="voiceSliderChanged:" destination="iN0-l3-epB" eventType="valueChanged" id="xNy-oI-COP"/>
+                            </connections>
                         </slider>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LtL-P3-DrI">
                             <rect key="frame" x="268" y="8" width="36" height="28"/>
@@ -112,6 +140,9 @@
                             <state key="normal" backgroundImage="video_11.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="button2Cliked:" destination="iN0-l3-epB" eventType="touchDown" id="Onl-rc-8hu"/>
+                            </connections>
                         </button>
                     </subviews>
                     <constraints>
@@ -161,6 +192,18 @@
                 <constraint firstItem="OTe-Xr-HqF" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="wr6-G0-msT"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="allScreenButton" destination="L7k-NI-IOq" id="TwI-6p-D98"/>
+                <outlet property="button1" destination="3BR-TM-oCY" id="28l-Kz-2Yj"/>
+                <outlet property="button2" destination="LtL-P3-DrI" id="Rdo-MA-WT4"/>
+                <outlet property="button3" destination="cOL-Xr-wKa" id="BZH-du-xxI"/>
+                <outlet property="button4" destination="f6f-1c-Vli" id="yYY-tv-NWh"/>
+                <outlet property="cameraButton" destination="VAr-6S-XWS" id="ZS0-h1-pPI"/>
+                <outlet property="qualityButton" destination="9Yp-3X-ngX" id="ye1-Dm-hl6"/>
+                <outlet property="videoButton" destination="kYr-ke-ZRm" id="CzD-ig-oqo"/>
+                <outlet property="voiceButton" destination="hf0-fa-aun" id="X0U-P2-MIf"/>
+                <outlet property="voiceSlider" destination="daV-73-wCw" id="vgt-RA-63f"/>
+            </connections>
             <point key="canvasLocation" x="290.5" y="726"/>
         </view>
     </objects>

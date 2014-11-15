@@ -463,6 +463,15 @@ unsigned int _getTickCount() {
         return 0;
     }
     
+    int ret1;
+    SMsgAVIoctrlAVStream ioMsg1;
+    memset(&ioMsg1, 0, sizeof(SMsgAVIoctrlAVStream));
+    if((ret1 = avSendIOCtrl(avIndex, IOTYPE_USER_IPCAM_AUDIOSTART, (char *)&ioMsg1, sizeof(SMsgAVIoctrlAVStream))) < 0)
+    {
+        printf("StartVideo failed[%d]\n", ret);
+        return -1;
+    }
+    
     return 1;
 }
 

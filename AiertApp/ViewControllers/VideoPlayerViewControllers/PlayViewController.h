@@ -12,6 +12,9 @@
 #import "ZMRecorderFileIndexManage.h"
 #import "PlayBottomView.h"
 
+#import "PlayerBottomBar.h"
+#import "PlayerTopBar.h"
+
 @protocol PlayViewControllerDelegate <NSObject>
 
 @optional
