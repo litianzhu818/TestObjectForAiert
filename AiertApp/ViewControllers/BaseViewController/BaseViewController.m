@@ -83,7 +83,7 @@
 //IOS 6的方法
 - (BOOL)shouldAutorotate
 {
-    return NO;
+    return YES;
 }
 - (NSUInteger)supportedInterfaceOrientations
 {

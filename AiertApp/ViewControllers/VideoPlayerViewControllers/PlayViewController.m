@@ -61,6 +61,8 @@
     
     self.view.backgroundColor = [UIColor AppThemeTableViewBackgroundColor];
     
+    [UIViewController attemptRotationToDeviceOrientation];
+    
     self.popupQualityView = [[CMPopTipViewQuality alloc] initWithBackgroundColor:self.alarmMessageButton.backgroundColor];
     self.popupQualityView.qualityView.delegate = self;
     self.popupQualityView.delegate = self;
@@ -177,8 +179,14 @@
 
 #pragma mark - Autorotate
 
-- (NSUInteger)supportedInterfaceOrientations{
-    return UIInterfaceOrientationMaskAll ;
+-(UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
+{
+    return UIInterfaceOrientationLandscapeRight;
+}
+
+-(NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskLandscapeRight;
 }
 
 - (BOOL)shouldAutorotate
