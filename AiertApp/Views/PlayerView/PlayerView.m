@@ -80,7 +80,8 @@
     self.closeButton.frame = CGRectMake(BUTTON_MARGIN_WIDTH, MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
     self.closeButton.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
     self.closeButton.tag = 1;
-    [self.closeButton addTarget:self action:@selector(clikedOnButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.closeButton addTarget:self action:@selector(touchUpInsideButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.closeButton addTarget:self action:@selector(touchDownInsideButton:) forControlEvents:UIControlEventTouchDown];
     [self.closeButton setSelected:NO];
     [self.closeButton setBackgroundImage:[UIImage imageNamed:@"video_stop_pre"] forState:UIControlStateSelected];
     [self.closeButton setBackgroundImage:[UIImage imageNamed:@"video_stop_btn"] forState:UIControlStateNormal];
@@ -93,7 +94,8 @@
     self.button1.frame = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.closeButton), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
     self.button1.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
     self.button1.tag = 2;
-    [self.button1 addTarget:self action:@selector(clikedOnButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.button1 addTarget:self action:@selector(touchUpInsideButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.button1 addTarget:self action:@selector(touchDownInsideButton:) forControlEvents:UIControlEventTouchDown];
     [self.button1 setSelected:NO];
     [self.button1 setBackgroundImage:[UIImage imageNamed:@"video_10"] forState:UIControlStateSelected];
     [self.button1 setBackgroundImage:[UIImage imageNamed:@"video_10"] forState:UIControlStateNormal];
@@ -106,7 +108,8 @@
     self.button2.frame = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.button1), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
     self.button2.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
     self.button2.tag = 3;
-    [self.button2 addTarget:self action:@selector(clikedOnButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.button2 addTarget:self action:@selector(touchUpInsideButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.button2 addTarget:self action:@selector(touchDownInsideButton:) forControlEvents:UIControlEventTouchDown];
     [self.button2 setSelected:NO];
     [self.button2 setBackgroundImage:[UIImage imageNamed:@"video_11"] forState:UIControlStateSelected];
     [self.button2 setBackgroundImage:[UIImage imageNamed:@"video_11"] forState:UIControlStateNormal];
@@ -119,7 +122,8 @@
     self.left_right_btn.frame = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.button2), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
     self.left_right_btn.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
     self.left_right_btn.tag = 4;
-    [self.left_right_btn addTarget:self action:@selector(clikedOnButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.left_right_btn addTarget:self action:@selector(touchUpInsideButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.left_right_btn addTarget:self action:@selector(touchDownInsideButton:) forControlEvents:UIControlEventTouchDown];
     [self.left_right_btn setSelected:NO];
     [self.left_right_btn setBackgroundImage:[UIImage imageNamed:@"video_1"] forState:UIControlStateSelected];
     [self.left_right_btn setBackgroundImage:[UIImage imageNamed:@"video_1"] forState:UIControlStateNormal];
@@ -132,7 +136,8 @@
     self.up_down_btn.frame = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.left_right_btn), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
     self.up_down_btn.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
     self.up_down_btn.tag = 5;
-    [self.up_down_btn addTarget:self action:@selector(clikedOnButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.up_down_btn addTarget:self action:@selector(touchUpInsideButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.up_down_btn addTarget:self action:@selector(touchDownInsideButton:) forControlEvents:UIControlEventTouchDown];
     [self.up_down_btn setSelected:NO];
     [self.up_down_btn setBackgroundImage:[UIImage imageNamed:@"video_2"] forState:UIControlStateSelected];
     [self.up_down_btn setBackgroundImage:[UIImage imageNamed:@"video_2"] forState:UIControlStateNormal];
@@ -145,7 +150,8 @@
     self.turn_left_right_btn.frame = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.up_down_btn), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
     self.turn_left_right_btn.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
     self.turn_left_right_btn.tag = 6;
-    [self.turn_left_right_btn addTarget:self action:@selector(clikedOnButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.turn_left_right_btn addTarget:self action:@selector(touchUpInsideButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.turn_left_right_btn addTarget:self action:@selector(touchDownInsideButton:) forControlEvents:UIControlEventTouchDown];
     [self.turn_left_right_btn setSelected:NO];
     [self.turn_left_right_btn setBackgroundImage:[UIImage imageNamed:@"video_3"] forState:UIControlStateSelected];
     [self.turn_left_right_btn setBackgroundImage:[UIImage imageNamed:@"video_3"] forState:UIControlStateNormal];
@@ -158,7 +164,8 @@
     self.turn_up_down_btn.frame = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.turn_left_right_btn), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
     self.turn_up_down_btn.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
     self.turn_up_down_btn.tag = 7;
-    [self.turn_up_down_btn addTarget:self action:@selector(clikedOnButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.turn_up_down_btn addTarget:self action:@selector(touchUpInsideButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.turn_up_down_btn addTarget:self action:@selector(touchDownInsideButton:) forControlEvents:UIControlEventTouchDown];
     [self.turn_up_down_btn setSelected:NO];
     [self.turn_up_down_btn setBackgroundImage:[UIImage imageNamed:@"video_4"] forState:UIControlStateSelected];
     [self.turn_up_down_btn setBackgroundImage:[UIImage imageNamed:@"video_4"] forState:UIControlStateNormal];
@@ -171,7 +178,8 @@
     self.button3.frame = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.turn_up_down_btn), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
     self.button3.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
     self.button3.tag = 8;
-    [self.button3 addTarget:self action:@selector(clikedOnButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.button3 addTarget:self action:@selector(touchUpInsideButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.button3 addTarget:self action:@selector(touchDownInsideButton:) forControlEvents:UIControlEventTouchDown];
     [self.button3 setSelected:NO];
     [self.button3 setBackgroundImage:[UIImage imageNamed:@"video_14_selected"] forState:UIControlStateSelected];
     [self.button3 setBackgroundImage:[UIImage imageNamed:@"video_14"] forState:UIControlStateNormal];
@@ -196,7 +204,7 @@
     [self.playerView addSubview:self.noticeLabel];
     
     self.talkButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.talkButton.frame = CGRectMake(PLAYER_VIEW_WIDTH - 4*MARGIN_WIDTH - BAR_HEIGHT, PLAYER_VIEW_HEIGHT - BAR_HEIGHT, BAR_HEIGHT, BAR_HEIGHT);
+    self.talkButton.frame = CGRectMake(PLAYER_VIEW_WIDTH - MARGIN_WIDTH - BAR_HEIGHT, PLAYER_VIEW_HEIGHT - BAR_HEIGHT, BAR_HEIGHT, BAR_HEIGHT);
     self.talkButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin| UIViewAutoresizingFlexibleTopMargin;
     [self.talkButton addTarget:self action:@selector(talkButtonClosed:) forControlEvents:UIControlEventTouchUpInside];
     [self.talkButton addTarget:self action:@selector(talkButtonOpened:) forControlEvents:UIControlEventTouchDown];
@@ -219,7 +227,8 @@
     self.button4.frame = CGRectMake(BUTTON_MARGIN_WIDTH, MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
     self.button4.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
     self.button4.tag = 9;
-    [self.button4 addTarget:self action:@selector(clikedOnButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.button4 addTarget:self action:@selector(touchUpInsideButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.button4 addTarget:self action:@selector(touchDownInsideButton:) forControlEvents:UIControlEventTouchDown];
     [self.button4 setSelected:NO];
     [self.button4 setBackgroundImage:[UIImage imageNamed:@"video_6_no"] forState:UIControlStateSelected];
     [self.button4 setBackgroundImage:[UIImage imageNamed:@"video_6_no"] forState:UIControlStateNormal];
@@ -232,10 +241,11 @@
     self.button5.frame = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.button4), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
     self.button5.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
     self.button5.tag = 10;
-    [self.button5 addTarget:self action:@selector(clikedOnButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.button5 addTarget:self action:@selector(touchUpInsideButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.button5 addTarget:self action:@selector(touchDownInsideButton:) forControlEvents:UIControlEventTouchDown];
     [self.button5 setSelected:NO];
-    [self.button5 setBackgroundImage:[UIImage imageNamed:@"power_sel"] forState:UIControlStateSelected];
-    [self.button5 setBackgroundImage:[UIImage imageNamed:@"power"] forState:UIControlStateNormal];
+    [self.button5 setBackgroundImage:[UIImage imageNamed:@"video_7"] forState:UIControlStateSelected];
+    [self.button5 setBackgroundImage:[UIImage imageNamed:@"video_7"] forState:UIControlStateNormal];
     [self.button5 setTintColor:[UIColor clearColor]];
     [self.button5 setUserInteractionEnabled:YES];
     [self.bottomBarView addSubview:self.button5];
@@ -245,10 +255,11 @@
     self.button6.frame = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.button5), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
     self.button6.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
     self.button6.tag = 11;
-    [self.button6 addTarget:self action:@selector(clikedOnButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.button6 addTarget:self action:@selector(touchUpInsideButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.button6 addTarget:self action:@selector(touchDownInsideButton:) forControlEvents:UIControlEventTouchDown];
     [self.button6 setSelected:NO];
-    [self.button6 setBackgroundImage:[UIImage imageNamed:@"power_sel"] forState:UIControlStateSelected];
-    [self.button6 setBackgroundImage:[UIImage imageNamed:@"power"] forState:UIControlStateNormal];
+    [self.button6 setBackgroundImage:[UIImage imageNamed:@"video_8"] forState:UIControlStateSelected];
+    [self.button6 setBackgroundImage:[UIImage imageNamed:@"video_8"] forState:UIControlStateNormal];
     [self.button6 setTintColor:[UIColor clearColor]];
     [self.button6 setUserInteractionEnabled:YES];
     [self.bottomBarView addSubview:self.button6];
@@ -258,10 +269,11 @@
     self.button7.frame = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.button6), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
     self.button7.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
     self.button7.tag = 12;
-    [self.button7 addTarget:self action:@selector(clikedOnButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.button7 addTarget:self action:@selector(touchUpInsideButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.button7 addTarget:self action:@selector(touchDownInsideButton:) forControlEvents:UIControlEventTouchDown];
     [self.button7 setSelected:NO];
-    [self.button7 setBackgroundImage:[UIImage imageNamed:@"power_sel"] forState:UIControlStateSelected];
-    [self.button7 setBackgroundImage:[UIImage imageNamed:@"power"] forState:UIControlStateNormal];
+    [self.button7 setBackgroundImage:[UIImage imageNamed:@"video_9"] forState:UIControlStateSelected];
+    [self.button7 setBackgroundImage:[UIImage imageNamed:@"video_9"] forState:UIControlStateNormal];
     [self.button7 setTintColor:[UIColor clearColor]];
     [self.button7 setUserInteractionEnabled:YES];
     [self.bottomBarView addSubview:self.button7];
@@ -271,10 +283,11 @@
     self.button8.frame = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.button7), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
     self.button8.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
     self.button8.tag = 13;
-    [self.button8 addTarget:self action:@selector(clikedOnButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.button8 addTarget:self action:@selector(touchUpInsideButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.button8 addTarget:self action:@selector(touchDownInsideButton:) forControlEvents:UIControlEventTouchDown];
     [self.button8 setSelected:NO];
-    [self.button8 setBackgroundImage:[UIImage imageNamed:@"power_sel"] forState:UIControlStateSelected];
-    [self.button8 setBackgroundImage:[UIImage imageNamed:@"power"] forState:UIControlStateNormal];
+    [self.button8 setBackgroundImage:[UIImage imageNamed:@"video_12"] forState:UIControlStateSelected];
+    [self.button8 setBackgroundImage:[UIImage imageNamed:@"video_12"] forState:UIControlStateNormal];
     [self.button8 setTintColor:[UIColor clearColor]];
     [self.button8 setUserInteractionEnabled:YES];
     [self.bottomBarView addSubview:self.button8];
@@ -284,10 +297,11 @@
     self.button9.frame = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.button8), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
     self.button9.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
     self.button9.tag = 14;
-    [self.button9 addTarget:self action:@selector(clikedOnButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.button9 addTarget:self action:@selector(touchUpInsideButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.button9 addTarget:self action:@selector(touchDownInsideButton:) forControlEvents:UIControlEventTouchDown];
     [self.button9 setSelected:NO];
-    [self.button9 setBackgroundImage:[UIImage imageNamed:@"power_sel"] forState:UIControlStateSelected];
-    [self.button9 setBackgroundImage:[UIImage imageNamed:@"power"] forState:UIControlStateNormal];
+    [self.button9 setBackgroundImage:[UIImage imageNamed:@"video_13"] forState:UIControlStateSelected];
+    [self.button9 setBackgroundImage:[UIImage imageNamed:@"video_13"] forState:UIControlStateNormal];
     [self.button9 setTintColor:[UIColor clearColor]];
     [self.button9 setUserInteractionEnabled:YES];
     [self.bottomBarView addSubview:self.button9];
@@ -296,12 +310,12 @@
     self.volumeSlider.autoresizingMask = UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleWidth;
     self.volumeSlider.backgroundColor = [UIColor clearColor];
     self.volumeSlider.minimumValue = 0;
-    self.volumeSlider.maximumValue = 100;
-    self.volumeSlider.value = 50;
+    self.volumeSlider.maximumValue = 1;
+    self.volumeSlider.value = 0.5;
     [self.volumeSlider addTarget:self action:@selector(updateValue:) forControlEvents:UIControlEventValueChanged];
     //左右轨的图片
-    UIImage *stetchLeftTrack= [UIImage imageNamed:@"volume_bar"];
-    UIImage *stetchRightTrack = [UIImage imageNamed:@"volume_bar"];
+    UIImage *stetchLeftTrack= [UIImage imageNamed:@"volume_bar_selected"];
+    UIImage *stetchRightTrack = [UIImage imageNamed:@"volume_bar_normal"];
     //滑块图片
     UIImage *thumbImage = [UIImage imageNamed:@"volume_btn"];
     
@@ -415,21 +429,44 @@
         [self.delegate playerView:self didSwitchTalkStatus:NO];
     }
 }
-- (void)clikedOnButton:(id)sender
+
+- (void)touchDownInsideButton:(UIButton *)btn
 {
-    UIButton *btn = (UIButton *)sender;
-    if (btn.tag == 9) {
-        if (!self.talkButton.hidden) {
-            [self.button4 setBackgroundImage:[UIImage imageNamed:@"video_6_no"] forState:UIControlStateNormal];
-            [self hidenTalkViews:YES];
-        }else{
-            [self.button4 setBackgroundImage:[UIImage imageNamed:@"video_6_yes"] forState:UIControlStateNormal];
-            [self hidenTalkViews:NO];
+    switch (btn.tag) {
+        case 9:
+            
+            break;
+            
+        default:
+            break;
+    }
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(playerView:touchDownInsideButtonAtIndex:)]) {
+        [self.delegate playerView:self touchDownInsideButtonAtIndex:btn.tag];
+    }
+}
+- (void)touchUpInsideButton:(UIButton *)btn
+{
+    switch (btn.tag) {
+        case 9:
+        {
+            if (!self.talkButton.hidden) {
+                [self.button4 setBackgroundImage:[UIImage imageNamed:@"video_6_no"] forState:UIControlStateNormal];
+                [self hidenTalkViews:YES];
+            }else{
+                [self.button4 setBackgroundImage:[UIImage imageNamed:@"video_6_yes"] forState:UIControlStateNormal];
+                [self hidenTalkViews:NO];
+            }
         }
+            break;
+            
+        default:
+            break;
     }
-    if (self.delegate && [self.delegate respondsToSelector:@selector(playerView:clikedOnButtonAtIndex:)]) {
-        [self.delegate playerView:self clikedOnButtonAtIndex:btn.tag];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(playerView:touchUpInsideButtonAtIndex:)]) {
+        [self.delegate playerView:self touchUpInsideButtonAtIndex:btn.tag];
     }
+    
 }
 #pragma mark - DisplayImageView
 - (void)displayImageViewTaped:(id)sender

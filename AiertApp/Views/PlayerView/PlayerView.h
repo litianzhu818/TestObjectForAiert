@@ -52,7 +52,8 @@
 
 @protocol PlayerViewDelegate <NSObject>
 
-- (void)playerView:(PlayerView *)playerView clikedOnButtonAtIndex:(NSUInteger)index;
+- (void)playerView:(PlayerView *)playerView touchDownInsideButtonAtIndex:(NSUInteger)index;
+- (void)playerView:(PlayerView *)playerView touchUpInsideButtonAtIndex:(NSUInteger)index;
 - (void)playerView:(PlayerView *)playerView didSwitchTalkStatus:(BOOL)talking;
 - (void)playerView:(PlayerView *)playerView didChangedVolumeWithValue:(float)value;
 
