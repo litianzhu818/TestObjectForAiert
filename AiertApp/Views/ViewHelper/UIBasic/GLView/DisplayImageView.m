@@ -116,7 +116,7 @@ enum {
         _glView = [[GLView alloc] initWithFrame:self.bounds];
         [self addSubview:_glView];
 
-        [_glView setBackgroundColor:[UIColor whiteColor]];
+        [_glView setBackgroundColor:[UIColor darkGrayColor]];
         
         [self loadShaders:@"YUVShader" forProgram:&_testProgram];
         

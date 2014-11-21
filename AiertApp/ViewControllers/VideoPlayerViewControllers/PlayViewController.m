@@ -31,8 +31,6 @@
 @property (strong, nonatomic) NSMutableArray *views;
 @property (strong, nonatomic) ZMRecorderFileIndex *fileIndexItem;
 @property (strong, nonatomic) NSData *currentVideoFrame;
-@property (strong, nonatomic) PlayerTopBar *playerBottomBar;
-@property (strong, nonatomic) PlayerBottomBar *playerTopBar;
 @property (assign, nonatomic) BOOL isStopPlaying;
 
 @end
@@ -49,10 +47,7 @@
 }
 
 - (void)dealloc {
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIDeviceOrientationDidChangeNotification
-                                                  object:nil];
+
 }
 
 
@@ -65,15 +60,8 @@
     
     [UIViewController attemptRotationToDeviceOrientation];
     
-    self.popupQualityView = [[CMPopTipViewQuality alloc] initWithBackgroundColor:self.alarmMessageButton.backgroundColor];
-    self.popupQualityView.qualityView.delegate = self;
-    self.popupQualityView.delegate = self;
-    
     //默认画质
     self.qualityType = VideoQualityTypeLD;
-    
-    //设置scrollview减速参数
-    self.scrollView.decelerationRate = 0.1f; //0 to 1
     
     //
     _enableSound = YES;
@@ -86,60 +74,7 @@
         [deviceAddtion setVideoNum:1];
         [self.device setDeviceAdditionInfo:deviceAddtion];
     }
-    
-    [self.livePageControl setNumberOfPages:self.device.deviceAdditionInfo.videoNum];
-    
-    if (1 == self.device.deviceAdditionInfo.videoNum) {
-        [self.livePageControl setHidden:YES];
-    }
-    
-    [self.scrollView setBackgroundColor:[UIColor blackColor]];
-    self.scrollView.pagingEnabled = YES;
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.device.deviceAdditionInfo.videoNum,
-                                             self.scrollView.frame.size.height);
-    self.scrollView.showsHorizontalScrollIndicator = NO;
-    self.scrollView.showsVerticalScrollIndicator = NO;
-    self.scrollView.scrollsToTop = NO;
-    
-    self.scrollView.delegate = self;
-    
-    self.views = [[NSMutableArray alloc] initWithCapacity:self.device.deviceAdditionInfo.videoNum];
-    
-    for (int i=0; i<self.device.deviceAdditionInfo.videoNum; ++i) {
-        
-        DisplayImageView *view = [[DisplayImageView alloc] initWithFrame:CGRectOffset(self.scrollView.frame,
-                                                                                      self.scrollView.frame.size.width * i,
-                                                                                      -self.scrollView.frame.origin.y)];
-        [view setDelegate:self];
-        [self.scrollView addSubview:view];
-        [self.views addObject:view];
-    }
-    
-    [self loadScrollViewWithPage:0];
-    [self loadScrollViewWithPage:1];
-    
-    
-    
-    UIImage *talkImage = [UIImage imageNamed:@"talk_show.png"];
-    CGSize talkImageSize = talkImage.size;
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((_scrollView.bounds.size.width - talkImageSize.width) / 2 , (_scrollView.bounds.size.height - talkImageSize.height ) / 2, talkImageSize.width, talkImageSize.height)];
-    imageView.image = talkImage;
-    self.talkImageView = imageView;
-    [self.scrollView addSubview:imageView];
-    imageView.alpha = 0.0;
-    
-    
-    float bottomView_Height = 49.0;
-    float navigation_Height = 44.0;
-    if (IOS7_OR_LATER) {
-        navigation_Height += 20.0;
-    }
-    PlayBottomView *bottomView = [[PlayBottomView alloc] initWithType:CGRectMake(0, self.bkView.bounds.size.height - bottomView_Height - navigation_Height, self.bkView.bounds.size.width, bottomView_Height) Type:1];
-    bottomView.delegate = self;
-    bottomView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    self.playBottomView = bottomView;
-    [self.bkView addSubview:bottomView];
-    
+
     [[LibCoreWrap sharedCore] registerEventObserver:self];
     [[LibCoreWrap sharedCore] registerStreamObserverWithDeviceId:nil
                                                          channel:0
@@ -152,15 +87,7 @@
                                                userName:self.device.userInfo.userName
                                                password:self.device.userInfo.userPassword
                                                 timeout:0];
-    [SVProgressHUD showWithStatus:@"正在连接..." maskType:SVProgressHUDMaskTypeClear];
-    
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(_orientationDidChange:)
-                                                 name:UIDeviceOrientationDidChangeNotification
-                                               object:nil];
-    
-    [self orgSomeViewFrame];
+    [SVProgressHUD showWithStatus:@"正在连接..."];
     
     _showSomeMenu = YES;
     _verticalScreen = YES;
@@ -171,19 +98,32 @@
     [self initData];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-//    [[LibCoreWrap sharedCore] closeConnection];
+    [self.navigationController.navigationBar setHidden:YES];
 }
 
--(void)viewWillLayoutSubviews
+- (void)viewWillDisappear:(BOOL)animated
 {
-    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
-    {
-        [self setUp1];
-    }else{
-        [self setUp2];
+    if ([SVProgressHUD isVisible]){
+        [SVProgressHUD dismiss];
     }
+    
+    [self.navigationController.navigationBar setHidden:NO];
+}
+
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    NSLog(NSStringFromCGRect(self.view.frame));
+    [UIView animateWithDuration:duration animations:^{
+        if(UIDeviceOrientationIsLandscape(toInterfaceOrientation)) {
+            self.playerView.frame = CGRectMake(0, 20, self.height, self.width - 20);
+        } else {
+            self.playerView.frame = CGRectMake(0, 106, self.width, 268);
+        }
+    } completion:^(BOOL finished) {
+        
+    }];
 }
 
 
@@ -196,7 +136,7 @@
 #pragma mark - Autorotate
 
 - (NSUInteger)supportedInterfaceOrientations{
-    return UIInterfaceOrientationMaskLandscapeRight ;
+    return UIInterfaceOrientationMaskAll ;
 }
 
 - (BOOL)shouldAutorotate
@@ -204,241 +144,48 @@
     return YES;
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-                                duration:(NSTimeInterval)duration
-{
-    [self.popupQualityView dismissAnimated:NO];
-    [self popTipViewWasDismissedByUser:self.popupQualityView];
-    
-}
 
 - (void)initUI
 {
-    self.playerTopBar = [PlayerBottomBar instanceFromNib];
-    self.playerTopBar.frame = CGRectMake(0, 0, self.view.frame.size.height, 64.0);
-    [self.playerTopBar setDelegate:self];
-    [self.view addSubview:self.playerTopBar];
-    
-    self.playerBottomBar = [PlayerTopBar instanceFromNib];
-    self.playerBottomBar.frame = CGRectMake(0, VIEW_H(self.view) - 44, self.view.frame.size.width, 44.0);
-    [self.playerBottomBar setDelegate:self];
-    [self.view addSubview:self.playerBottomBar];
+    self.width = self.view.frame.size.width;
+    self.height = self.view.frame.size.height;
+    self.view.backgroundColor = [UIColor blackColor];
+    [self.defaultImageView setImage:nil];
+    self.defaultImageView.backgroundColor = [UIColor blackColor];
+    self.playerView = [[PlayerView alloc] initWithFrame:CGRectMake(0, 106, self.width, 268)];
+    self.playerView.center = self.view.center;
+    self.playerView.delegate = self;
+    [self.view addSubview:self.playerView];
 }
 - (void)initData
 {
     self.isStopPlaying = YES;
 }
-- (void)setUp1
-{
-    self.playerTopBar.frame = CGRectMake(0, 0, self.view.frame.size.height, 64.0);
-    self.playerBottomBar.frame = CGRectMake(0, VIEW_W(self.view) - 44, self.view.frame.size.height, 44.0);
-}
 
-- (void)setUp2
-{
-    self.playerTopBar.frame = CGRectMake(0, 0, self.view.frame.size.width, 64.0);
-    self.playerBottomBar.frame = CGRectMake(0, VIEW_H(self.view) - 44, self.view.frame.size.width, 44.0);
-}
-
-#pragma mark - PlayerBottomBarDelegate methods
-- (void)playerBottomBar:(PlayerBottomBar *)playerBottomBar didClikedOnButtonIndex:(NSUInteger)index
+#pragma mark - PlayerViewDelegate methods
+- (void)playerView:(PlayerView *)playerView clikedOnButtonAtIndex:(NSUInteger)index
 {
     switch (index) {
         case 1:
-            [self backButton_TouchUpInside:nil];
+            [self closeButton_TouchUpInside:nil];
             break;
             
         default:
             break;
     }
 }
-#pragma mark - /*##########################################旧代码部分##############################################*/
-
-- (void)_orientationDidChange:(NSNotification*)notify
+- (void)playerView:(PlayerView *)playerView didSwitchTalkStatus:(BOOL)talking
 {
-    [self _shouldRotateToOrientation:(UIDeviceOrientation)[UIApplication sharedApplication].statusBarOrientation];
+
 }
-
-- (void)_shouldRotateToOrientation:(UIDeviceOrientation)orientation {
-    
-    if (orientation == UIDeviceOrientationPortrait ||orientation == UIDeviceOrientationPortraitUpsideDown) {
-        // 竖屏
-        
-        NSLog(@"----- - - -- - - - -- --竖屏-");
-        _verticalScreen = YES;
-        _showSomeMenu = YES;
-        
-        self.cameraNameLabel.frame = _orgCameraNameLabelFrame;
-        
-        self.alarmMessageButton.frame = _orgAlarmMessageButtonFrame;
-        
-        self.scrollView.frame = _orgScrollVewFrame;
-        
-        self.liveInformationHolderView.frame = _orgliveInformationHolderViewFrame;
-        
-
-        self.playBottomView.frame = _orgPlayBottomViewFrame;
-        
-        CGRect frame = self.talkImageView.frame;
-        frame.origin.x = (self.scrollView.frame.size.width - frame.size.width) / 2;
-        frame.origin.y = (self.scrollView.frame.size.height - frame.size.height) / 2;
-        self.talkImageView.frame = frame;
-                
-        [self hiddenSomeView:NO];
-        
-        
-        //重新设置DisplayImage视图的frame
-        [self resetDisplayImageViewFrame];
-        
-        [self.view setBackgroundColor:[UIColor AppThemeTableViewBackgroundColor]];
-        self.cameraNameLabel.textColor = [UIColor blackColor];
-    }
-    else {
-        
-        // 横屏
-        NSLog(@"----- - - -- - - - -- --横屏-");
-        _verticalScreen = NO;
-        if (!_showSomeMenu) {
-            return;
-        }
-        
-        float origY = 0.0;
-        //CameraNameLabel
-        CGRect frame = self.cameraNameLabel.frame;
-        frame.origin.y = origY;
-        self.cameraNameLabel.frame = frame;
-        
-        frame = self.alarmMessageButton.frame;
-        frame.origin.x = self.bkView.bounds.size.width - frame.size.width;
-        frame.origin.y = origY;
-        self.alarmMessageButton.frame = frame;
-        
-        //playBottomView
-        float playBottomView_height = kBottomLiveBkView_HorizontalScreenHeight;
-        frame = self.playBottomView.frame;
-        frame.origin.y = self.bkView.bounds.size.height - playBottomView_height - origY;
-        frame.size.height = playBottomView_height;
-        frame.size.width = self.bkView.bounds.size.width;
-        self.playBottomView.frame = frame;
-        
-        //liveInfomationHolderView
-        float liveInfomationHolderView_height = kLiveInfoHolderView_HorizontalScreenHeight;
-        if (self.device.deviceAdditionInfo.videoNum > 1) {
-            liveInfomationHolderView_height = kBottomLiveBkView_HorizontalScreenHeightWithPageCtrl - origY;
-        }
-        float liveInfomationHolderView_OrgY = self.bkView.bounds.size.height - playBottomView_height - liveInfomationHolderView_height - origY;
-        
-        frame = self.liveInformationHolderView.frame;
-        frame.origin.x = 0.0;
-        frame.size.height = liveInfomationHolderView_height;
-        frame.origin.y = liveInfomationHolderView_OrgY;
-        self.liveInformationHolderView.frame = frame;
-        
-        
-        //ScrollView
-        frame = self.scrollView.frame;
-        frame.origin.x = 0.0;
-        frame.origin.y = self.cameraNameLabel.frame.size.height + origY;
-        frame.size.width = self.bkView.bounds.size.width;
-        frame.size.height = liveInfomationHolderView_OrgY - frame.origin.y;
-        self.scrollView.frame = frame;
-        
-        
-        frame = self.talkImageView.frame;
-        frame.origin.x = (self.scrollView.frame.size.width - frame.size.width) / 2;
-        frame.origin.y = (self.scrollView.frame.size.height - frame.size.height) / 2;
-        self.talkImageView.frame = frame;
-        
-
-        //重新设置DisplayImage视图的frame
-        [self resetDisplayImageViewFrame];
-        
-        _orgScrollViewFrameWithHorizontalScreen = self.scrollView.frame;
-    }
-}
-#pragma mark - Page Change Delegate
-
-- (IBAction)livePageControl_ChangePage:(id)sender
+- (void)playerView:(PlayerView *)playerView didChangedVolumeWithValue:(float)value
 {
-    DLog(@"%@ : %@",NSStringFromSelector(_cmd),self);
-    int page = self.livePageControl.currentPage;
-	
-    //    // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
-    //    [self loadScrollViewWithPage:page - 1];
-    //    [self loadScrollViewWithPage:page];
-    //    [self loadScrollViewWithPage:page + 1];
-    
-	// update the scroll view to the appropriate page
-    CGRect frame = self.scrollView.frame;
-    frame.origin.x = frame.size.width * page;
-    frame.origin.y = 0;
-    [self.scrollView scrollRectToVisible:frame animated:YES];
-    
-	// Set the boolean used when scrolls originate from the UIPageControl. See scrollViewDidScroll: above.
-    _pageControlUsed = YES;
-}
-#pragma mark - ScrollView delegate
 
-- (void)loadScrollViewWithPage:(int)page
-{
-    if (page < 0)
-        return;
-    if (page >= self.device.deviceAdditionInfo.videoNum)
-        return;
-    
-    UIView *view = [self.views objectAtIndex:page];
-    NSAssert(nil != view,@"page is Nil !");
-    if (view.superview == nil)
-    {
-        [self.scrollView addSubview:view];
-    }
-    // add the controller's view to the scroll view
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)sender
-{
-    // We don't want a "feedback loop" between the UIPageControl and the scroll delegate in
-    // which a scroll event generated from the user hitting the page control triggers updates from
-    // the delegate method. We use a boolean to disable the delegate logic when the page control is used.
-    if (_pageControlUsed)
-    {
-        // do nothing - the scroll was initiated from the page control, not the user dragging
-        return;
-    }
-	
-    // Switch the indicator when more than 50% of the previous/next page is visible
-    CGFloat pageWidth = self.scrollView.frame.size.width;
-    int page = floor((self.scrollView.contentOffset.x - pageWidth*0.5f) / pageWidth) + 1;
-    
-    DLog(@"%@ : %@ , page: %d",NSStringFromSelector(_cmd),self,_currentChannel);
-    
-    if (page == _currentChannel) {
-        return;
-    }
-    
-    [self.views[_currentChannel] setFrame:[self.views[_currentChannel] frame]];
-    _currentChannel = page;
-    self.livePageControl.currentPage = page;
-    
-    [[LibCoreWrap sharedCore] changeChannel:page];
-    
-}
-
-// At the begin of scroll dragging, reset the boolean used when scrolls originate from the UIPageControl
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-    _pageControlUsed = NO;
-}
-
-// At the end of scroll animation, reset the boolean used when scrolls originate from the UIPageControl
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    _pageControlUsed = NO;
 }
 
 #pragma mark - Navigation
 
-- (IBAction)backButton_TouchUpInside:(id)sender {
+- (IBAction)closeButton_TouchUpInside:(id)sender {
    
     
     if (CameraStateRecording&[AppData cameraState]) {
@@ -463,16 +210,8 @@
     [AppData resetCameraState];
     
     if (![SVProgressHUD isVisible] && !self.isStopPlaying) {
-        [SVProgressHUD showWithStatus:@"正在关闭..." maskType:SVProgressHUDMaskTypeClear];
+        [SVProgressHUD showWithStatus:@"正在关闭..."];
     }
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
-    DLog(@"%d",[AppData cameraState]);
-    
-    DLog(@"------------------------------------------------------> 1 stop playing !");
-     
 }
 
 - (void)setEnableSound:(BOOL)enableSound
@@ -509,18 +248,18 @@
 }
 
 
-#pragma mark - Quality Change Delegate
-
-- (void)selectQualityView:(SelectQualityView *)selectQualityView
-          changeQualityTo:(VideoQualityType)newQualityType
-{
-    [self.playBottomView selectAtQualityIndexWithSubIndex:newQualityType];
-    
-    self.playBottomView.qualityIndex = newQualityType;
-    self.qualityType = newQualityType;
-    [self switchUIbyQualityType:self.qualityType];
-    [self.popupQualityView dismissAnimated:YES];
-}
+//#pragma mark - Quality Change Delegate
+//
+//- (void)selectQualityView:(SelectQualityView *)selectQualityView
+//          changeQualityTo:(VideoQualityType)newQualityType
+//{
+//    [self.playBottomView selectAtQualityIndexWithSubIndex:newQualityType];
+//    
+//    self.playBottomView.qualityIndex = newQualityType;
+//    self.qualityType = newQualityType;
+//    [self switchUIbyQualityType:self.qualityType];
+//    [self.popupQualityView dismissAnimated:YES];
+//}
 
 - (void)popTipViewWasDismissedByUser:(CMPopTipView *)popTipView
 {
@@ -714,7 +453,11 @@
             [SVProgressHUD dismiss];
         }
         
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        if (self.navigationController) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            [self dismissViewControllerAnimated:YES completion:^{}];
+        }
     });
 }
 
@@ -763,8 +506,6 @@
                 });
             }
             
-            
-            
             //begin small_image
             UIImage *smallImage = [Utilities generatePhotoThumbnail:image Width:75.0 Height:60.0];
             
@@ -775,8 +516,6 @@
             [smallImageData writeToFile:[Utilities documentsPathWithFolder:[[AppData lastLoginUser] userId] fileName:smallImageName] atomically:NO];
             
             //end small_image
-            
-
         }
         
     }
@@ -801,8 +540,8 @@
 {
     //DLog(@"%@,%@",NSStringFromClass([self class]),NSStringFromSelector(_cmd));
     dispatch_async(dispatch_get_main_queue(), ^{
-        
-        [self.views[_currentChannel] processFrameBuffer:data];
+
+        [self.playerView.playerView processFrameBuffer:data];
         
     });
 }
@@ -811,92 +550,6 @@
 
     [AudioStreamer playAudioData:data];
 }
-
-- (void)orgSomeViewFrame {
-    //记录各个视图开始的frame信息,竖屏的时候方便恢复
-    _orgCameraNameLabelFrame = self.cameraNameLabel.frame;
-    
-    _orgAlarmMessageButtonFrame = self.alarmMessageButton.frame;
-    
-    _orgliveInformationHolderViewFrame = self.liveInformationHolderView.frame;
-    
-    _orgScrollVewFrame = self.scrollView.frame;
-    
-    _orgPlayBottomViewFrame = self.playBottomView.frame;
-}
-
-- (void)hiddenSomeView:(BOOL)bYes {
-    
-    self.navigationController.navigationBarHidden = bYes;
-    
-    self.liveInformationHolderView.hidden = bYes;
-    
-    self.playBottomView.hidden = bYes;
-}
-
-- (void)resetDisplayImageViewFrame {
-    
-    for (int i = 0; i < [self.views count]; ++i) {
-        DisplayImageView *view = (DisplayImageView *)[self.views objectAtIndex:i];
-        view.frame = CGRectOffset(self.scrollView.frame,
-                                  self.scrollView.frame.size.width * i,
-                                  -self.scrollView.frame.origin.y);
-    }
-}
-
-#pragma mark - DisplayImageViewDelegate
-- (void)displayImageViewTaped:(id)sender
-{
-    if (!_verticalScreen) {
-     //横屏情况下,才会显示和隐藏菜单
-        _showSomeMenu = !_showSomeMenu;
-        
-        float origY = 0.0;
-        if (IOS7_OR_LATER) {
-            origY = 20.0;
-        }
-        if (_showSomeMenu) {
-            //显示菜单
-            
-            [self hiddenSomeView:NO];
-        
-            self.scrollView.frame = _orgScrollViewFrameWithHorizontalScreen;
-            
-            [self.view setBackgroundColor:[UIColor AppThemeTableViewBackgroundColor]];
-            CGRect frame = self.cameraNameLabel.frame;
-            frame.origin.y = 0.0;
-            self.cameraNameLabel.frame = frame;
-            
-            
-            frame = self.talkImageView.frame;
-            frame.origin.x = (self.scrollView.frame.size.width - frame.size.width) / 2;
-            frame.origin.y = (self.scrollView.frame.size.height - frame.size.height) / 2;
-            self.talkImageView.frame = frame;
-        }
-        else {
-            //隐藏菜单
-             [self hiddenSomeView:YES];
-            
-    
-            CGRect frame = self.cameraNameLabel.frame;
-            frame.origin.y = origY;
-            self.cameraNameLabel.frame = frame;
-            origY += frame.size.height;
-     
-            //重新设置scrollView的高度
-            frame = self.scrollView.frame;
-            frame.origin.y = origY;
-            frame.size.height = self.bkView.bounds.size.height - origY ;
-            self.scrollView.frame = frame;
-            
-            [self.view setBackgroundColor:[UIColor blackColor]];
-        }
-        //重新设置DisplayImage视图的frame
-        [self resetDisplayImageViewFrame];
-    }
-}
-
-
 #pragma mark - PlayBottomViewDelegate
 - (void)clickButtonAtPlayBottomView:(id)sender Index:(NSInteger)aIndex {
     DLog(@" clickButtonAtPlayBottomView  aIndex:%d",aIndex);
@@ -904,7 +557,7 @@
     switch (aIndex) {
         case PlayBottomTypeVideo: { //录像
             
-            if (CameraStateRecording&[AppData cameraState]) {
+            if (CameraStateRecording & [AppData cameraState]) {
                 [AppData removeCameraState:CameraStateRecording];
                 
                 NSString *date = [Utilities dateToStringWithFormat:@"yyyyMMdd" date:[NSDate date]];
@@ -943,18 +596,18 @@
         case PlayBottomTypeTalk: { //对讲
             self.enableMicrophone = !self.enableMicrophone;
             
-            [self.playBottomView selectAtIndexWithOpenStatus:PlayBottomTypeTalk OpenStatus:self.enableMicrophone];
+//            [self.playBottomView selectAtIndexWithOpenStatus:PlayBottomTypeTalk OpenStatus:self.enableMicrophone];
         }
             break;
         case PlayBottomTypeSound: { //声音
             self.enableSound = !self.enableSound;
             
-            [self.playBottomView selectAtIndexWithOpenStatus:PlayBottomTypeSound OpenStatus:self.enableSound];
+//            [self.playBottomView selectAtIndexWithOpenStatus:PlayBottomTypeSound OpenStatus:self.enableSound];
         }
             break;
         case PlayBottomTypeQuality: { //品质
-            self.popupQualityView.qualityView.qualityType = self.qualityType;
-            [self.popupQualityView presentPointingAtView:sender inView:self.bkView animated:YES];
+//            self.popupQualityView.qualityView.qualityType = self.qualityType;
+//            [self.popupQualityView presentPointingAtView:sender inView:self.bkView animated:YES];
         }
             break;
     }
@@ -962,7 +615,6 @@
 
 - (void)didLongPressBeganInPlayBottomView:(id)aData Tag:(NSInteger)aTag {
     if (self.enableMicrophone) {
-        self.talkImageView.alpha = 1.0;
         [[LibCoreWrap sharedCore] startTalkWithDeviceId:self.device.deviceID
                                                 channel:_currentChannel];
     }
@@ -971,7 +623,6 @@
 
 - (void)didLongPressEndInPlayBottomView:(id)aData Tag:(NSInteger)aTag {
     if (self.enableMicrophone) {
-        self.talkImageView.alpha = 0.0;
         [[LibCoreWrap sharedCore] stopTalkWithDeviceId:self.device.deviceID
                                                channel:_currentChannel];
     }

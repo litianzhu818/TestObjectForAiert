@@ -907,13 +907,7 @@
         
         self.currentDeviceId = device.deviceID;
         self.currentChannel = device.deviceAdditionInfo.videoNum;
-        
-//        self.userName = username;
-//        self.currentDeviceId = device_id;
-//        self.password = password;
-//        self.currentChannel = channel;
-//        self.currentMediaType = media_type;
-        
+
         __weak LibCoreWrap *tempSelf = self;
         
         dispatch_group_async(_group, _streamQueue, ^{

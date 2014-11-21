@@ -4,16 +4,14 @@
 
 #import "CMPopTipViewQuality.H"
 #import "BasicDefine.h"
-#import "UIPageControlEx.h"
 #import "UIButtonWithTouchDown.h"
 #import "Utilities.h"
 #import "ZMRecorderFileIndex.h"
 #import "SVProgressHUD.h"
 #import "ZMRecorderFileIndexManage.h"
-#import "PlayBottomView.h"
 
-#import "PlayerBottomBar.h"
-#import "PlayerTopBar.h"
+#import "PlayerView.h"
+
 
 @protocol PlayViewControllerDelegate <NSObject>
 
@@ -23,7 +21,7 @@
 @end
 
 @class ZMDevice;
-@interface PlayViewController : BaseViewController <SelectQualityViewDelegate, CMPopTipViewDelegate, UIScrollViewDelegate,PlayViewControllerDelegate,PlayBottomViewDelegate>
+@interface PlayViewController : BaseViewController <SelectQualityViewDelegate, CMPopTipViewDelegate, UIScrollViewDelegate,PlayViewControllerDelegate>
 {
     BOOL _enableSound;
     BOOL _enableMicrophone;
@@ -42,19 +40,11 @@
 }
 
 @property (strong, nonatomic) AiertDeviceInfo *device;
-//暂时没有启用
-@property (weak, nonatomic) IBOutlet UILabel *cameraNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *liveSpeedLabel;
-@property (weak, nonatomic) IBOutlet UILabel *liveTotalLabel;
-@property (weak, nonatomic) IBOutlet UIView *alarmMessageButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *exitBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (assign, nonatomic) CGFloat width;
+@property (assign, nonatomic) CGFloat height;
 
-@property (weak, nonatomic) IBOutlet UIView *liveInformationHolderView;
+@property (strong, nonatomic) PlayerView *playerView;
 
-@property (weak, nonatomic) IBOutlet UIPageControlEx *livePageControl;
-
-@property (strong, nonatomic) CMPopTipViewQuality *popupQualityView;
 @property (nonatomic) VideoQualityType qualityType;
 
 @property (nonatomic) BOOL enableFourChannel;
@@ -63,15 +53,10 @@
 @property (nonatomic) BOOL enableMicrophone;
 @property (nonatomic) NSInteger currentChannel;
 
-@property (strong,nonatomic) UIImageView *talkImageView;
-
-@property (strong,nonatomic) PlayBottomView *playBottomView;
-
-@property (weak,nonatomic) IBOutlet UIView *bkView;
 
 @property (weak, nonatomic) id<PlayViewControllerDelegate> delegatePlayViewController;
 
-- (IBAction)backButton_TouchUpInside:(id)sender;
+- (IBAction)closeButton_TouchUpInside:(id)sender;
 /*
 - (IBAction)bottomLiveRecordButton_TouchUpInside:(id)sender;
  */

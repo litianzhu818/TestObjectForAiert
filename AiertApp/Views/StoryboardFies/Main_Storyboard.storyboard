@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ejh-sA-jkk">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
@@ -238,15 +239,9 @@
                         <viewControllerLayoutGuide type="bottom" id="1eo-C5-dvT"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="cIP-gd-4qS">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="44" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <scrollView autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z3z-I1-6da">
-                                <rect key="frame" x="0.0" y="88" width="320" height="180"/>
-                                <connections>
-                                    <outlet property="delegate" destination="xFh-89-xaM" id="gh8-5K-NTK"/>
-                                </connections>
-                            </scrollView>
                             <view multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f8z-Il-y02">
                                 <rect key="frame" x="0.0" y="267" width="320" height="93"/>
                                 <subviews>
@@ -255,10 +250,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                     <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="4" translatesAutoresizingMaskIntoConstraints="NO" id="H17-68-5T3" customClass="UIPageControlEx">
-                                        <rect key="frame" x="-1" y="20" width="320" height="36"/>
-                                        <connections>
-                                            <action selector="livePageControl_ChangePage:" destination="xFh-89-xaM" eventType="valueChanged" id="CIn-uw-ff1"/>
-                                        </connections>
+                                        <rect key="frame" x="-1" y="20" width="320" height="37"/>
                                     </pageControl>
                                 </subviews>
                             </view>
@@ -269,21 +261,11 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Pk0-d5-wlK">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" image="video_stop_btn.png" id="EO1-oy-HHu">
-                            <connections>
-                                <action selector="backButton_TouchUpInside:" destination="xFh-89-xaM" id="zkW-dQ-Ckm"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="leftBarButtonItem" image="video_stop_btn.png" id="EO1-oy-HHu"/>
                     </navigationItem>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="bkView" destination="cIP-gd-4qS" id="OnM-XG-Jc4"/>
-                        <outlet property="exitBarButtonItem" destination="EO1-oy-HHu" id="mXJ-Lw-PaJ"/>
-                        <outlet property="liveInformationHolderView" destination="f8z-Il-y02" id="tId-d5-48z"/>
-                        <outlet property="livePageControl" destination="H17-68-5T3" id="JWM-zQ-HMg"/>
-                        <outlet property="scrollView" destination="Z3z-I1-6da" id="oyf-hb-ZSm"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1nn-Ke-u3W" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -743,7 +725,7 @@
                         <outlet property="editButton" destination="be4-vp-eq6" id="Jkc-wa-Ykb"/>
                         <outlet property="headerView" destination="W2j-vg-wOH" id="UMe-C0-iNv"/>
                         <outlet property="tableView" destination="v2k-qX-4zG" id="9WX-zn-A9x"/>
-                        <segue destination="xFh-89-xaM" kind="modal" identifier="DeviceList2Play" id="y4b-Ik-iat"/>
+                        <segue destination="xFh-89-xaM" kind="push" identifier="DeviceList2Play" id="y4b-Ik-iat"/>
                         <segue destination="GC4-xq-4VT" kind="push" identifier="AddDevice" id="5T7-c7-jYh"/>
                         <segue destination="lCN-Le-wfj" kind="push" identifier="device_edit" id="knS-A8-ekG"/>
                     </connections>
