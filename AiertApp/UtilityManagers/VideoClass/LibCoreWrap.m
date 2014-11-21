@@ -400,6 +400,7 @@
     }else {
         
         dispatch_group_async(_group, _streamQueue, ^{
+            
             [self.zspConnection changeStream:dstMediaType];
 
             if (CameraStateAudioPlaying&[AppData cameraState]) {

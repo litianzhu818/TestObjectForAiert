@@ -236,7 +236,8 @@
 }
 
 - (void)setEnableMicrophone:(BOOL)enableMicrophone
-{    _enableMicrophone = enableMicrophone;
+{
+    _enableMicrophone = enableMicrophone;
 }
 
 #pragma mark - Switch LD SD HD
@@ -244,7 +245,6 @@
 - (void)switchUIbyQualityType:(VideoQualityType)type
 {
     [[LibCoreWrap sharedCore] changeStream:type];
-    
 }
 
 
@@ -260,13 +260,6 @@
 //    [self switchUIbyQualityType:self.qualityType];
 //    [self.popupQualityView dismissAnimated:YES];
 //}
-
-- (void)popTipViewWasDismissedByUser:(CMPopTipView *)popTipView
-{
-    //
-    /*  self.bottomLiveQualityButton.selected = NO;*/
-}
-
 
 #pragma mark - Change Password
 
@@ -307,33 +300,33 @@
     
 }
 
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"Play2Setting"]) {
-        
-        self.hidesBottomBarWhenPushed = YES;
-        
-        if (!_verticalScreen) {
-            [Utilities setMyViewControllerOrientation:_verticalScreen
-                                          Orientation:UIInterfaceOrientationPortrait];
-        }
-        
-        DeviceSettingTableViewController *viewController = segue.destinationViewController;
-        if (viewController) {
-            viewController.currentDeviceName = @"Device Test Name";
-        }
-    }else if ([segue.identifier isEqualToString:@"Play2AlarmList"])
-    {
-        AlarmListTableViewController *viewController = segue.destinationViewController;
-        if (viewController) {
-            //TODO Set Device Name
-            //Test
-            viewController.deviceId = self.device.deviceID;
-        }
-    }
-}
+//#pragma mark - Navigation
+//
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+//{
+//    if ([segue.identifier isEqualToString:@"Play2Setting"]) {
+//        
+//        self.hidesBottomBarWhenPushed = YES;
+//        
+//        if (!_verticalScreen) {
+//            [Utilities setMyViewControllerOrientation:_verticalScreen
+//                                          Orientation:UIInterfaceOrientationPortrait];
+//        }
+//        
+//        DeviceSettingTableViewController *viewController = segue.destinationViewController;
+//        if (viewController) {
+//            viewController.currentDeviceName = @"Device Test Name";
+//        }
+//    }else if ([segue.identifier isEqualToString:@"Play2AlarmList"])
+//    {
+//        AlarmListTableViewController *viewController = segue.destinationViewController;
+//        if (viewController) {
+//            //TODO Set Device Name
+//            //Test
+//            viewController.deviceId = self.device.deviceID;
+//        }
+//    }
+//}
 
 
 #pragma mark - LibCore Event observer
@@ -353,9 +346,9 @@
                 [_delegatePlayViewController dismissViewControllerInPlayViewControlller:_verticalScreen];
             }
             
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                [self.navigationController popToRootViewControllerAnimated:YES];
-//            });
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
 
         }
             break;
@@ -551,6 +544,7 @@
     [AudioStreamer playAudioData:data];
 }
 #pragma mark - PlayBottomViewDelegate
+//FIXME:这里是重点
 - (void)clickButtonAtPlayBottomView:(id)sender Index:(NSInteger)aIndex {
     DLog(@" clickButtonAtPlayBottomView  aIndex:%d",aIndex);
     

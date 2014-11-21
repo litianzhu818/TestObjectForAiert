@@ -82,7 +82,7 @@
     self.closeButton.tag = 1;
     [self.closeButton addTarget:self action:@selector(clikedOnButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.closeButton setSelected:NO];
-    [self.closeButton setBackgroundImage:[UIImage imageNamed:@"video_stop_btn"] forState:UIControlStateSelected];
+    [self.closeButton setBackgroundImage:[UIImage imageNamed:@"video_stop_pre"] forState:UIControlStateSelected];
     [self.closeButton setBackgroundImage:[UIImage imageNamed:@"video_stop_btn"] forState:UIControlStateNormal];
     [self.closeButton setTintColor:[UIColor clearColor]];
     [self.closeButton setUserInteractionEnabled:YES];
@@ -95,8 +95,8 @@
     self.button1.tag = 2;
     [self.button1 addTarget:self action:@selector(clikedOnButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.button1 setSelected:NO];
-    [self.button1 setBackgroundImage:[UIImage imageNamed:@"power_sel"] forState:UIControlStateSelected];
-    [self.button1 setBackgroundImage:[UIImage imageNamed:@"power"] forState:UIControlStateNormal];
+    [self.button1 setBackgroundImage:[UIImage imageNamed:@"video_10"] forState:UIControlStateSelected];
+    [self.button1 setBackgroundImage:[UIImage imageNamed:@"video_10"] forState:UIControlStateNormal];
     [self.button1 setTintColor:[UIColor clearColor]];
     [self.button1 setUserInteractionEnabled:YES];
     [self.topBarView addSubview:self.button1];
@@ -108,8 +108,8 @@
     self.button2.tag = 3;
     [self.button2 addTarget:self action:@selector(clikedOnButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.button2 setSelected:NO];
-    [self.button2 setBackgroundImage:[UIImage imageNamed:@"power_sel"] forState:UIControlStateSelected];
-    [self.button2 setBackgroundImage:[UIImage imageNamed:@"power"] forState:UIControlStateNormal];
+    [self.button2 setBackgroundImage:[UIImage imageNamed:@"video_11"] forState:UIControlStateSelected];
+    [self.button2 setBackgroundImage:[UIImage imageNamed:@"video_11"] forState:UIControlStateNormal];
     [self.button2 setTintColor:[UIColor clearColor]];
     [self.button2 setUserInteractionEnabled:YES];
     [self.topBarView addSubview:self.button2];
@@ -121,8 +121,8 @@
     self.left_right_btn.tag = 4;
     [self.left_right_btn addTarget:self action:@selector(clikedOnButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.left_right_btn setSelected:NO];
-    [self.left_right_btn setBackgroundImage:[UIImage imageNamed:@"power_sel"] forState:UIControlStateSelected];
-    [self.left_right_btn setBackgroundImage:[UIImage imageNamed:@"power"] forState:UIControlStateNormal];
+    [self.left_right_btn setBackgroundImage:[UIImage imageNamed:@"video_1"] forState:UIControlStateSelected];
+    [self.left_right_btn setBackgroundImage:[UIImage imageNamed:@"video_1"] forState:UIControlStateNormal];
     [self.left_right_btn setTintColor:[UIColor clearColor]];
     [self.left_right_btn setUserInteractionEnabled:YES];
     [self.topBarView addSubview:self.left_right_btn];
@@ -134,8 +134,8 @@
     self.up_down_btn.tag = 5;
     [self.up_down_btn addTarget:self action:@selector(clikedOnButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.up_down_btn setSelected:NO];
-    [self.up_down_btn setBackgroundImage:[UIImage imageNamed:@"power_sel"] forState:UIControlStateSelected];
-    [self.up_down_btn setBackgroundImage:[UIImage imageNamed:@"power"] forState:UIControlStateNormal];
+    [self.up_down_btn setBackgroundImage:[UIImage imageNamed:@"video_2"] forState:UIControlStateSelected];
+    [self.up_down_btn setBackgroundImage:[UIImage imageNamed:@"video_2"] forState:UIControlStateNormal];
     [self.up_down_btn setTintColor:[UIColor clearColor]];
     [self.up_down_btn setUserInteractionEnabled:YES];
     [self.topBarView addSubview:self.up_down_btn];
@@ -147,8 +147,8 @@
     self.turn_left_right_btn.tag = 6;
     [self.turn_left_right_btn addTarget:self action:@selector(clikedOnButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.turn_left_right_btn setSelected:NO];
-    [self.turn_left_right_btn setBackgroundImage:[UIImage imageNamed:@"power_sel"] forState:UIControlStateSelected];
-    [self.turn_left_right_btn setBackgroundImage:[UIImage imageNamed:@"power"] forState:UIControlStateNormal];
+    [self.turn_left_right_btn setBackgroundImage:[UIImage imageNamed:@"video_3"] forState:UIControlStateSelected];
+    [self.turn_left_right_btn setBackgroundImage:[UIImage imageNamed:@"video_3"] forState:UIControlStateNormal];
     [self.turn_left_right_btn setTintColor:[UIColor clearColor]];
     [self.turn_left_right_btn setUserInteractionEnabled:YES];
     [self.topBarView addSubview:self.turn_left_right_btn];
@@ -160,8 +160,8 @@
     self.turn_up_down_btn.tag = 7;
     [self.turn_up_down_btn addTarget:self action:@selector(clikedOnButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.turn_up_down_btn setSelected:NO];
-    [self.turn_up_down_btn setBackgroundImage:[UIImage imageNamed:@"power_sel"] forState:UIControlStateSelected];
-    [self.turn_up_down_btn setBackgroundImage:[UIImage imageNamed:@"power"] forState:UIControlStateNormal];
+    [self.turn_up_down_btn setBackgroundImage:[UIImage imageNamed:@"video_4"] forState:UIControlStateSelected];
+    [self.turn_up_down_btn setBackgroundImage:[UIImage imageNamed:@"video_4"] forState:UIControlStateNormal];
     [self.turn_up_down_btn setTintColor:[UIColor clearColor]];
     [self.turn_up_down_btn setUserInteractionEnabled:YES];
     [self.topBarView addSubview:self.turn_up_down_btn];
@@ -173,8 +173,8 @@
     self.button3.tag = 8;
     [self.button3 addTarget:self action:@selector(clikedOnButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.button3 setSelected:NO];
-    [self.button3 setBackgroundImage:[UIImage imageNamed:@"power_sel"] forState:UIControlStateSelected];
-    [self.button3 setBackgroundImage:[UIImage imageNamed:@"power"] forState:UIControlStateNormal];
+    [self.button3 setBackgroundImage:[UIImage imageNamed:@"video_14_selected"] forState:UIControlStateSelected];
+    [self.button3 setBackgroundImage:[UIImage imageNamed:@"video_14"] forState:UIControlStateNormal];
     [self.button3 setTintColor:[UIColor clearColor]];
     [self.button3 setUserInteractionEnabled:YES];
     [self.topBarView addSubview:self.button3];
@@ -189,7 +189,7 @@
     self.playerView.userInteractionEnabled = YES;
     [self addSubview:self.playerView];
     
-    self.noticeLabel = [[UILabel alloc] initWithFrame:CGRectMake(4*MARGIN_WIDTH, PLAYER_VIEW_HEIGHT - BAR_HEIGHT, 200, BAR_HEIGHT)];
+    self.noticeLabel = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_WIDTH/2, PLAYER_VIEW_HEIGHT - BAR_HEIGHT, 200, BAR_HEIGHT)];
     self.noticeLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
     [self.noticeLabel setFont:[UIFont systemFontOfSize:14.0]];
     [self.noticeLabel setText:@"请按住右边的麦克风进行语音对话"];
@@ -198,7 +198,8 @@
     self.talkButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     self.talkButton.frame = CGRectMake(PLAYER_VIEW_WIDTH - 4*MARGIN_WIDTH - BAR_HEIGHT, PLAYER_VIEW_HEIGHT - BAR_HEIGHT, BAR_HEIGHT, BAR_HEIGHT);
     self.talkButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin| UIViewAutoresizingFlexibleTopMargin;
-    [self.talkButton addTarget:self action:@selector(talkButtonCliked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.talkButton addTarget:self action:@selector(talkButtonClosed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.talkButton addTarget:self action:@selector(talkButtonOpened:) forControlEvents:UIControlEventTouchDown];
     [self.talkButton setSelected:NO];
     [self.talkButton setBackgroundImage:[UIImage imageNamed:@"speak_pre"] forState:UIControlStateSelected];
     [self.talkButton setBackgroundImage:[UIImage imageNamed:@"speak_nor"] forState:UIControlStateNormal];
@@ -220,8 +221,8 @@
     self.button4.tag = 9;
     [self.button4 addTarget:self action:@selector(clikedOnButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.button4 setSelected:NO];
-    [self.button4 setBackgroundImage:[UIImage imageNamed:@"power_sel"] forState:UIControlStateSelected];
-    [self.button4 setBackgroundImage:[UIImage imageNamed:@"power"] forState:UIControlStateNormal];
+    [self.button4 setBackgroundImage:[UIImage imageNamed:@"video_6_no"] forState:UIControlStateSelected];
+    [self.button4 setBackgroundImage:[UIImage imageNamed:@"video_6_no"] forState:UIControlStateNormal];
     [self.button4 setTintColor:[UIColor clearColor]];
     [self.button4 setUserInteractionEnabled:YES];
     [self.bottomBarView addSubview:self.button4];
@@ -399,17 +400,33 @@
     }
 }
 
-- (void)talkButtonCliked:(id)sender
+- (void)talkButtonOpened:(id)sender
 {
-    [self hidenTalkViews:!self.talkButton.hidden];
+    [self.talkButton setBackgroundImage:[UIImage imageNamed:@"speak_pre"] forState:UIControlStateNormal];
     if (self.delegate && [self.delegate respondsToSelector:@selector(playerView:didSwitchTalkStatus:)]) {
-        [self.delegate playerView:self didSwitchTalkStatus:!self.talkButton.hidden];
+        [self.delegate playerView:self didSwitchTalkStatus:YES];
+    }
+}
+
+- (void)talkButtonClosed:(id)sender
+{
+    [self.talkButton setBackgroundImage:[UIImage imageNamed:@"speak_nor"] forState:UIControlStateNormal];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(playerView:didSwitchTalkStatus:)]) {
+        [self.delegate playerView:self didSwitchTalkStatus:NO];
     }
 }
 - (void)clikedOnButton:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
-    
+    if (btn.tag == 9) {
+        if (!self.talkButton.hidden) {
+            [self.button4 setBackgroundImage:[UIImage imageNamed:@"video_6_no"] forState:UIControlStateNormal];
+            [self hidenTalkViews:YES];
+        }else{
+            [self.button4 setBackgroundImage:[UIImage imageNamed:@"video_6_yes"] forState:UIControlStateNormal];
+            [self hidenTalkViews:NO];
+        }
+    }
     if (self.delegate && [self.delegate respondsToSelector:@selector(playerView:clikedOnButtonAtIndex:)]) {
         [self.delegate playerView:self clikedOnButtonAtIndex:btn.tag];
     }
