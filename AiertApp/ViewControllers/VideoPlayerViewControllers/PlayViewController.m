@@ -56,15 +56,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view.backgroundColor = [UIColor AppThemeTableViewBackgroundColor];
-    
-    [UIViewController attemptRotationToDeviceOrientation];
-    
     //默认画质
     self.qualityType = VideoQualityTypeLD;
     
     //
-    _enableSound = YES;
+    _enableSound = NO;
     _enableMicrophone = NO;
     
 
@@ -92,7 +88,7 @@
     _showSomeMenu = YES;
     _verticalScreen = YES;
     self.enableMicrophone = NO;
-    self.enableSound = YES;
+    self.enableSound = NO;
     
     [self initUI];
     [self initData];
@@ -101,6 +97,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController.navigationBar setHidden:YES];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    
+    [[UIDevice currentDevice] setValue:
+     [NSNumber numberWithInteger: UIInterfaceOrientationLandscapeRight]
+                                forKey:@"orientation"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -114,7 +117,7 @@
 
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    NSLog(NSStringFromCGRect(self.view.frame));
+    
     [UIView animateWithDuration:duration animations:^{
         if(UIDeviceOrientationIsLandscape(toInterfaceOrientation)) {
             self.playerView.frame = CGRectMake(0, 20, self.height, self.width - 20);
@@ -136,7 +139,7 @@
 #pragma mark - Autorotate
 
 - (NSUInteger)supportedInterfaceOrientations{
-    return UIInterfaceOrientationMaskAll ;
+    return UIInterfaceOrientationMaskLandscapeRight ;
 }
 
 - (BOOL)shouldAutorotate
@@ -144,15 +147,32 @@
     return YES;
 }
 
+- (void)viewWillLayoutSubviews
+{
+    if(UIDeviceOrientationIsLandscape(self.interfaceOrientation)) {
+        self.playerView.frame = CGRectMake(0, 20, self.height, self.width - 20);
+    } else {
+        self.playerView.frame = CGRectMake(0, 106, self.width, 268);
+    }
+}
 
 - (void)initUI
 {
+    CGRect playerViewFrame = CGRectZero;
+    if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
+    {
+        playerViewFrame = CGRectMake(0, 106, self.width, 268);
+    }else/* if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation))*/{
+        playerViewFrame = CGRectMake(0, 20, self.height, self.width - 20);
+    }
+    
     self.width = self.view.frame.size.width;
     self.height = self.view.frame.size.height;
     self.view.backgroundColor = [UIColor blackColor];
     [self.defaultImageView setImage:nil];
     self.defaultImageView.backgroundColor = [UIColor blackColor];
-    self.playerView = [[PlayerView alloc] initWithFrame:CGRectMake(0, 106, self.width, 268)];
+    self.playerView = [[PlayerView alloc] initWithFrame:playerViewFrame];
+    self.playerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleWidth;
     self.playerView.center = self.view.center;
     self.playerView.delegate = self;
     [self.view addSubview:self.playerView];
@@ -171,21 +191,36 @@
         case 1:
             [self closeButton_TouchUpInside:nil];
             break;
+        case 6:
+//            [self closeButton_TouchUpInside:nil];
+            break;
+        case 9:
+        {
+            if (self.playerView.talkButton.hidden) {
+                [self setEnableSound:NO];
+            }else{
+                [self setEnableSound:YES];
+            }
             
+        }
+            break;
         default:
             break;
     }
 }
 - (void)playerView:(PlayerView *)playerView didSwitchTalkStatus:(BOOL)talking
-{}
+{
+    [self setEnableMicrophone:YES];
+}
 - (void)playerView:(PlayerView *)playerView didChangedVolumeWithValue:(float)value
-{}
+{
+
+}
 
 #pragma mark - Navigation
 
 - (IBAction)closeButton_TouchUpInside:(id)sender {
    
-    
     if (CameraStateRecording&[AppData cameraState]) {
         
         [AppData removeCameraState:CameraStateRecording];
@@ -210,6 +245,7 @@
     if (![SVProgressHUD isVisible] && !self.isStopPlaying) {
         [SVProgressHUD showWithStatus:@"正在关闭..."];
     }
+     
 }
 
 - (void)setEnableSound:(BOOL)enableSound

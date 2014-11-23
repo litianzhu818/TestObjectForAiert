@@ -11,6 +11,8 @@
 @interface EditDeviceViewController ()
 {
     UITextField *activeField;
+    CGFloat width;
+    CGFloat height;
 }
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *saveButton;
@@ -51,7 +53,31 @@
     self.scrollView.frame = CGRectMake(0, 0, VIEW_W(self.view), VIEW_H(self.view));
     
     [self.scrollView setContentSize:CGSizeMake(VIEW_W(self.view), VIEW_H(self.view)+50)];
+    NSLog(NSStringFromCGRect(self.view.frame));
+    if(UIDeviceOrientationIsLandscape(self.interfaceOrientation)) {
+        self.backView.frame = CGRectMake(20, 90, height - 40, 249);
+    } else {
+        self.backView.frame = CGRectMake(20, 91, 280, 249);
+    }
     
+}
+
+- (NSUInteger)supportedInterfaceOrientations{
+    return UIInterfaceOrientationPortrait;
+}
+
+- (BOOL)shouldAutorotate
+{
+    return NO;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+   
+    if(UIDeviceOrientationIsLandscape(toInterfaceOrientation)) {
+        self.backView.frame = CGRectMake(20, 90, height - 40, 249);
+    } else {
+        self.backView.frame = CGRectMake(20, 91, 280, 249);
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -110,6 +136,10 @@
     [_nameTextField setText:self.device.deviceName];
     [_userNameTextField setText:self.device.userInfo.userName];
     [_userPwdTextField setText:self.device.userInfo.userPassword];
+    
+    //The width and height
+    width = [UIScreen mainScreen].bounds.size.width;
+    height = [UIScreen mainScreen].bounds.size.height;
 }
 
 -(void)addNotifications

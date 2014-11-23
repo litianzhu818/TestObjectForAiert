@@ -33,17 +33,12 @@
 {
     [super viewDidLoad];
     [self initUI];
-    //[self localizedSupport];
-    
-    //self.clearsSelectionOnViewWillAppear = YES;
     [self.tableView hideExtraCellLine];
     
     if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
         [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     }
     
-    //self.tableView.backgroundColor = [UIColor AppThemeTableViewBackgroundColor];
-    //self.tableView.backgroundColor = [UIColor colorWithRed:124.0/255.0f green:111.0/255.0f blue:176.0/255.0f alpha:1.0];
     self.tableView.backgroundColor = [UIColor whiteColor];
     _popupTipShowCount = 0;
     
@@ -130,29 +125,18 @@
     [self.navigationItem setTitleView:titleView];
     
     [self.editButton setTitle:NSLocalizedString(@"编辑", @"")];
-//    UIButton *rightButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0, 0.0, 40, 30)];
-//    [rightButton setBackgroundImage:PNG_NAME(@"edit_btn") forState:UIControlStateNormal];
-//    [rightButton setTitle:@"编辑" forState:UIControlStateNormal];
-//    [rightButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//    [rightButton addTarget:self action:@selector(clikedOnEditButton:) forControlEvents:UIControlEventTouchUpInside];
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
-    
-    //self.headerView.backgroundColor = [UIColor AppThemeTableViewBackgroundColor];
 }
-
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
 }
-
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
 
-    if (!self.deviceList) {
-        [self showPopupTipWhenEmpty];
-    }
+    [[UIDevice currentDevice] setValue:
+     [NSNumber numberWithInteger: UIInterfaceOrientationPortrait]
+                                forKey:@"orientation"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -179,36 +163,16 @@
     isEditing = !isEditing;
 }
 
-#pragma mark - Show Popup Tip
-
-- (void)showPopupTipWhenEmpty
-{
-    if (self.deviceList.count == 0 && _popupTipShowCount <= 0) {
-        [popupTipView presentPointingAtView:self.navigationItem.rightBarButtonItem.customView
-                                     inView:self.view animated:YES];
-        _popupTipShowCount++;
-    }
-    else {
-        [popupTipView dismissAnimated:NO];
-    }
-}
-
-#pragma mark - Localized Support
-
-- (void)localizedSupport
-{
-    //self.navigationItem.title = NSLocalizedString(@"List", @"List");
-}
-
 #pragma mark - Autorotate
 
-- (NSUInteger)supportedInterfaceOrientations{
-    return UIInterfaceOrientationPortrait;
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 - (BOOL)shouldAutorotate
 {
-    return NO;
+    return YES;
 }
 
 #pragma mark - Table view data source

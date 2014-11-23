@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ejh-sA-jkk">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ejh-sA-jkk">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kE2-rq-1NH">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kE2-rq-1NH">
                                 <rect key="frame" x="0.0" y="-11" width="320" height="480"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bCS-OY-4QP">
@@ -191,9 +191,9 @@
                                     </view>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="bCS-OY-4QP" secondAttribute="trailing" constant="20" id="BhT-8J-XKY"/>
                                     <constraint firstItem="bCS-OY-4QP" firstAttribute="top" secondItem="kE2-rq-1NH" secondAttribute="top" constant="91" id="Ei1-4v-m3R"/>
-                                    <constraint firstAttribute="trailing" secondItem="bCS-OY-4QP" secondAttribute="trailing" constant="20" id="FET-hN-bUz"/>
-                                    <constraint firstItem="bCS-OY-4QP" firstAttribute="leading" secondItem="kE2-rq-1NH" secondAttribute="leading" constant="20" id="UCc-wA-qnZ"/>
+                                    <constraint firstItem="bCS-OY-4QP" firstAttribute="leading" secondItem="kE2-rq-1NH" secondAttribute="leading" constant="20" id="xFL-xO-soX"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="lCN-Le-wfj" id="rgV-fv-F8i"/>
@@ -202,10 +202,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="kE2-rq-1NH" firstAttribute="top" secondItem="ASM-Qs-kRZ" secondAttribute="top" constant="-11" id="4BK-OY-x3j"/>
+                            <constraint firstItem="kE2-rq-1NH" firstAttribute="top" secondItem="ASM-Qs-kRZ" secondAttribute="top" id="4BK-OY-x3j"/>
                             <constraint firstAttribute="trailing" secondItem="kE2-rq-1NH" secondAttribute="trailing" id="TJx-Hz-kLn"/>
                             <constraint firstItem="kE2-rq-1NH" firstAttribute="leading" secondItem="ASM-Qs-kRZ" secondAttribute="leading" id="VRl-Sj-UIR"/>
-                            <constraint firstAttribute="bottom" secondItem="kE2-rq-1NH" secondAttribute="bottom" constant="11" id="c7u-7O-Qjw"/>
+                            <constraint firstAttribute="bottom" secondItem="kE2-rq-1NH" secondAttribute="bottom" id="c7u-7O-Qjw"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="修改设备信息" id="o3e-oO-xBu">
@@ -673,7 +673,7 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VPN-QT-dFb">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VPN-QT-dFb">
                                         <rect key="frame" x="240" y="2" width="40" height="40"/>
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -682,11 +682,15 @@
                                             <action selector="clikedOnRefreshButton:" destination="W2j-vg-wOH" eventType="touchUpInside" id="HVL-zR-eTB"/>
                                         </connections>
                                     </button>
-                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="1.png" translatesAutoresizingMaskIntoConstraints="NO" id="x9l-89-yTH">
+                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="1.png" translatesAutoresizingMaskIntoConstraints="NO" id="x9l-89-yTH">
                                         <rect key="frame" x="242" y="4" width="36" height="36"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="x9l-89-yTH" secondAttribute="trailing" constant="10" id="87p-1h-cGX"/>
+                                    <constraint firstAttribute="trailing" secondItem="VPN-QT-dFb" secondAttribute="trailing" constant="8" id="oLa-Lo-llh"/>
+                                </constraints>
                                 <connections>
                                     <outlet property="cameraImageView" destination="glK-Co-Ef8" id="5uh-i5-Bg6"/>
                                     <outlet property="delegate" destination="UEM-Dh-unD" id="ERX-PB-FhZ"/>
@@ -948,7 +952,7 @@
         <image name="navigationbar_refresh_selected.png" width="21" height="20"/>
         <image name="navigationbar_refresh_unselected.png" width="21" height="20"/>
         <image name="pic_tabar.png" width="29" height="29"/>
-        <image name="video_stop_btn.png" width="25" height="27"/>
+        <image name="video_stop_btn.png" width="71" height="86"/>
         <image name="video_tabbar.png" width="29" height="29"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

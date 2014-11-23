@@ -83,17 +83,12 @@
 //IOS 6的方法
 - (BOOL)shouldAutorotate
 {
-    return YES;
+    return NO;
 }
 - (NSUInteger)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskPortrait;
 }
-
-//- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
-//{
-//    return UIInterfaceOrientationLandscapeRight;
-//}
 
 -(void)initStatusBar
 {
