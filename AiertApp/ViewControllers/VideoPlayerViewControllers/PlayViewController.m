@@ -59,11 +59,9 @@
     //默认画质
     self.qualityType = VideoQualityTypeLD;
     
-    //
     _enableSound = NO;
     _enableMicrophone = NO;
     
-
     //如果此时没有设备的videoNum信息，我们就设置位1
     if (self.device.deviceAdditionInfo.videoNum < 1) {
         DeviceAddition *deviceAddtion = [[DeviceAddition alloc] init];
@@ -75,7 +73,6 @@
     [[LibCoreWrap sharedCore] registerStreamObserverWithDeviceId:nil
                                                          channel:0
                                                   streamObserver:self];
-    
     
     [[LibCoreWrap sharedCore] startRealPlayWithDeviceId:self.device.deviceID
                                                 channel:_currentChannel
@@ -210,11 +207,23 @@
 }
 - (void)playerView:(PlayerView *)playerView didSwitchTalkStatus:(BOOL)talking
 {
-    [self setEnableMicrophone:YES];
+    [self setEnableMicrophone:talking];
+    
+    if (talking) {
+        if (self.enableMicrophone) {
+            [[LibCoreWrap sharedCore] startTalkWithDeviceId:self.device.deviceID
+                                                    channel:_currentChannel];
+        }
+    }else{
+        if (self.enableMicrophone) {
+            [[LibCoreWrap sharedCore] stopTalkWithDeviceId:self.device.deviceID
+                                                   channel:_currentChannel];
+        }
+    }
 }
 - (void)playerView:(PlayerView *)playerView didChangedVolumeWithValue:(float)value
 {
-
+    
 }
 
 #pragma mark - Navigation
@@ -294,9 +303,8 @@
 //    [self switchUIbyQualityType:self.qualityType];
 //    [self.popupQualityView dismissAnimated:YES];
 //}
-
+/*
 #pragma mark - Change Password
-
 - (void)askTochangeDevicePassword
 {
     CXAlertViewEx *alart = [[CXAlertViewEx alloc] initWithMessage:NSLocalizedString(@"Password is not safe. For safety, please change the default password!",
@@ -361,7 +369,7 @@
 //        }
 //    }
 //}
-
+*/
 
 #pragma mark - LibCore Event observer
 
@@ -621,18 +629,6 @@
             }
         }
             break;
-        case PlayBottomTypeTalk: { //对讲
-            self.enableMicrophone = !self.enableMicrophone;
-            
-//            [self.playBottomView selectAtIndexWithOpenStatus:PlayBottomTypeTalk OpenStatus:self.enableMicrophone];
-        }
-            break;
-        case PlayBottomTypeSound: { //声音
-            self.enableSound = !self.enableSound;
-            
-//            [self.playBottomView selectAtIndexWithOpenStatus:PlayBottomTypeSound OpenStatus:self.enableSound];
-        }
-            break;
         case PlayBottomTypeQuality: { //品质
 //            self.popupQualityView.qualityView.qualityType = self.qualityType;
 //            [self.popupQualityView presentPointingAtView:sender inView:self.bkView animated:YES];
@@ -640,22 +636,4 @@
             break;
     }
 }
-
-- (void)didLongPressBeganInPlayBottomView:(id)aData Tag:(NSInteger)aTag {
-    if (self.enableMicrophone) {
-        [[LibCoreWrap sharedCore] startTalkWithDeviceId:self.device.deviceID
-                                                channel:_currentChannel];
-    }
-    
-}
-
-- (void)didLongPressEndInPlayBottomView:(id)aData Tag:(NSInteger)aTag {
-    if (self.enableMicrophone) {
-        [[LibCoreWrap sharedCore] stopTalkWithDeviceId:self.device.deviceID
-                                               channel:_currentChannel];
-    }
-}
-
-
-
 @end
