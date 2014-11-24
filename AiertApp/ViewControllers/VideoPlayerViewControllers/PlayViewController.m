@@ -226,6 +226,12 @@
     
 }
 
+- (void)playerView:(PlayerView *)playerView didChangedQualityTypeWithValue:(VideoQualityType)newQualityType
+{
+    self.qualityType = newQualityType;
+    [self switchUIbyQualityType:self.qualityType];
+}
+
 #pragma mark - Navigation
 
 - (IBAction)closeButton_TouchUpInside:(id)sender {

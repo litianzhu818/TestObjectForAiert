@@ -38,7 +38,7 @@
 
 - (void)dealloc
 {
-    [self.playerView removeGestureRecognizer:self.tapGesture];
+//    [self.playerView removeGestureRecognizer:self.tapGesture];
     if ([self.timer isValid]) {
         [self.timer invalidate];
     }
@@ -326,6 +326,11 @@
     [self.volumeSlider setThumbImage:thumbImage forState:UIControlStateNormal];
     
     [self.bottomBarView addSubview:self.volumeSlider];
+    
+    
+    self.popupQualityView = [[CMPopTipViewQuality alloc] initWithBackgroundColor:[UIColor lightGrayColor]];
+    self.popupQualityView.qualityView.delegate = self;
+    self.popupQualityView.delegate = self;
 
     NSLog(NSStringFromCGRect(self.button9.frame));
     
@@ -337,9 +342,10 @@
 - (void)initData
 {
     self.backgroundColor = [UIColor blackColor];
-    self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clikedOnPlayerView:)];
-    [self.playerView addGestureRecognizer:self.tapGesture];
+//    self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clikedOnPlayerView:)];
+//    [self.playerView addGestureRecognizer:self.tapGesture];
     self.isFullScreen = NO;
+    self.qualityType = VideoQualityTypeLD;
     [self startTimer];
 }
 
@@ -437,6 +443,13 @@
             
             break;
             
+        case 12:
+        {
+            self.popupQualityView.qualityView.qualityType = self.qualityType;
+            [self.popupQualityView presentPointingAtView:btn inView:self animated:YES];
+        }
+            break;
+            
         default:
             break;
     }
@@ -473,5 +486,16 @@
 {
     [self showBars:self.isFullScreen];
 }
+
+- (void)selectQualityView:(SelectQualityView *)selectQualityView
+          changeQualityTo:(VideoQualityType)newQualityType
+{
+    self.qualityType = newQualityType;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(playerView:didChangedQualityTypeWithValue:)]) {
+        [self.delegate playerView:self didChangedQualityTypeWithValue:newQualityType];
+    }
+    [self.popupQualityView dismissAnimated:YES];
+}
+
 
 @end

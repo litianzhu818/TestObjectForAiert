@@ -8,19 +8,22 @@
 
 #import <UIKit/UIKit.h>
 #import "DisplayImageView.h"
+#import "CMPopTipViewQuality.h"
+#import "BasicDefine.h"
 
 @protocol PlayerViewDelegate;
 
 @interface PlayerView : UIView<DisplayImageViewProtocol>
-
+@property (assign, nonatomic) VideoQualityType qualityType;
 @property (assign, nonatomic) BOOL isFullScreen;
 @property (assign, nonatomic) BOOL hasTimer;
 @property (strong, nonatomic) NSTimer *timer;
-@property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
+//@property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
 
 @property (strong, nonatomic) UIView *topBarView;
 @property (strong, nonatomic) UIView *bottomBarView;
 @property (strong, nonatomic) DisplayImageView *playerView;
+@property (strong, nonatomic) CMPopTipViewQuality *popupQualityView;
 
 @property (strong, nonatomic) UILabel *noticeLabel;
 @property (strong, nonatomic) UIButton *talkButton;
@@ -56,5 +59,6 @@
 - (void)playerView:(PlayerView *)playerView touchUpInsideButtonAtIndex:(NSUInteger)index;
 - (void)playerView:(PlayerView *)playerView didSwitchTalkStatus:(BOOL)talking;
 - (void)playerView:(PlayerView *)playerView didChangedVolumeWithValue:(float)value;
+- (void)playerView:(PlayerView *)playerView didChangedQualityTypeWithValue:(VideoQualityType)newQualityType;
 
 @end

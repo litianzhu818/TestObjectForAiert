@@ -288,6 +288,7 @@
 		E77FBDBE19CEC74A00D1698C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E77FBDBD19CEC74A00D1698C /* AudioToolbox.framework */; };
 		E77FBDC019CEC75900D1698C /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E77FBDBF19CEC75900D1698C /* CFNetwork.framework */; };
 		E7927B5819CEA09400588FB5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E7927B5719CEA09400588FB5 /* libz.dylib */; };
+		E798F9FD1A22C4B90082A786 /* Start.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E798F9FC1A22C4B90082A786 /* Start.storyboard */; };
 		E7AE674819FF2B66008546EA /* PlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AE674719FF2B66008546EA /* PlayViewController.m */; };
 		E7AF49AC19EA3C0D00699BA1 /* GCDMulticastDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF49A719EA3C0D00699BA1 /* GCDMulticastDelegate.m */; };
 		E7AF49AD19EA3C0D00699BA1 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF49AA19EA3C0D00699BA1 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -389,7 +390,6 @@
 		E7AF4C4D19EA50AA00699BA1 /* PlayBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF4C4C19EA50AA00699BA1 /* PlayBottomView.m */; };
 		E7AF4C5019EA54F300699BA1 /* AiertDeviceCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AF4C4F19EA54F300699BA1 /* AiertDeviceCoreDataManager.m */; };
 		E7B186BF19EE47420091685F /* VideoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B186BE19EE47420091685F /* VideoPlayerViewController.m */; };
-		E7B6244D1A12622A00FB7143 /* Start.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7B6244C1A12622A00FB7143 /* Start.storyboard */; };
 		E7B624511A12627B00FB7143 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B624501A12627B00FB7143 /* TestViewController.m */; };
 		E7B9378F1A1FA577005B515C /* PlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B9378E1A1FA577005B515C /* PlayerView.m */; };
 		E7B937931A1FA5C0005B515C /* volume_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E7B937911A1FA5C0005B515C /* volume_btn@2x.png */; };
@@ -913,6 +913,7 @@
 		E77FBDBD19CEC74A00D1698C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		E77FBDBF19CEC75900D1698C /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		E7927B5719CEA09400588FB5 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		E798F9FC1A22C4B90082A786 /* Start.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Start.storyboard; sourceTree = "<group>"; };
 		E7AE674619FF2B66008546EA /* PlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayViewController.h; sourceTree = "<group>"; };
 		E7AE674719FF2B66008546EA /* PlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayViewController.m; sourceTree = "<group>"; };
 		E7AF49A619EA3C0D00699BA1 /* GCDMulticastDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDMulticastDelegate.h; sourceTree = "<group>"; };
@@ -1108,7 +1109,6 @@
 		E7AF4C4F19EA54F300699BA1 /* AiertDeviceCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AiertDeviceCoreDataManager.m; sourceTree = "<group>"; };
 		E7B186BD19EE47420091685F /* VideoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPlayerViewController.h; sourceTree = "<group>"; };
 		E7B186BE19EE47420091685F /* VideoPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoPlayerViewController.m; sourceTree = "<group>"; };
-		E7B6244C1A12622A00FB7143 /* Start.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Start.storyboard; sourceTree = "<group>"; };
 		E7B6244F1A12627B00FB7143 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
 		E7B624501A12627B00FB7143 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		E7B9378D1A1FA577005B515C /* PlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerView.h; sourceTree = "<group>"; };
@@ -2439,7 +2439,6 @@
 			isa = PBXGroup;
 			children = (
 				E7AF4BB419EA507300699BA1 /* Main_Storyboard.storyboard */,
-				E7B6244C1A12622A00FB7143 /* Start.storyboard */,
 			);
 			path = StoryboardFies;
 			sourceTree = "<group>";
@@ -2730,6 +2729,7 @@
 		E7B6244E1A12626900FB7143 /* TestViewController */ = {
 			isa = PBXGroup;
 			children = (
+				E798F9FC1A22C4B90082A786 /* Start.storyboard */,
 				E7B6244F1A12627B00FB7143 /* TestViewController.h */,
 				E7B624501A12627B00FB7143 /* TestViewController.m */,
 			);
@@ -3172,7 +3172,6 @@
 				3543F3DF188A7BF000107A48 /* live_snapshot_unselected.png in Resources */,
 				E7419DFA19E653D700B5B764 /* 6@2x.png in Resources */,
 				E7419E0C19E653D700B5B764 /* icon_smal@2x.png in Resources */,
-				E7B6244D1A12622A00FB7143 /* Start.storyboard in Resources */,
 				E7419DF919E653D700B5B764 /* 5@2x.png in Resources */,
 				3543F3B2188A7BF000107A48 /* camera_picture@2x.png in Resources */,
 				3647098418DD7D6700BBD125 /* svSuccess@2x.png in Resources */,
@@ -3257,6 +3256,7 @@
 				E7419E2019E653D700B5B764 /* tabar@2x.png in Resources */,
 				E7419E0419E653D700B5B764 /* camera_all_tabar@2x.png in Resources */,
 				3543F40D188A7BF000107A48 /* navigationbar_live_selected.png in Resources */,
+				E798F9FD1A22C4B90082A786 /* Start.storyboard in Resources */,
 				F42758E61908A5C300F93434 /* live_104_0_sel.png in Resources */,
 				3543F415188A7BF000107A48 /* navigationbar_refresh_selected.png in Resources */,
 				E7419DF619E653D700B5B764 /* 2@2x.png in Resources */,
