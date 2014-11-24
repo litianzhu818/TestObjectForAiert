@@ -328,7 +328,8 @@
     [self.bottomBarView addSubview:self.volumeSlider];
     
     
-    self.popupQualityView = [[CMPopTipViewQuality alloc] initWithBackgroundColor:[UIColor lightGrayColor]];
+    self.popupQualityView = [[CMPopTipViewQuality alloc] initWithBackgroundColor:[UIColor colorWithRed:124.0/255.0f green:111.0/255.0f blue:176.0/255.0f alpha:1.0]];
+    self.popupQualityView.alpha = 0.5;
     self.popupQualityView.qualityView.delegate = self;
     self.popupQualityView.delegate = self;
 
@@ -342,8 +343,6 @@
 - (void)initData
 {
     self.backgroundColor = [UIColor blackColor];
-//    self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clikedOnPlayerView:)];
-//    [self.playerView addGestureRecognizer:self.tapGesture];
     self.isFullScreen = NO;
     self.qualityType = VideoQualityTypeLD;
     [self startTimer];
@@ -495,6 +494,11 @@
         [self.delegate playerView:self didChangedQualityTypeWithValue:newQualityType];
     }
     [self.popupQualityView dismissAnimated:YES];
+}
+
+- (void)popTipViewWasDismissedByUser:(CMPopTipView *)popTipView
+{
+
 }
 
 
