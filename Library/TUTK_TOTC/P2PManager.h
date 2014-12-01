@@ -40,6 +40,8 @@ typedef NS_ENUM(NSUInteger, CONNECT_TYPE){
 
 - (void)closeConnection;
 
+- (void)setMirror;
+
 @end
 
 

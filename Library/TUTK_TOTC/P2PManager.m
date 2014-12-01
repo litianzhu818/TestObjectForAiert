@@ -627,4 +627,34 @@ unsigned int _getTickCount() {
         dispatch_async(p2pManagerQueue, block);
 }
 
+- (void)setMirror
+{
+    dispatch_block_t block = ^{@autoreleasepool{
+        
+        [self _setMirror];
+        
+        }
+    };
+    
+    if (dispatch_get_specific(p2pManagerQueueTag))
+        block();
+    else
+        dispatch_async(p2pManagerQueue, block);
+
+}
+
+- (void)_setMirror
+{
+    if (!dispatch_get_specific(p2pManagerQueueTag)) return;
+    
+    int ret = 0;
+    int mode =1;
+    if (ret = avSendIOCtrl([self avIndex], IOTYPE_USER_IPCAM_SETMIRROR, (char *)&mode, sizeof(int))) {
+        
+        NSLog(@"set_mirror_failed[%d]", ret);
+        
+    };
+        
+}
+
 @end
