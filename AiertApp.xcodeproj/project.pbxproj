@@ -284,6 +284,11 @@
 		E742BA0419CD5E4100ACA06A /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E742BA0019CD5E4100ACA06A /* libavutil.a */; };
 		E742BA0519CD5E4100ACA06A /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E742BA0119CD5E4100ACA06A /* libavcodec.a */; };
 		E742BA0719CD62DB00ACA06A /* libzbar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E742BA0619CD62DB00ACA06A /* libzbar.a */; };
+		E77F632B1A2DA0BD007CEC3E /* 增加的协议.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E77F63281A2DA0BD007CEC3E /* 增加的协议.rtf */; };
+		E77F632C1A2DA0BD007CEC3E /* 朱工聊天记录（部分）.rtfd in Resources */ = {isa = PBXBuildFile; fileRef = E77F63291A2DA0BD007CEC3E /* 朱工聊天记录（部分）.rtfd */; };
+		E77F632D1A2DA0BD007CEC3E /* 第一部分协议接口.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E77F632A1A2DA0BD007CEC3E /* 第一部分协议接口.rtf */; };
+		E77F63301A2DA0CF007CEC3E /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = E77F632E1A2DA0CF007CEC3E /* LICENSE */; };
+		E77F63311A2DA0CF007CEC3E /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = E77F632F1A2DA0CF007CEC3E /* README.md */; };
 		E77FBDBC19CEC73200D1698C /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E77FBDBB19CEC73200D1698C /* OpenGLES.framework */; };
 		E77FBDBE19CEC74A00D1698C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E77FBDBD19CEC74A00D1698C /* AudioToolbox.framework */; };
 		E77FBDC019CEC75900D1698C /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E77FBDBF19CEC75900D1698C /* CFNetwork.framework */; };
@@ -909,6 +914,11 @@
 		E742BA0019CD5E4100ACA06A /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = Library/install_ffmpeg2.1_zsight/lib/libavutil.a; sourceTree = "<group>"; };
 		E742BA0119CD5E4100ACA06A /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = Library/install_ffmpeg2.1_zsight/lib/libavcodec.a; sourceTree = "<group>"; };
 		E742BA0619CD62DB00ACA06A /* libzbar.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzbar.a; path = Library/ZBarSDK/lib/libzbar.a; sourceTree = "<group>"; };
+		E77F63281A2DA0BD007CEC3E /* 增加的协议.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = "增加的协议.rtf"; sourceTree = "<group>"; };
+		E77F63291A2DA0BD007CEC3E /* 朱工聊天记录（部分）.rtfd */ = {isa = PBXFileReference; lastKnownFileType = wrapper.rtfd; path = "朱工聊天记录（部分）.rtfd"; sourceTree = "<group>"; };
+		E77F632A1A2DA0BD007CEC3E /* 第一部分协议接口.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = "第一部分协议接口.rtf"; sourceTree = "<group>"; };
+		E77F632E1A2DA0CF007CEC3E /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		E77F632F1A2DA0CF007CEC3E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E77FBDBB19CEC73200D1698C /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		E77FBDBD19CEC74A00D1698C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		E77FBDBF19CEC75900D1698C /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -1573,6 +1583,9 @@
 		35ED8FE11883B61500943961 = {
 			isa = PBXGroup;
 			children = (
+				E77F632E1A2DA0CF007CEC3E /* LICENSE */,
+				E77F632F1A2DA0CF007CEC3E /* README.md */,
+				E77F63271A2DA0BD007CEC3E /* 技术文档 */,
 				35ED8FF31883B61500943961 /* AiertApp */,
 				35A17A791883BDD600ABC41C /* Library */,
 				35ED8FEC1883B61500943961 /* Frameworks */,
@@ -2187,6 +2200,16 @@
 				E715532C19F36CAB00BF17D0 /* DeviceAddition.m */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		E77F63271A2DA0BD007CEC3E /* 技术文档 */ = {
+			isa = PBXGroup;
+			children = (
+				E77F63281A2DA0BD007CEC3E /* 增加的协议.rtf */,
+				E77F63291A2DA0BD007CEC3E /* 朱工聊天记录（部分）.rtfd */,
+				E77F632A1A2DA0BD007CEC3E /* 第一部分协议接口.rtf */,
+			);
+			path = "技术文档";
 			sourceTree = "<group>";
 		};
 		E7AF49A019EA3C0D00699BA1 /* UtilityManagers */ = {
@@ -3111,6 +3134,7 @@
 				E7419E2219E653D700B5B764 /* video_10@2x.png in Resources */,
 				3641E65818EC1091005527C7 /* blackArrow.png in Resources */,
 				3641E65B18EC1091005527C7 /* blueArrow@2x.png in Resources */,
+				E77F632C1A2DA0BD007CEC3E /* 朱工聊天记录（部分）.rtfd in Resources */,
 				F47E81BB19076E14003C0F1B /* live_103@2x.png in Resources */,
 				F43558181904F806007D2B21 /* PBottom_100-sel.png in Resources */,
 				E7419E1F19E653D700B5B764 /* speak_pre@2x.png in Resources */,
@@ -3132,6 +3156,7 @@
 				E7419E1A19E653D700B5B764 /* search@2x.png in Resources */,
 				F47E81A719076E14003C0F1B /* live_100@2x.png in Resources */,
 				E7419E2B19E653D700B5B764 /* video_3@2x.png in Resources */,
+				E77F632D1A2DA0BD007CEC3E /* 第一部分协议接口.rtf in Resources */,
 				3543F3B0188A7BF000107A48 /* adddevice_putfield@2x.png in Resources */,
 				3543F42C188A7BF000107A48 /* tabbar_more_unselected@2x.png in Resources */,
 				E7419E0B19E653D700B5B764 /* icon_setting@2x.png in Resources */,
@@ -3159,6 +3184,7 @@
 				3543F3B4188A7BF000107A48 /* Error@2x.png in Resources */,
 				F42758EC1908A5C300F93434 /* live_104_1.png in Resources */,
 				3543F3F2188A7BF000107A48 /* live_stream_hd_selected@2x.png in Resources */,
+				E77F63301A2DA0CF007CEC3E /* LICENSE in Resources */,
 				3543F3D9188A7BF000107A48 /* live_mic_shutdown_unselected.png in Resources */,
 				3543F3ED188A7BF000107A48 /* live_stop_selected.png in Resources */,
 				E7AF4B4A19EA4E8300699BA1 /* btn_close_selected.png in Resources */,
@@ -3238,6 +3264,7 @@
 				F435581C1904F806007D2B21 /* VBottom_101-sel.png in Resources */,
 				F47E81AF19076E14003C0F1B /* live_102_close@2x.png in Resources */,
 				3543F3DD188A7BF000107A48 /* live_snapshot_selected.png in Resources */,
+				E77F632B1A2DA0BD007CEC3E /* 增加的协议.rtf in Resources */,
 				F42758F01908A5C300F93434 /* live_104_2.png in Resources */,
 				F42758E91908A5C300F93434 /* live_104_0@2x.png in Resources */,
 				E7419E2419E653D700B5B764 /* video_12@2x.png in Resources */,
@@ -3550,6 +3577,7 @@
 				E7AF4B5319EA4E8300699BA1 /* UICustomAlertView.m in Sources */,
 				E7AF4C3119EA507300699BA1 /* CMPopTipView+AppTheme.m in Sources */,
 				E7AF4B5A19EA4E8300699BA1 /* AlarmMessageViewController.m in Sources */,
+				E77F63311A2DA0CF007CEC3E /* README.md in Sources */,
 				E7AF4BAF19EA4FEA00699BA1 /* WebInterface.m in Sources */,
 				3641E5DC18EBAC69005527C7 /* json_writer.cpp in Sources */,
 				E7AF4C4619EA507300699BA1 /* UITableView+AppTheme.m in Sources */,
