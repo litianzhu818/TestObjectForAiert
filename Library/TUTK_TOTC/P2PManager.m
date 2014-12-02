@@ -23,8 +23,10 @@
 
 @interface P2PManager ()
 {
-    dispatch_queue_t p2pManagerQueue;
-    void *p2pManagerQueueTag;
+    dispatch_queue_t p2pVideoPlayManagerQueue;
+    dispatch_queue_t p2pIOControlManagerQueue;
+    void *p2pVideoPlayManagerQueueTag;
+    void *p2pIOControlManagerQueueTag;
     BOOL closeConnection;
     
     int mirrorUpDownTag;
@@ -78,19 +80,26 @@ static  P2PManager *sharedInstance = nil ;
     {
         if (queue)
         {
-            p2pManagerQueue = queue;
+            p2pVideoPlayManagerQueue = queue;
+            p2pIOControlManagerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 #if !OS_OBJECT_USE_OBJC
             dispatch_retain(p2pManagerQueue);
 #endif
         }
         else
         {
-            const char *p2pManagerQueueName = [[self className] UTF8String];
-            p2pManagerQueue = dispatch_queue_create(p2pManagerQueueName, NULL);
+            const char *p2pVideoPlayManagerQueueName = [[self className] UTF8String];
+            const char *p2pIOControlManagerQueueName = [@"P2P_IO_CONTROL_QUEUE" UTF8String];
+            
+            p2pVideoPlayManagerQueue = /*dispatch_queue_create(p2pVideoPlayManagerQueueName, NULL)*/dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+            p2pIOControlManagerQueue = dispatch_queue_create(p2pIOControlManagerQueueName, NULL);
         }
         
-         p2pManagerQueueTag = & p2pManagerQueueTag;
-        dispatch_queue_set_specific( p2pManagerQueue,  p2pManagerQueueTag,  p2pManagerQueueTag, NULL);
+        p2pVideoPlayManagerQueueTag = & p2pVideoPlayManagerQueueTag;
+        p2pIOControlManagerQueueTag = & p2pIOControlManagerQueueTag;
+        dispatch_queue_set_specific( p2pVideoPlayManagerQueue,  p2pVideoPlayManagerQueueTag,  p2pVideoPlayManagerQueueTag, NULL);
+        dispatch_queue_set_specific( p2pIOControlManagerQueue,  p2pIOControlManagerQueueTag,  p2pIOControlManagerQueueTag, NULL);
+        
         closeConnection = NO;
         isCameraTurning = NO;
         SID = -999999;
@@ -138,10 +147,10 @@ static  P2PManager *sharedInstance = nil ;
         
     };
     
-    if (dispatch_get_specific(p2pManagerQueueTag))
+    if (dispatch_get_specific(p2pVideoPlayManagerQueueTag))
         block();
     else
-        dispatch_async(p2pManagerQueue, block);
+        dispatch_async(p2pVideoPlayManagerQueue, block);
 }
 
 - (void)removeDelegate
@@ -152,35 +161,36 @@ static  P2PManager *sharedInstance = nil ;
         
     };
     
-    if (dispatch_get_specific(p2pManagerQueueTag))
+    if (dispatch_get_specific(p2pVideoPlayManagerQueueTag))
         block();
     else
-        dispatch_async(p2pManagerQueue, block);
+        dispatch_async(p2pVideoPlayManagerQueue, block);
 }
 
-- (dispatch_queue_t)p2pManagerQueue
+- (dispatch_queue_t)p2pVideoPlayManagerQueue
 {
-    return p2pManagerQueue;
+    return p2pVideoPlayManagerQueue;
 }
 
-- (void *)p2pManagerQueueTag
+- (void *)p2pVideoPlayManagerQueueTag
 {
-    return p2pManagerQueueTag;
+    return p2pVideoPlayManagerQueueTag;
 }
 
 - (unsigned char)turnSpeed
 {
     __block unsigned char result = DEFAULT_TURN_SPEED;
+    
     dispatch_block_t block = ^{
         
         result = turnSpeed;
         
     };
     
-    if (dispatch_get_specific(p2pManagerQueueTag))
+    if (dispatch_get_specific(p2pIOControlManagerQueueTag))
         block();
     else
-        dispatch_sync(p2pManagerQueue, block);
+        dispatch_sync(p2pIOControlManagerQueue, block);
     
     return result;
 }
@@ -193,10 +203,10 @@ static  P2PManager *sharedInstance = nil ;
         
     };
     
-    if (dispatch_get_specific(p2pManagerQueueTag))
+    if (dispatch_get_specific(p2pIOControlManagerQueueTag))
         block();
     else
-        dispatch_async(p2pManagerQueue, block);
+        dispatch_async(p2pIOControlManagerQueue, block);
 }
 
 - (int)avIndex
@@ -209,11 +219,10 @@ static  P2PManager *sharedInstance = nil ;
         
     };
     
-    if (dispatch_get_specific(p2pManagerQueueTag))
+    if (dispatch_get_specific(p2pVideoPlayManagerQueueTag))
         block();
     else
-        dispatch_sync(p2pManagerQueue, block);
-    
+        dispatch_sync(p2pVideoPlayManagerQueue, block);
     return result;
 }
 
@@ -225,10 +234,10 @@ static  P2PManager *sharedInstance = nil ;
         
     };
     
-    if (dispatch_get_specific(p2pManagerQueueTag))
+    if (dispatch_get_specific(p2pVideoPlayManagerQueueTag))
         block();
     else
-        dispatch_async(p2pManagerQueue, block);
+        dispatch_async(p2pVideoPlayManagerQueue, block);
 }
 
 - (int)SID
@@ -241,10 +250,10 @@ static  P2PManager *sharedInstance = nil ;
         
     };
     
-    if (dispatch_get_specific(p2pManagerQueueTag))
+    if (dispatch_get_specific(p2pVideoPlayManagerQueueTag))
         block();
     else
-        dispatch_sync(p2pManagerQueue, block);
+        dispatch_sync(p2pVideoPlayManagerQueue, block);
     
     return result;
 }
@@ -255,10 +264,10 @@ static  P2PManager *sharedInstance = nil ;
         SID = sid;
     };
     
-    if (dispatch_get_specific(p2pManagerQueueTag))
+    if (dispatch_get_specific(p2pVideoPlayManagerQueueTag))
         block();
     else
-        dispatch_async(p2pManagerQueue, block);
+        dispatch_async(p2pVideoPlayManagerQueue, block);
 }
 
 - (NSString *)deviceID
@@ -271,10 +280,10 @@ static  P2PManager *sharedInstance = nil ;
         
     };
     
-    if (dispatch_get_specific(p2pManagerQueueTag))
+    if (dispatch_get_specific(p2pVideoPlayManagerQueueTag))
         block();
     else
-        dispatch_sync(p2pManagerQueue, block);
+        dispatch_sync(p2pVideoPlayManagerQueue, block);
     
     return result;
 }
@@ -287,10 +296,10 @@ static  P2PManager *sharedInstance = nil ;
         
     };
     
-    if (dispatch_get_specific(p2pManagerQueueTag))
+    if (dispatch_get_specific(p2pVideoPlayManagerQueueTag))
         block();
     else
-        dispatch_async(p2pManagerQueue, block);
+        dispatch_async(p2pVideoPlayManagerQueue, block);
 }
 
 
@@ -306,7 +315,7 @@ unsigned int _getTickCount() {
 
 - (void)getMediaInfoWithVideoIndex:(int )arg
 {
-    if (!dispatch_get_specific(p2pManagerQueueTag)) return;
+    if (!dispatch_get_specific(p2pVideoPlayManagerQueueTag)) return;
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(p2pManager:didStartPlayWithDEviceID:)]) {
         [self.delegate p2pManager:self didStartPlayWithDEviceID:[self.deviceID copy]];
@@ -440,7 +449,7 @@ unsigned int _getTickCount() {
 
 - (int)start_ipcam_stream:(int)avindex {
     
-    if (!dispatch_get_specific(p2pManagerQueueTag)) return 0;
+    if (!dispatch_get_specific(p2pVideoPlayManagerQueueTag)) return 0;
     
     [self setAvIndex:avindex];
     
@@ -472,9 +481,9 @@ unsigned int _getTickCount() {
     
     SMsgAVIoctrlAVStream ioMsg;
     memset(&ioMsg, 0, sizeof(SMsgAVIoctrlAVStream));
-    ioMsg.channel = 0;/*QVGA*/
+    //ioMsg.channel = 0;/*QVGA*/
     //ioMsg.channel = 1;/*VGA*/
-    //ioMsg.channel = 2;/*720*/
+    ioMsg.channel = 2;/*720*/
     if ((ret = avSendIOCtrl(avIndex, IOTYPE_USER_IPCAM_START, (char *)&ioMsg, sizeof(SMsgAVIoctrlAVStream)) < 0))
     {
         NSLog(@"start_ipcam_stream_failed[%d]", ret);
@@ -564,10 +573,10 @@ unsigned int _getTickCount() {
         
     };
     
-    if (dispatch_get_specific(p2pManagerQueueTag))
+    if (dispatch_get_specific(p2pVideoPlayManagerQueueTag))
         block();
     else
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block);
+        dispatch_async(p2pVideoPlayManagerQueue, block);
 }
 /**
  *  停止播放
@@ -671,10 +680,10 @@ unsigned int _getTickCount() {
         }
     };
     
-    if (dispatch_get_specific(p2pManagerQueueTag))
+    if (dispatch_get_specific(p2pVideoPlayManagerQueueTag))
         block();
     else
-        dispatch_async(p2pManagerQueue, block);
+        dispatch_async(p2pVideoPlayManagerQueue, block);
 }
 
 - (void)setMirrorUpDown
@@ -686,10 +695,10 @@ unsigned int _getTickCount() {
         }
     };
     
-    if (dispatch_get_specific(p2pManagerQueueTag))
+    if (dispatch_get_specific(p2pIOControlManagerQueueTag))
         block();
     else
-        dispatch_async(p2pManagerQueue, block);
+        dispatch_async(p2pIOControlManagerQueue, block);
 }
 - (void)setMirrorLeftRight
 {
@@ -700,15 +709,15 @@ unsigned int _getTickCount() {
     }
     };
     
-    if (dispatch_get_specific(p2pManagerQueueTag))
+    if (dispatch_get_specific(p2pIOControlManagerQueueTag))
         block();
     else
-        dispatch_async(p2pManagerQueue, block);
+        dispatch_async(p2pIOControlManagerQueue, block);
 }
 
 - (void)_setMirrorUpDown
 {
-    if (!dispatch_get_specific(p2pManagerQueueTag)) return;
+    if (!dispatch_get_specific(p2pIOControlManagerQueueTag)) return;
     
     int ret = 0;
     int IOTYPE_USER_IPCAM_SETMIRROR = 0x2008;
@@ -725,7 +734,7 @@ unsigned int _getTickCount() {
 }
 - (void)_setMirrorLeftRight
 {
-    if (!dispatch_get_specific(p2pManagerQueueTag)) return;
+    if (!dispatch_get_specific(p2pIOControlManagerQueueTag)) return;
     
     int ret = 0;
     int IOTYPE_USER_IPCAM_SETFLIP = 0x2009;
@@ -760,15 +769,15 @@ unsigned int _getTickCount() {
         }
     };
     
-    if (dispatch_get_specific(p2pManagerQueueTag))
+    if (dispatch_get_specific(p2pIOControlManagerQueueTag))
         block();
     else
-        dispatch_async(p2pManagerQueue, block);
+        dispatch_async(p2pIOControlManagerQueue, block);
 }
 
 - (void)_turnWithSpeed:(unsigned char)speed type:(CAMERA_TURN_TYPE)cameraTurnType
 {
-    if (!dispatch_get_specific(p2pManagerQueueTag)) return;
+    if (!dispatch_get_specific(p2pIOControlManagerQueueTag)) return;
     
     int ret = 0;
     int IOTYPE_USER_IPCAM_PTZ_COMMAND = 0x1001;

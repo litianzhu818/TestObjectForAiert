@@ -194,10 +194,10 @@
             [[LibCoreWrap sharedCore] setMirrorLeftRight];
             break;
         case 6:
-            [[LibCoreWrap sharedCore] startTurnCameraWithSpeed:self.turnCameraSpeed type:CAMERA_TURN_TYPE_LEFT_RIGHT];
+            [[LibCoreWrap sharedCore] startTurnCameraWithSpeed:self.turnCameraSpeed type:CAMERA_TURN_TYPE_UP_DOWN];
             break;
         case 7:
-            [[LibCoreWrap sharedCore] startTurnCameraWithSpeed:self.turnCameraSpeed type:CAMERA_TURN_TYPE_UP_DOWN];
+            [[LibCoreWrap sharedCore] startTurnCameraWithSpeed:self.turnCameraSpeed type:CAMERA_TURN_TYPE_LEFT_RIGHT];
             break;
         default:
             break;
@@ -212,12 +212,12 @@
         case 2:
 
             break;
-        case 4:
-            [[LibCoreWrap sharedCore] setMirrorUpDown];
-            break;
-        case 5:
-            [[LibCoreWrap sharedCore] setMirrorLeftRight];
-            break;
+//        case 4:
+//            [[LibCoreWrap sharedCore] setMirrorUpDown];
+//            break;
+//        case 5:
+//            [[LibCoreWrap sharedCore] setMirrorLeftRight];
+//            break;
             
         case 6:
         case 7:

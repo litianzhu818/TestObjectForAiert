@@ -46,8 +46,8 @@ typedef NS_ENUM(NSUInteger, CAMERA_TURN_TYPE){
 - (instancetype)initWithDelegate:(id<P2PManagerDelegate>)delegate;
 - (void)removeDelegate;
 
-- (dispatch_queue_t)p2pManagerQueue;
-- (void *)p2pManagerQueueTag;
+- (dispatch_queue_t)p2pVideoPlayManagerQueue;
+- (void *)p2pVideoPlayManagerQueueTag;
 
 /**
  *  用设备id连接进行网络连接
