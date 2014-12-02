@@ -32,6 +32,7 @@
 @property (strong, nonatomic) ZMRecorderFileIndex *fileIndexItem;
 @property (strong, nonatomic) NSData *currentVideoFrame;
 @property (assign, nonatomic) BOOL isStopPlaying;
+@property (assign, nonatomic) BOOL playingFailed;
 
 @end
 
@@ -177,19 +178,37 @@
 - (void)initData
 {
     self.isStopPlaying = YES;
+    self.playingFailed = NO;
 }
 
 #pragma mark - PlayerViewDelegate methods
 - (void)playerView:(PlayerView *)playerView touchDownInsideButtonAtIndex:(NSUInteger)index
-{}
+{
+    switch (index) {
+        case 4:
+            [[LibCoreWrap sharedCore] setMirrorUpDown];
+            break;
+        case 5:
+            [[LibCoreWrap sharedCore] setMirrorLeftRight];
+            break;
+        default:
+            break;
+    }
+}
 - (void)playerView:(PlayerView *)playerView touchUpInsideButtonAtIndex:(NSUInteger)index
 {
     switch (index) {
         case 1:
             [self closeButton_TouchUpInside:nil];
             break;
-        case 6:
-//            [self closeButton_TouchUpInside:nil];
+        case 2:
+
+            break;
+        case 4:
+            [[LibCoreWrap sharedCore] setMirrorUpDown];
+            break;
+        case 5:
+            [[LibCoreWrap sharedCore] setMirrorLeftRight];
             break;
         case 9:
         {
@@ -250,17 +269,28 @@
         
         fclose (_fp);
 
-    }
+    } 
     
-    [[LibCoreWrap sharedCore] stopRealPlayWithDeviceId:self.device.deviceID
-                                               channel:_currentChannel];
+    if (self.playingFailed) {
+        if (self.navigationController) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            [self dismissViewControllerAnimated:YES completion:^{}];
+        }
+        
+        if ([SVProgressHUD isVisible]) {
+            [SVProgressHUD dismiss];
+        }
+    }else{
+        [[LibCoreWrap sharedCore] stopRealPlayWithDeviceId:self.device.deviceID
+                                                   channel:_currentChannel];
+        if (![SVProgressHUD isVisible] && !self.isStopPlaying) {
+            [SVProgressHUD showWithStatus:@"正在关闭..."];
+        }
+    }
     
     [AppData resetCameraState];
-    
-    if (![SVProgressHUD isVisible] && !self.isStopPlaying) {
-        [SVProgressHUD showWithStatus:@"正在关闭..."];
-    }
-     
+
 }
 
 - (void)setEnableSound:(BOOL)enableSound
@@ -462,9 +492,9 @@
         if ([SVProgressHUD isVisible]) {
             [SVProgressHUD dismiss];
         }
-        
+        typeof(self) __weak weakObject = self;
         [self showMessage:@"连接失败！请检查设备连接后重试..." title:@"提示" cancelButtonTitle:@"我知道了" cancleBlock:^{
-
+            weakObject.playingFailed = YES;
         }];
         
     });

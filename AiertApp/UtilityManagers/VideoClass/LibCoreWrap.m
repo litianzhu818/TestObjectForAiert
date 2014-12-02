@@ -154,6 +154,15 @@
     [self.p2pManager closeConnection];
 }
 
+- (void)setMirrorUpDown
+{
+    [self.p2pManager setMirrorUpDown];
+}
+- (void)setMirrorLeftRight
+{
+    [self.p2pManager setMirrorLeftRight];
+}
+
 #pragma mark -
 #pragma mark - P2PManagerDelegate Methods
 

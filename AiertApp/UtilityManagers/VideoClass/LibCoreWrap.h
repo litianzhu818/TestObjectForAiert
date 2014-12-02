@@ -3,6 +3,7 @@
 #import <Foundation/Foundation.h>
 #import "ZSPConnection.h"
 #import "P2PManager.h"
+#import "AiertDeviceInfo.h"
 
 @interface LibCoreWrap : NSObject<ZSPConnectionDelegate,P2PManagerDelegate>
 
@@ -135,6 +136,9 @@
                       password:(NSString *)password;
 
 - (id)currentFrame;
+
+- (void)setMirrorUpDown;
+- (void)setMirrorLeftRight;
 
 @end
 

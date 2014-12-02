@@ -22,6 +22,10 @@
     dispatch_queue_t p2pManagerQueue;
     void *p2pManagerQueueTag;
     BOOL closeConnection;
+    
+    int mirrorUpDownTag;
+    int mirrorLeftRightTag;
+    
 }
 
 @property (nonatomic, assign) int avIndex;
@@ -81,6 +85,8 @@ static  P2PManager *sharedInstance = nil ;
         closeConnection = NO;
         SID = -999999;
         avIndex = -999999;
+        mirrorUpDownTag = 1;
+        mirrorLeftRightTag = 1;
     }
     return self;
 }
@@ -627,11 +633,11 @@ unsigned int _getTickCount() {
         dispatch_async(p2pManagerQueue, block);
 }
 
-- (void)setMirror
+- (void)setMirrorUpDown
 {
     dispatch_block_t block = ^{@autoreleasepool{
         
-        [self _setMirror];
+        [self _setMirrorUpDown];
         
         }
     };
@@ -640,21 +646,55 @@ unsigned int _getTickCount() {
         block();
     else
         dispatch_async(p2pManagerQueue, block);
-
+}
+- (void)setMirrorLeftRight
+{
+    dispatch_block_t block = ^{@autoreleasepool{
+        
+        [self _setMirrorUpDown];
+        
+    }
+    };
+    
+    if (dispatch_get_specific(p2pManagerQueueTag))
+        block();
+    else
+        dispatch_async(p2pManagerQueue, block);
 }
 
-- (void)_setMirror
+- (void)_setMirrorUpDown
 {
     if (!dispatch_get_specific(p2pManagerQueueTag)) return;
     
     int ret = 0;
-    int mode =1;
-    if (ret = avSendIOCtrl([self avIndex], IOTYPE_USER_IPCAM_SETMIRROR, (char *)&mode, sizeof(int))) {
-        
-        NSLog(@"set_mirror_failed[%d]", ret);
-        
+    int IOTYPE_USER_IPCAM_SETMIRROR = 0x2008;
+    if ((ret = avSendIOCtrl([self avIndex], IOTYPE_USER_IPCAM_SETMIRROR, (char *)&mirrorUpDownTag, sizeof(int)) < 0)) {
+        LOG(@"set_mirror_failed[%d]", ret);
+        return;
     };
-        
+    
+    if (mirrorUpDownTag == 1) {
+        mirrorUpDownTag = 0;
+    }else{
+        mirrorUpDownTag = 1;
+    }
 }
-
+- (void)_setMirrorLeftRight
+{
+    if (!dispatch_get_specific(p2pManagerQueueTag)) return;
+    
+    int ret = 0;
+    int IOTYPE_USER_IPCAM_SETFLIP = 0x2009;
+    if ((ret = avSendIOCtrl([self avIndex], IOTYPE_USER_IPCAM_SETFLIP, (char *)&mirrorLeftRightTag, sizeof(int)) < 0)) {
+        LOG(@"set_mirror_failed[%d]", ret);
+        return;
+    };
+    
+    if (mirrorLeftRightTag == 1) {
+        mirrorLeftRightTag = 0;
+    }else{
+        mirrorLeftRightTag = 1;
+    }
+    
+}
 @end
