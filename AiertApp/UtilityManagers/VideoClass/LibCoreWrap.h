@@ -139,6 +139,8 @@
 
 - (void)setMirrorUpDown;
 - (void)setMirrorLeftRight;
+- (void)stopTurnCamera;
+- (void)startTurnCameraWithSpeed:(unsigned char)speed type:(CAMERA_TURN_TYPE)cameraTurnType;
 
 @end
 

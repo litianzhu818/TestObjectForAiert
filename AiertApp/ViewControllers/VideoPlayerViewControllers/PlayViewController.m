@@ -88,8 +88,9 @@
     self.enableMicrophone = NO;
     self.enableSound = NO;
     
-    [self initUI];
     [self initData];
+    [self initUI];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -169,7 +170,7 @@
     self.view.backgroundColor = [UIColor blackColor];
     [self.defaultImageView setImage:nil];
     self.defaultImageView.backgroundColor = [UIColor blackColor];
-    self.playerView = [[PlayerView alloc] initWithFrame:playerViewFrame];
+    self.playerView = [[PlayerView alloc] initWithFrame:playerViewFrame minValue:0 maxValue:32];
     self.playerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleWidth;
     self.playerView.center = self.view.center;
     self.playerView.delegate = self;
@@ -179,6 +180,7 @@
 {
     self.isStopPlaying = YES;
     self.playingFailed = NO;
+    self.turnCameraSpeed = 15;
 }
 
 #pragma mark - PlayerViewDelegate methods
@@ -190,6 +192,12 @@
             break;
         case 5:
             [[LibCoreWrap sharedCore] setMirrorLeftRight];
+            break;
+        case 6:
+            [[LibCoreWrap sharedCore] startTurnCameraWithSpeed:self.turnCameraSpeed type:CAMERA_TURN_TYPE_LEFT_RIGHT];
+            break;
+        case 7:
+            [[LibCoreWrap sharedCore] startTurnCameraWithSpeed:self.turnCameraSpeed type:CAMERA_TURN_TYPE_UP_DOWN];
             break;
         default:
             break;
@@ -209,6 +217,11 @@
             break;
         case 5:
             [[LibCoreWrap sharedCore] setMirrorLeftRight];
+            break;
+            
+        case 6:
+        case 7:
+            [[LibCoreWrap sharedCore] stopTurnCamera];
             break;
         case 9:
         {
@@ -242,7 +255,7 @@
 }
 - (void)playerView:(PlayerView *)playerView didChangedVolumeWithValue:(float)value
 {
-    
+    self.turnCameraSpeed = value;
 }
 
 - (void)playerView:(PlayerView *)playerView didChangedQualityTypeWithValue:(VideoQualityType)newQualityType
@@ -269,7 +282,8 @@
         
         fclose (_fp);
 
-    } 
+    }
+    
     
     if (self.playingFailed) {
         if (self.navigationController) {

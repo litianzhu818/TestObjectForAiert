@@ -42,6 +42,7 @@
 @property (strong, nonatomic) AiertDeviceInfo *device;
 @property (assign, nonatomic) CGFloat width;
 @property (assign, nonatomic) CGFloat height;
+@property (assign, nonatomic) int turnCameraSpeed;
 
 @property (strong, nonatomic) PlayerView *playerView;
 

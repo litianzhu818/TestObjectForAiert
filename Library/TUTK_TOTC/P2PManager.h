@@ -8,11 +8,31 @@
 
 #import <Foundation/Foundation.h>
 
+#define TURN_STOP       0
+#define TURN_UP         1
+#define TURN_DOWN       2
+#define TURN_LEFT       3
+#define TURN_RIGHT      4
+
+#define TURN_LEFT_RIGHT 5
+#define TURN_UP_DOWN    6
+
 typedef NS_ENUM(NSUInteger, CONNECT_TYPE){
     
     CONNECT_P2P_TYPE = 0,   //The p2p connect type
     CONNECT_RELAY_TYPE,     //The relay connect type
     CONNECT_LAN_TYPE        //The lan connect type
+};
+
+typedef NS_ENUM(NSUInteger, CAMERA_TURN_TYPE){
+    
+    CAMERA_TURN_TYPE_STOP = 0,
+    CAMERA_TURN_TYPE_UP = 1,
+    CAMERA_TURN_TYPE_DOWN = 2,
+    CAMERA_TURN_TYPE_LEFT = 3,
+    CAMERA_TURN_TYPE_RIGHT = 4,
+    CAMERA_TURN_TYPE_UP_DOWN = 5,
+    CAMERA_TURN_TYPE_LEFT_RIGHT = 6
 };
 
 @protocol P2PManagerDelegate;
@@ -42,6 +62,9 @@ typedef NS_ENUM(NSUInteger, CONNECT_TYPE){
 
 - (void)setMirrorUpDown;
 - (void)setMirrorLeftRight;
+- (void)stopTurnCamera;
+- (void)startTurnCameraWithSpeed:(unsigned char)speed type:(CAMERA_TURN_TYPE)cameraTurnType;
+- (void)turnWithSpeed:(unsigned char)speed type:(CAMERA_TURN_TYPE)cameraTurnType;
 
 @end
 

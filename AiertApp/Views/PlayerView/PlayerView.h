@@ -51,6 +51,8 @@
 
 @property (weak, nonatomic) id<PlayerViewDelegate> delegate;
 
+- (id)initWithFrame:(CGRect)frame minValue:(int)miniValue maxValue:(int)_MaxValue;
+
 @end
 
 @protocol PlayerViewDelegate <NSObject>

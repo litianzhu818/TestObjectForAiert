@@ -163,6 +163,15 @@
     [self.p2pManager setMirrorLeftRight];
 }
 
+- (void)stopTurnCamera
+{
+    [self.p2pManager stopTurnCamera];
+}
+- (void)startTurnCameraWithSpeed:(unsigned char)speed type:(CAMERA_TURN_TYPE)cameraTurnType
+{
+    [self.p2pManager startTurnCameraWithSpeed:speed type:cameraTurnType];
+}
+
 #pragma mark -
 #pragma mark - P2PManagerDelegate Methods
 

@@ -12,10 +12,14 @@
 #import "AVIOCTRLDEFs.h"
 #import "AVFRAMEINFO.h"
 #include "G711Convert_HISI.h"
+#import "AiertProtocol.h"
 #import <sys/time.h>
 
 #define AUDIO_BUF_SIZE	1024
 #define VIDEO_BUF_SIZE	65535 + 32
+
+#define DEFAULT_TURN_SPEED 15;
+
 
 @interface P2PManager ()
 {
@@ -26,11 +30,16 @@
     int mirrorUpDownTag;
     int mirrorLeftRightTag;
     
+    unsigned char turnUpDown;
+    unsigned char turnLeftRight;
+    
+    BOOL isCameraTurning;
 }
 
 @property (nonatomic, assign) int avIndex;
 @property (nonatomic, assign) int SID;
 @property (nonatomic, strong) NSString *deviceID;
+@property (nonatomic, assign) unsigned char turnSpeed;
 
 @end
 
@@ -39,6 +48,7 @@ static  P2PManager *sharedInstance = nil ;
 @implementation P2PManager
 @synthesize avIndex;
 @synthesize SID;
+@synthesize turnSpeed;
 @synthesize deviceID = _deviceID;
 
 + (P2PManager *)sharedInstance
@@ -49,7 +59,6 @@ static  P2PManager *sharedInstance = nil ;
         
     });
     return sharedInstance;
-
 }
 
 /**
@@ -83,10 +92,14 @@ static  P2PManager *sharedInstance = nil ;
          p2pManagerQueueTag = & p2pManagerQueueTag;
         dispatch_queue_set_specific( p2pManagerQueue,  p2pManagerQueueTag,  p2pManagerQueueTag, NULL);
         closeConnection = NO;
+        isCameraTurning = NO;
         SID = -999999;
         avIndex = -999999;
         mirrorUpDownTag = 1;
         mirrorLeftRightTag = 1;
+        turnUpDown = 0;
+        turnLeftRight = 0;
+        self.turnSpeed = DEFAULT_TURN_SPEED;
     }
     return self;
 }
@@ -153,6 +166,37 @@ static  P2PManager *sharedInstance = nil ;
 - (void *)p2pManagerQueueTag
 {
     return p2pManagerQueueTag;
+}
+
+- (unsigned char)turnSpeed
+{
+    __block unsigned char result = DEFAULT_TURN_SPEED;
+    dispatch_block_t block = ^{
+        
+        result = turnSpeed;
+        
+    };
+    
+    if (dispatch_get_specific(p2pManagerQueueTag))
+        block();
+    else
+        dispatch_sync(p2pManagerQueue, block);
+    
+    return result;
+}
+
+- (void)setTurnSpeed:(unsigned char)TurnSpeed
+{
+    dispatch_block_t block = ^{
+        
+        turnSpeed = TurnSpeed;
+        
+    };
+    
+    if (dispatch_get_specific(p2pManagerQueueTag))
+        block();
+    else
+        dispatch_async(p2pManagerQueue, block);
 }
 
 - (int)avIndex
@@ -695,6 +739,65 @@ unsigned int _getTickCount() {
     }else{
         mirrorLeftRightTag = 1;
     }
+}
+
+- (void)stopTurnCamera
+{
+    [self turnWithSpeed:self.turnSpeed type:CAMERA_TURN_TYPE_STOP];
+}
+
+- (void)startTurnCameraWithSpeed:(unsigned char)speed type:(CAMERA_TURN_TYPE)cameraTurnType
+{
+    [self turnWithSpeed:speed type:cameraTurnType];
+}
+
+- (void)turnWithSpeed:(unsigned char)speed type:(CAMERA_TURN_TYPE)cameraTurnType
+{
+    dispatch_block_t block = ^{@autoreleasepool{
+        
+        [self _turnWithSpeed:speed type:cameraTurnType];
+        
+        }
+    };
     
+    if (dispatch_get_specific(p2pManagerQueueTag))
+        block();
+    else
+        dispatch_async(p2pManagerQueue, block);
+}
+
+- (void)_turnWithSpeed:(unsigned char)speed type:(CAMERA_TURN_TYPE)cameraTurnType
+{
+    if (!dispatch_get_specific(p2pManagerQueueTag)) return;
+    
+    int ret = 0;
+    int IOTYPE_USER_IPCAM_PTZ_COMMAND = 0x1001;
+    SMsgAVIoctrlPtzCmd ioMsg;
+    memset(&ioMsg, 0, sizeof(SMsgAVIoctrlPtzCmd));
+    
+    ioMsg.speed = speed;
+    ioMsg.control = cameraTurnType;
+//    ioMsg.channel = 1;
+    
+    if (speed <= 0) {
+        speed = self.turnSpeed;
+    }
+    
+    if ((ret = avSendIOCtrl([self avIndex], IOTYPE_USER_IPCAM_PTZ_COMMAND, (char *)&ioMsg, sizeof(SMsgAVIoctrlPtzCmd)) < 0))
+    {
+        NSLog(@"turn_camera_failed[%d]", ret);
+        isCameraTurning = NO;
+        return;
+    }
+    
+    switch (cameraTurnType) {
+        case CAMERA_TURN_TYPE_STOP:
+            isCameraTurning = NO;
+            break;
+            
+        default:
+            isCameraTurning = YES;
+            break;
+    }
 }
 @end

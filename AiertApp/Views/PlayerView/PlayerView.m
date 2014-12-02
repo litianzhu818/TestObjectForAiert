@@ -34,6 +34,14 @@
 #define SLIDER_HEIGHT BUTTON_HEIGHT
 #define SLIDER_WIDTH (PLAYER_VIEW_WIDTH - 8 * BUTTON_MARGIN_WIDTH - 6 * BUTTON_WIDTH)
 
+@interface PlayerView ()
+
+@property (assign, nonatomic) int minValue;
+@property (assign, nonatomic) int maxValue;
+
+
+@end
+
 @implementation PlayerView
 
 - (void)dealloc
@@ -52,10 +60,17 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
+    return [self initWithFrame:frame minValue:0 maxValue:32];
+}
+
+- (id)initWithFrame:(CGRect)frame minValue:(int)miniValue maxValue:(int)_MaxValue
+{
     frame = CGRectMake(frame.origin.x, frame.origin.y, SELF_WIDTH, SELF_HEIGHT);
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        [self setMinValue:miniValue];
+        [self setMaxValue:_MaxValue];
         [self initParameters];
     }
     return self;
@@ -63,6 +78,9 @@
 
 - (void)initParameters
 {
+    if (self.maxValue == 0) {
+        self.maxValue = 32;
+    }
     [self initUI];
     [self initData];
 }
@@ -309,9 +327,9 @@
     self.volumeSlider  =[[UISlider alloc] initWithFrame:CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.button9), MARGIN_WIDTH, SLIDER_WIDTH, SLIDER_HEIGHT)];
     self.volumeSlider.autoresizingMask = UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleWidth;
     self.volumeSlider.backgroundColor = [UIColor clearColor];
-    self.volumeSlider.minimumValue = 0;
-    self.volumeSlider.maximumValue = 1;
-    self.volumeSlider.value = 0.5;
+    self.volumeSlider.minimumValue = self.minValue;
+    self.volumeSlider.maximumValue = self.maxValue;
+    self.volumeSlider.value = 0.5 * self.maxValue;
     [self.volumeSlider addTarget:self action:@selector(updateValue:) forControlEvents:UIControlEventValueChanged];
     //左右轨的图片
     UIImage *stetchLeftTrack= [UIImage imageNamed:@"volume_bar_selected"];
