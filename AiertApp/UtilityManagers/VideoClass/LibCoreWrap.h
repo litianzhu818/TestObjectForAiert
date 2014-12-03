@@ -144,6 +144,7 @@
 - (void)setCameraBrightness:(NSInteger)Brightness;
 - (void)setCameraContrast:(NSInteger)Contrast;
 - (void)setCameraSaturation:(NSInteger)Saturation;
+- (void)setCamseraDefauleValue;
 
 - (void)startTurnCameraWithSpeed:(unsigned char)speed type:(CAMERA_TURN_TYPE)cameraTurnType;
 

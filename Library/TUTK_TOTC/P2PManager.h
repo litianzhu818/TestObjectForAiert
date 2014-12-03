@@ -71,6 +71,7 @@ typedef NS_ENUM(NSUInteger, CAMERA_TURN_TYPE){
 - (void)setCameraBrightness:(NSInteger)Brightness;
 - (void)setCameraContrast:(NSInteger)Contrast;
 - (void)setCameraSaturation:(NSInteger)Saturation;
+- (void)setCameraDefauleValue;
 
 @end
 

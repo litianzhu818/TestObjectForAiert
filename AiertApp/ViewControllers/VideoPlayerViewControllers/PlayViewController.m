@@ -188,7 +188,7 @@
 {
     switch (index) {
         case 2:
-            [[LibCoreWrap sharedCore] setCameraBrightness:50];
+            [[LibCoreWrap sharedCore] setCameraBrightness:200];
             break;
         case 4:
             [[LibCoreWrap sharedCore] setMirrorUpDown];
@@ -201,6 +201,9 @@
             break;
         case 7:
             [[LibCoreWrap sharedCore] startTurnCameraWithSpeed:self.turnCameraSpeed type:CAMERA_TURN_TYPE_LEFT_RIGHT];
+            break;
+        case 13:
+            [[LibCoreWrap sharedCore] setCamseraDefauleValue];
             break;
         default:
             break;

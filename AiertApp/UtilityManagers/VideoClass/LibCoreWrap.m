@@ -179,6 +179,10 @@
 {
     [self.p2pManager setCameraSaturation:Saturation];
 }
+- (void)setCamseraDefauleValue
+{
+    [self.p2pManager setCameraDefauleValue];
+}
 - (void)startTurnCameraWithSpeed:(unsigned char)speed type:(CAMERA_TURN_TYPE)cameraTurnType
 {
     [self.p2pManager startTurnCameraWithSpeed:speed type:cameraTurnType];

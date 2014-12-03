@@ -939,6 +939,14 @@ unsigned int _getTickCount() {
     [self setBrightness:self.brightness contrast:self.contrast saturation:self.saturation];
 }
 
+- (void)setCameraDefauleValue
+{
+    [self setBrightness:DEFAULT_SETTING_VALUE];
+    [self setContrast:DEFAULT_SETTING_VALUE];
+    [self setSaturation:DEFAULT_SETTING_VALUE];
+    [self setBrightness:self.brightness contrast:self.contrast saturation:self.saturation];
+}
+
 - (void)setBrightness:(NSInteger)Brightness contrast:(NSInteger)Contrast saturation:(NSInteger)Saturation
 {
     dispatch_block_t block = ^{@autoreleasepool{
