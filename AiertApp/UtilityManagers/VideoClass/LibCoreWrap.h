@@ -140,6 +140,11 @@
 - (void)setMirrorUpDown;
 - (void)setMirrorLeftRight;
 - (void)stopTurnCamera;
+
+- (void)setCameraBrightness:(NSInteger)Brightness;
+- (void)setCameraContrast:(NSInteger)Contrast;
+- (void)setCameraSaturation:(NSInteger)Saturation;
+
 - (void)startTurnCameraWithSpeed:(unsigned char)speed type:(CAMERA_TURN_TYPE)cameraTurnType;
 
 @end

@@ -167,6 +167,18 @@
 {
     [self.p2pManager stopTurnCamera];
 }
+- (void)setCameraBrightness:(NSInteger)Brightness
+{
+    [self.p2pManager setCameraBrightness:Brightness];
+}
+- (void)setCameraContrast:(NSInteger)Contrast
+{
+    [self.p2pManager setCameraContrast:Contrast];
+}
+- (void)setCameraSaturation:(NSInteger)Saturation
+{
+    [self.p2pManager setCameraSaturation:Saturation];
+}
 - (void)startTurnCameraWithSpeed:(unsigned char)speed type:(CAMERA_TURN_TYPE)cameraTurnType
 {
     [self.p2pManager startTurnCameraWithSpeed:speed type:cameraTurnType];

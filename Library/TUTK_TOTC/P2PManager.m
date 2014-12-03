@@ -18,7 +18,14 @@
 #define AUDIO_BUF_SIZE	1024
 #define VIDEO_BUF_SIZE	65535 + 32
 
-#define DEFAULT_TURN_SPEED 15;
+#define DEFAULT_TURN_SPEED 15
+
+typedef struct
+{
+    int brightness;// 亮度 0~255 默认128
+    int contrast;//对比度0~255 默认128
+    int saturation;//饱和度0~255 默认128
+}AnaLog;
 
 
 @interface P2PManager ()
@@ -42,6 +49,9 @@
 @property (nonatomic, assign) int SID;
 @property (nonatomic, strong) NSString *deviceID;
 @property (nonatomic, assign) unsigned char turnSpeed;
+@property (nonatomic, assign) NSInteger brightness;
+@property (nonatomic, assign) NSInteger contrast;
+@property (nonatomic, assign) NSInteger saturation;
 
 @end
 
@@ -51,6 +61,9 @@ static  P2PManager *sharedInstance = nil ;
 @synthesize avIndex;
 @synthesize SID;
 @synthesize turnSpeed;
+@synthesize brightness;
+@synthesize contrast;
+@synthesize saturation;
 @synthesize deviceID = _deviceID;
 
 + (P2PManager *)sharedInstance
@@ -109,6 +122,9 @@ static  P2PManager *sharedInstance = nil ;
         turnUpDown = 0;
         turnLeftRight = 0;
         self.turnSpeed = DEFAULT_TURN_SPEED;
+        self.brightness = DEFAULT_SETTING_VALUE;
+        self.contrast = DEFAULT_SETTING_VALUE;
+        self.saturation = DEFAULT_SETTING_VALUE;
     }
     return self;
 }
@@ -302,6 +318,101 @@ static  P2PManager *sharedInstance = nil ;
         dispatch_async(p2pVideoPlayManagerQueue, block);
 }
 
+- (NSInteger)brightness
+{
+    __block NSInteger result = DEFAULT_SETTING_VALUE;
+    
+    dispatch_block_t block = ^{
+        
+        result = brightness;
+        
+    };
+    
+    if (dispatch_get_specific(p2pVideoPlayManagerQueueTag))
+        block();
+    else
+        dispatch_sync(p2pVideoPlayManagerQueue, block);
+    
+    return result;
+}
+
+- (void)setBrightness:(NSInteger)_brightness
+{
+    dispatch_block_t block = ^{
+        
+        brightness = _brightness;
+        
+    };
+    
+    if (dispatch_get_specific(p2pVideoPlayManagerQueueTag))
+        block();
+    else
+        dispatch_async(p2pVideoPlayManagerQueue, block);
+}
+
+- (NSInteger)contrast
+{
+    __block NSInteger result = DEFAULT_SETTING_VALUE;
+    
+    dispatch_block_t block = ^{
+        
+        result = contrast;
+        
+    };
+    
+    if (dispatch_get_specific(p2pVideoPlayManagerQueueTag))
+        block();
+    else
+        dispatch_sync(p2pVideoPlayManagerQueue, block);
+    
+    return result;
+}
+
+- (void)setContrast:(NSInteger)_contrast
+{
+    dispatch_block_t block = ^{
+        
+        contrast = _contrast;
+        
+    };
+    
+    if (dispatch_get_specific(p2pVideoPlayManagerQueueTag))
+        block();
+    else
+        dispatch_async(p2pVideoPlayManagerQueue, block);
+}
+
+- (NSInteger)saturation
+{
+    __block NSInteger result = DEFAULT_SETTING_VALUE;
+    
+    dispatch_block_t block = ^{
+        
+        result = saturation;
+        
+    };
+    
+    if (dispatch_get_specific(p2pVideoPlayManagerQueueTag))
+        block();
+    else
+        dispatch_sync(p2pVideoPlayManagerQueue, block);
+    
+    return result;
+}
+
+- (void)setSaturation:(NSInteger)_saturation
+{
+    dispatch_block_t block = ^{
+        
+        saturation = _saturation;
+        
+    };
+    
+    if (dispatch_get_specific(p2pVideoPlayManagerQueueTag))
+        block();
+    else
+        dispatch_async(p2pVideoPlayManagerQueue, block);
+}
 
 unsigned int _getTickCount() {
     
@@ -809,4 +920,60 @@ unsigned int _getTickCount() {
             break;
     }
 }
+
+- (void)setCameraBrightness:(NSInteger)Brightness
+{
+    [self setBrightness:Brightness];
+    [self setBrightness:self.brightness contrast:self.contrast saturation:self.saturation];
+}
+
+- (void)setCameraContrast:(NSInteger)Contrast
+{
+    [self setContrast:Contrast];
+    [self setBrightness:self.brightness contrast:self.contrast saturation:self.saturation];
+}
+
+- (void)setCameraSaturation:(NSInteger)Saturation
+{
+    [self setSaturation:Saturation];
+    [self setBrightness:self.brightness contrast:self.contrast saturation:self.saturation];
+}
+
+- (void)setBrightness:(NSInteger)Brightness contrast:(NSInteger)Contrast saturation:(NSInteger)Saturation
+{
+    dispatch_block_t block = ^{@autoreleasepool{
+        
+        [self _setBrightness:Brightness contrast:Contrast saturation:Saturation];
+        
+    }};
+    
+    if (dispatch_get_specific(p2pIOControlManagerQueueTag))
+        block();
+    else
+        dispatch_async(p2pIOControlManagerQueue, block);
+}
+
+-(void)_setBrightness:(NSInteger)Brightness contrast:(NSInteger)Contrast saturation:(NSInteger)Saturation
+{
+    if (!dispatch_get_specific(p2pIOControlManagerQueueTag)) return;
+    
+    int ret = 0;
+    int IOTYPE_USER_IPCAM_SETANLOG = 0x200C;
+    
+    AnaLog anaLog;
+    memset(&anaLog, 0, sizeof(AnaLog));
+    
+    anaLog.brightness = Brightness;
+    anaLog.contrast = Contrast;
+    anaLog.saturation = Saturation;
+    
+    if ((ret = avSendIOCtrl([self avIndex], IOTYPE_USER_IPCAM_SETANLOG, (char *)&anaLog, sizeof(AnaLog)) < 0))
+    {
+        NSLog(@"setting_camera_brightness_contrast_saturation_failed:[%d]", ret);
+        isCameraTurning = NO;
+        return;
+    }
+    
+}
+
 @end

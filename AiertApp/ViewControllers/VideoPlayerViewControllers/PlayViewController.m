@@ -187,6 +187,9 @@
 - (void)playerView:(PlayerView *)playerView touchDownInsideButtonAtIndex:(NSUInteger)index
 {
     switch (index) {
+        case 2:
+            [[LibCoreWrap sharedCore] setCameraBrightness:50];
+            break;
         case 4:
             [[LibCoreWrap sharedCore] setMirrorUpDown];
             break;

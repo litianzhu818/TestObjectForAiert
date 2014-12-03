@@ -17,6 +17,8 @@
 #define TURN_LEFT_RIGHT 5
 #define TURN_UP_DOWN    6
 
+#define DEFAULT_SETTING_VALUE 128
+
 typedef NS_ENUM(NSUInteger, CONNECT_TYPE){
     
     CONNECT_P2P_TYPE = 0,   //The p2p connect type
@@ -65,6 +67,10 @@ typedef NS_ENUM(NSUInteger, CAMERA_TURN_TYPE){
 - (void)stopTurnCamera;
 - (void)startTurnCameraWithSpeed:(unsigned char)speed type:(CAMERA_TURN_TYPE)cameraTurnType;
 - (void)turnWithSpeed:(unsigned char)speed type:(CAMERA_TURN_TYPE)cameraTurnType;
+
+- (void)setCameraBrightness:(NSInteger)Brightness;
+- (void)setCameraContrast:(NSInteger)Contrast;
+- (void)setCameraSaturation:(NSInteger)Saturation;
 
 @end
 
