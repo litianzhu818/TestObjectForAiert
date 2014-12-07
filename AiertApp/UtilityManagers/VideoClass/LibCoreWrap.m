@@ -22,6 +22,7 @@
     dispatch_queue_t _recordFileQueue;
     
     NSInteger _pingCounter;
+    NSInteger _sid;
     BOOL _bLock;
     __block BOOL _bFindFirstIFrame;
     __block BOOL _bLocalDeviceExists;
@@ -76,6 +77,7 @@
         self.eventObersvers = [[NSMutableSet alloc] init];
         
         _bFindFirstIFrame = NO;
+        _sid = -1;
         
     }
     return self;
@@ -194,6 +196,7 @@
 - (void)p2pManager:(P2PManager *)p2pManager didConnectDeviceID:(NSString *)deviceID withType:(CONNECT_TYPE)connectType ip:(NSString *)ip port:(NSUInteger)port sid:(int)sid
 {
     if ([deviceID isEqualToString:self.currentDeviceId]/* && connectType != CONNECT_LAN_TYPE*/) {
+        _sid = sid;
         //P2P播放或者远程连接播放
         [p2pManager startWithSID:sid];
     }
@@ -413,37 +416,39 @@
     
     NSInteger currentConnectState = [AppData connectionState];
     
-    if (CameraNetworkStateTransmitConnected == currentConnectState
-        || CameraNetworkStateP2pConnected == currentConnectState) {
-        
-        dispatch_group_async(_group, _streamQueue, ^{
-//            [self.p2pConnection changeStream:_currentChannel
-//                                   mediaType:_currentMediaType
-//                                   operation:0];              // 关闭当前通道
+//    if (CameraNetworkStateTransmitConnected == currentConnectState
+//        || CameraNetworkStateP2pConnected == currentConnectState) {
+//        
+//        
+//    }else {
+//        
+//        dispatch_group_async(_group, _streamQueue, ^{
 //            
-//            [self.p2pConnection changeStream:_currentChannel
-//                                   mediaType:dstMediaType
-//                                   operation:1];
-//            
+//            [self.zspConnection changeStream:dstMediaType];
+//
 //            if (CameraStateAudioPlaying&[AppData cameraState]) {
-//                [self.p2pConnection enableSound:YES];
+//                [self.zspConnection openSound:YES];
 //            }
-
-        });
+//
+//            
+//        });
+//    }
+    dispatch_group_async(_group, _streamQueue, ^{
+        //            [self.p2pConnection changeStream:_currentChannel
+        //                                   mediaType:_currentMediaType
+        //                                   operation:0];              // 关闭当前通道
+        //
+        //            [self.p2pConnection changeStream:_currentChannel
+        //                                   mediaType:dstMediaType
+        //                                   operation:1];
+        //
+        //            if (CameraStateAudioPlaying&[AppData cameraState]) {
+        //                [self.p2pConnection enableSound:YES];
+        //            }
+        [self.p2pManager startIpcamStream:self.currentChannel withPlayType:dstMediaType];
         
-    }else {
-        
-        dispatch_group_async(_group, _streamQueue, ^{
-            
-            [self.zspConnection changeStream:dstMediaType];
+    });
 
-            if (CameraStateAudioPlaying&[AppData cameraState]) {
-                [self.zspConnection openSound:YES];
-            }
-
-            
-        });
-    }
     
     __weak LibCoreWrap *weakSelf = self;
     

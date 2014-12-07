@@ -37,6 +37,13 @@ typedef NS_ENUM(NSUInteger, CAMERA_TURN_TYPE){
     CAMERA_TURN_TYPE_LEFT_RIGHT = 6
 };
 
+typedef NS_ENUM(NSUInteger, CAMERA_PLAY_TYPE){
+    
+    CAMERA_PLAY_TYPE_QVGA = 0,
+    CAMERA_PLAY_TYPE_VGA = 1,
+    CAMERA_PLAY_TYPE_720 = 2
+};
+
 @protocol P2PManagerDelegate;
 
 @interface P2PManager : NSObject
@@ -58,6 +65,7 @@ typedef NS_ENUM(NSUInteger, CAMERA_TURN_TYPE){
  */
 - (void)startWithSID:(int)SID;
 - (void)checkConnectTypeWithDeviceID:(NSString *)deviceID;
+- (void)startIpcamStream:(int)avindex withPlayType:(CAMERA_PLAY_TYPE)playType;
 - (void)start:(NSString *)UID;
 
 - (void)closeConnection;

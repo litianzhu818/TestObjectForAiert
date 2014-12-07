@@ -11,6 +11,12 @@
 #import "CMPopTipViewQuality.h"
 #import "BasicDefine.h"
 
+typedef NS_ENUM(NSUInteger, SettingSliderType) {
+    SettingSliderTypeBrightness = 0,
+    SettingSliderTypeContrast,
+    SettingSliderTypeSaturation
+};
+
 @protocol PlayerViewDelegate;
 
 @interface PlayerView : UIView<DisplayImageViewProtocol>
@@ -47,6 +53,8 @@
 
 @property (strong, nonatomic) UISlider *volumeSlider;
 
+@property (strong, nonatomic) UISlider *settingSlider;
+
 @property (strong, nonatomic) UIActivityIndicatorView *activityIndicatorView;
 
 @property (weak, nonatomic) id<PlayerViewDelegate> delegate;
@@ -61,6 +69,7 @@
 - (void)playerView:(PlayerView *)playerView touchUpInsideButtonAtIndex:(NSUInteger)index;
 - (void)playerView:(PlayerView *)playerView didSwitchTalkStatus:(BOOL)talking;
 - (void)playerView:(PlayerView *)playerView didChangedVolumeWithValue:(float)value;
+- (void)playerView:(PlayerView *)playerView didChangedSettingWithValue:(float)value type:(SettingSliderType)type;
 - (void)playerView:(PlayerView *)playerView didChangedQualityTypeWithValue:(VideoQualityType)newQualityType;
 
 @end

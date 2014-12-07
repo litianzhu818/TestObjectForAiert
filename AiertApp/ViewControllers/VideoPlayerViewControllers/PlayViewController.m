@@ -187,9 +187,6 @@
 - (void)playerView:(PlayerView *)playerView touchDownInsideButtonAtIndex:(NSUInteger)index
 {
     switch (index) {
-        case 2:
-            [[LibCoreWrap sharedCore] setCameraBrightness:200];
-            break;
         case 4:
             [[LibCoreWrap sharedCore] setMirrorUpDown];
             break;
@@ -204,6 +201,23 @@
             break;
         case 13:
             [[LibCoreWrap sharedCore] setCamseraDefauleValue];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)playerView:(PlayerView *)playerView didChangedSettingWithValue:(float)value type:(SettingSliderType)type
+{
+    switch (type) {
+        case SettingSliderTypeBrightness:
+            [[LibCoreWrap sharedCore] setCameraBrightness:value];
+            break;
+        case SettingSliderTypeContrast:
+            [[LibCoreWrap sharedCore] setCameraContrast:value];
+            break;
+        case SettingSliderTypeSaturation:
+            [[LibCoreWrap sharedCore] setCameraSaturation:value];
             break;
         default:
             break;
@@ -239,6 +253,10 @@
             
         }
             break;
+        case 13:
+            [[LibCoreWrap sharedCore] setCamseraDefauleValue];
+            break;
+
         default:
             break;
     }

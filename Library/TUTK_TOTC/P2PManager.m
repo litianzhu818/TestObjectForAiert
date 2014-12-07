@@ -558,7 +558,21 @@ unsigned int _getTickCount() {
     NSLog(@"[thread_ReceiveVideo] thread exit");
 }
 
-- (int)start_ipcam_stream:(int)avindex {
+- (void)startIpcamStream:(int)avindex withPlayType:(CAMERA_PLAY_TYPE)playType
+{
+    dispatch_block_t block = ^{
+        
+        [self start_ipcam_stream:avIndex withPlayType:playType];
+    };
+    
+    if (dispatch_get_specific(p2pVideoPlayManagerQueueTag))
+        block();
+    else
+        dispatch_async(p2pVideoPlayManagerQueue, block);
+}
+
+- (int)start_ipcam_stream:(int)avindex withPlayType:(CAMERA_PLAY_TYPE)playType
+{
     
     if (!dispatch_get_specific(p2pVideoPlayManagerQueueTag)) return 0;
     
@@ -594,7 +608,7 @@ unsigned int _getTickCount() {
     memset(&ioMsg, 0, sizeof(SMsgAVIoctrlAVStream));
     //ioMsg.channel = 0;/*QVGA*/
     //ioMsg.channel = 1;/*VGA*/
-    ioMsg.channel = 2;/*720*/
+    ioMsg.channel = playType;/*720*/
     if ((ret = avSendIOCtrl(avIndex, IOTYPE_USER_IPCAM_START, (char *)&ioMsg, sizeof(SMsgAVIoctrlAVStream)) < 0))
     {
         NSLog(@"start_ipcam_stream_failed[%d]", ret);
@@ -676,7 +690,7 @@ unsigned int _getTickCount() {
                 return;
             }
             
-            if ([self start_ipcam_stream:self.avIndex]){
+            if ([self start_ipcam_stream:self.avIndex withPlayType:CAMERA_PLAY_TYPE_QVGA]){
                 [self getMediaInfoWithVideoIndex:self.avIndex];
             }
 

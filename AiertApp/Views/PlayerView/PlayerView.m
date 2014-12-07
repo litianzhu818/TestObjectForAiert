@@ -38,7 +38,8 @@
 
 @property (assign, nonatomic) int minValue;
 @property (assign, nonatomic) int maxValue;
-
+@property (assign, nonatomic) BOOL isSettingSliderShowing;
+@property (assign, nonatomic) SettingSliderType settingSliderType;
 
 @end
 
@@ -350,6 +351,18 @@
     self.popupQualityView.alpha = 0.5;
     self.popupQualityView.qualityView.delegate = self;
     self.popupQualityView.delegate = self;
+    
+    self.settingSlider  =[[UISlider alloc] initWithFrame:CGRectMake(0,0,100,44)];
+    self.settingSlider.center = self.playerView.center;
+    self.settingSlider.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.settingSlider.backgroundColor = [UIColor clearColor];
+    self.settingSlider.userInteractionEnabled;
+    self.settingSlider.hidden = YES;
+    self.settingSlider.minimumValue = 0.0;
+    self.settingSlider.maximumValue = 255.0;
+    self.settingSlider.value = 127;
+    [self.settingSlider addTarget:self action:@selector(updateSettingSliderValue:) forControlEvents:UIControlEventValueChanged];
+    [self.playerView addSubview:self.settingSlider];
 
     NSLog(NSStringFromCGRect(self.button9.frame));
     
@@ -363,6 +376,8 @@
     self.backgroundColor = [UIColor blackColor];
     self.isFullScreen = NO;
     self.qualityType = VideoQualityTypeLD;
+    self.isSettingSliderShowing = NO;
+    self.settingSliderType = SettingSliderTypeBrightness;
     [self startTimer];
 }
 
@@ -437,6 +452,14 @@
     }
 }
 
+- (IBAction)updateSettingSliderValue:(id)sender
+{
+    float value = self.settingSlider.value;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(playerView:didChangedSettingWithValue:type:)]) {
+        [self.delegate playerView:self didChangedSettingWithValue:value type:self.settingSliderType];
+    }
+}
+
 - (void)talkButtonOpened:(id)sender
 {
     [self.talkButton setBackgroundImage:[UIImage imageNamed:@"speak_pre"] forState:UIControlStateNormal];
@@ -489,7 +512,27 @@
             }
         }
             break;
-            
+        case 2:
+        {
+            [self.settingSlider setHidden:self.isSettingSliderShowing];
+            self.settingSliderType = SettingSliderTypeBrightness;
+            self.isSettingSliderShowing = !self.isSettingSliderShowing;
+        }
+            break;
+        case 3:
+        {
+            [self.settingSlider setHidden:self.isSettingSliderShowing];
+            self.settingSliderType = SettingSliderTypeContrast;
+            self.isSettingSliderShowing = !self.isSettingSliderShowing;
+        }
+            break;
+        case 14:
+        {
+            [self.settingSlider setHidden:self.isSettingSliderShowing];
+            self.settingSliderType = SettingSliderTypeSaturation;
+            self.isSettingSliderShowing = !self.isSettingSliderShowing;
+        }
+            break;
         default:
             break;
     }
