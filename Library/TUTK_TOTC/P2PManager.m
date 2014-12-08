@@ -571,6 +571,37 @@ unsigned int _getTickCount() {
         dispatch_async(p2pVideoPlayManagerQueue, block);
 }
 
+- (void)setAudioStart:(BOOL)start
+{
+    dispatch_block_t block = ^{
+        
+        [self _setAudioStart:start avIndex:self.avIndex];
+    };
+    
+    if (dispatch_get_specific(p2pVideoPlayManagerQueueTag))
+        block();
+    else
+        dispatch_async(p2pVideoPlayManagerQueue, block);
+}
+
+- (void)_setAudioStart:(BOOL)start avIndex:(int)avindex
+{
+    
+    if (!dispatch_get_specific(p2pVideoPlayManagerQueueTag)) return;
+    
+    int ret = 0;
+    int IOTYPE_USER_IPCAM_AUDIOSTART;
+    
+    SMsgAVIoctrlAVStream ioMsg;
+    memset(&ioMsg, 0, sizeof(SMsgAVIoctrlAVStream));
+    IOTYPE_USER_IPCAM_AUDIOSTART = start ? 0x300:0x301;
+    
+    if((ret = avSendIOCtrl(avindex, IOTYPE_USER_IPCAM_AUDIOSTART, (char *)&ioMsg, sizeof(SMsgAVIoctrlAVStream))) < 0){
+        LOG(@"set_audio_start_failed[%d]", ret);
+        return;
+    }
+}
+
 - (int)start_ipcam_stream:(int)avindex withPlayType:(CAMERA_PLAY_TYPE)playType
 {
     

@@ -146,6 +146,8 @@
 - (void)setCameraSaturation:(NSInteger)Saturation;
 - (void)setCamseraDefauleValue;
 
+- (void)setAudioStart:(BOOL)start;
+
 - (void)startTurnCameraWithSpeed:(unsigned char)speed type:(CAMERA_TURN_TYPE)cameraTurnType;
 
 @end

@@ -253,6 +253,11 @@
             
         }
             break;
+        case 10:
+        {
+            [[LibCoreWrap sharedCore] setAudioStart:YES];
+        }
+            break;
         case 13:
             [[LibCoreWrap sharedCore] setCamseraDefauleValue];
             break;

@@ -190,6 +190,11 @@
     [self.p2pManager startTurnCameraWithSpeed:speed type:cameraTurnType];
 }
 
+- (void)setAudioStart:(BOOL)start
+{
+    [self.p2pManager setAudioStart:start];
+}
+
 #pragma mark -
 #pragma mark - P2PManagerDelegate Methods
 

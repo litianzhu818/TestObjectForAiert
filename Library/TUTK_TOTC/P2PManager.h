@@ -81,6 +81,8 @@ typedef NS_ENUM(NSUInteger, CAMERA_PLAY_TYPE){
 - (void)setCameraSaturation:(NSInteger)Saturation;
 - (void)setCameraDefauleValue;
 
+- (void)setAudioStart:(BOOL)start;
+
 @end
 
 
