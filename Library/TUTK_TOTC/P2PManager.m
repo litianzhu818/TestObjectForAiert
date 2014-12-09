@@ -571,6 +571,7 @@ unsigned int _getTickCount() {
         dispatch_async(p2pVideoPlayManagerQueue, block);
 }
 
+
 - (void)setAudioStart:(BOOL)start
 {
     dispatch_block_t block = ^{
@@ -601,6 +602,7 @@ unsigned int _getTickCount() {
         return;
     }
 }
+
 
 - (int)start_ipcam_stream:(int)avindex withPlayType:(CAMERA_PLAY_TYPE)playType
 {
