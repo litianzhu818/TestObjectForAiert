@@ -160,7 +160,7 @@
 {
     dispatch_group_async(_group, _streamQueue, ^{
         
-        [self.p2pManager closeConnection];        
+        [self.p2pManager closeConnection];
     });
     
 }
@@ -472,9 +472,9 @@
     dispatch_group_async(_group, _decodeQueue, ^{
         [VideoFrameExtractor releaseVideoFrameExtractor:self.videoDecoder];
     });
-    
-    NSInteger currentConnectState = [AppData connectionState];
-    
+//    
+//    NSInteger currentConnectState = [AppData connectionState];
+//    
 //    if (CameraNetworkStateTransmitConnected == currentConnectState
 //        || CameraNetworkStateP2pConnected == currentConnectState) {
 //        
@@ -585,10 +585,10 @@
     if (CameraNetworkStateTransmitConnected == currentConnectState
         || CameraNetworkStateP2pConnected == currentConnectState)
     {
-        
+    
         dispatch_group_async(_group, _streamQueue, ^{
             
-//            [self.p2pConnection enableSound:YES];
+            [self.p2pManager setAudioStart:YES];
         });
         
     }else {

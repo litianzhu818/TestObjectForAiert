@@ -344,8 +344,11 @@
             [AudioStreamer startPlayAudio];
         }else
         {
+            [AudioStreamer startPlayAudio];
             [[LibCoreWrap sharedCore] openSoundWithDeviceId:self.device.deviceID channel:_currentChannel];
         }
+        [AudioStreamer startPlayAudio];
+        [[LibCoreWrap sharedCore] openSoundWithDeviceId:self.device.deviceID channel:_currentChannel];
 
     }else
     {
@@ -546,6 +549,7 @@
 - (void)didStartPlayWithDeviceID:(NSString *)deviceID
 {
     self.isStopPlaying = NO;
+    [AppData setConnectionState:CameraNetworkStateP2pConnected];
     dispatch_async(dispatch_get_main_queue(), ^{
         
         if ([SVProgressHUD isVisible]) {
