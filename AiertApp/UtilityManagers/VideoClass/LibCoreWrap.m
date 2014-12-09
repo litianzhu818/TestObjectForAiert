@@ -148,51 +148,105 @@
 
 - (void)connectWithDevice:(NSString *)deviceID
 {
-    [self.p2pManager checkConnectTypeWithDeviceID:self.currentDeviceId];
+    dispatch_group_async(_group, _streamQueue, ^{
+        
+        [self.p2pManager checkConnectTypeWithDeviceID:self.currentDeviceId];
+        
+    });
+    
 }
 
 - (void)closeConnection
 {
-    [self.p2pManager closeConnection];
+    dispatch_group_async(_group, _streamQueue, ^{
+        
+        [self.p2pManager closeConnection];        
+    });
+    
 }
 
 - (void)setMirrorUpDown
 {
-    [self.p2pManager setMirrorUpDown];
+    dispatch_group_async(_group, _streamQueue, ^{
+        
+        [self.p2pManager setMirrorUpDown];
+        
+    });
+    
 }
 - (void)setMirrorLeftRight
 {
-    [self.p2pManager setMirrorLeftRight];
+    dispatch_group_async(_group, _streamQueue, ^{
+        
+       [self.p2pManager setMirrorLeftRight];
+        
+    });
+    
 }
 
 - (void)stopTurnCamera
 {
-    [self.p2pManager stopTurnCamera];
+    dispatch_group_async(_group, _streamQueue, ^{
+        
+        [self.p2pManager stopTurnCamera];
+        
+    });
+    
 }
 - (void)setCameraBrightness:(NSInteger)Brightness
 {
-    [self.p2pManager setCameraBrightness:Brightness];
+    dispatch_group_async(_group, _streamQueue, ^{
+        
+        [self.p2pManager setCameraBrightness:Brightness];
+        
+    });
+    
 }
 - (void)setCameraContrast:(NSInteger)Contrast
 {
-    [self.p2pManager setCameraContrast:Contrast];
+    dispatch_group_async(_group, _streamQueue, ^{
+        
+        [self.p2pManager setCameraContrast:Contrast];
+        
+    });
+    
 }
 - (void)setCameraSaturation:(NSInteger)Saturation
 {
-    [self.p2pManager setCameraSaturation:Saturation];
+    dispatch_group_async(_group, _streamQueue, ^{
+        
+        [self.p2pManager setCameraSaturation:Saturation];
+        
+    });
+    
 }
 - (void)setCamseraDefauleValue
 {
-    [self.p2pManager setCameraDefauleValue];
+    dispatch_group_async(_group, _streamQueue, ^{
+        
+        [self.p2pManager setCameraDefauleValue];
+        
+    });
+    
 }
 - (void)startTurnCameraWithSpeed:(unsigned char)speed type:(CAMERA_TURN_TYPE)cameraTurnType
 {
-    [self.p2pManager startTurnCameraWithSpeed:speed type:cameraTurnType];
+    dispatch_group_async(_group, _streamQueue, ^{
+        
+        [self.p2pManager startTurnCameraWithSpeed:speed type:cameraTurnType];
+        
+    });
+    
 }
 
 - (void)setAudioStart:(BOOL)start
 {
-    [self.p2pManager setAudioStart:start];
+    dispatch_group_async(_group, _streamQueue, ^{
+        
+        [self.p2pManager setAudioStart:start];
+        
+    });
+    
 }
 
 #pragma mark -
