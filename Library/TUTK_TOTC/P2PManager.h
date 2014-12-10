@@ -83,6 +83,8 @@ typedef NS_ENUM(NSUInteger, CAMERA_PLAY_TYPE){
 
 - (void)setAudioStart:(BOOL)start;
 
+- (void)sendTalkData:(BytePtr)pData length:(int)iSize;
+
 @end
 
 

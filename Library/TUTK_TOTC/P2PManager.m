@@ -424,6 +424,49 @@ unsigned int _getTickCount() {
     return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
+- (void)sendTalkData:(BytePtr)pBuffer length:(int)nBufferLen
+{
+    dispatch_block_t block = ^{@autoreleasepool{
+        
+        Byte sendG711AudioBuffer[325];
+        Byte sendPcmAudioBuffer[641];
+        
+        int nStandPacketLen = 640;
+        if (0 != _audioPacketSize && 0 == _audioPacketSize%80) {
+            nStandPacketLen = _audioPacketSize*2;
+        }
+        DLog(@"%d",nStandPacketLen);
+        int nHisiLen;
+        NSData *tempAudioData;
+        for (int i=0; i<nBufferLen/nStandPacketLen; ++i) {
+            //将标准的pcm数据转换成hisi数据
+            nHisiLen = PCMBuf2G711ABuf_HISI(sendG711AudioBuffer,512,(const unsigned char*)pBuffer, nStandPacketLen,G711_BIG_ENDIAN);
+            
+            tempAudioData = [NSData dataWithBytes:sendG711AudioBuffer length:nHisiLen];
+            
+            [self composeRequestPacketWithCommand:CMD_TALK_DATA type:0 body:tempAudioData];
+            
+            pBuffer+=nStandPacketLen;
+        }
+
+        int ret;
+        ret = avSendAudioData(avIndex, <#const char *cabAudioData#>, <#int nAudioDataSize#>, <#const void *cabFrameInfo#>, <#int nFrameInfoSize#>);
+        if(ret == AV_ER_NoERROR)
+        {
+            LOG(@"send audio data succeed!");
+        }else if (ret < 0){
+            LOG(@"send audio data error!");
+        }
+        
+    }};
+    
+    if (dispatch_get_specific(p2pIOControlManagerQueueTag))
+        block();
+    else
+        dispatch_async(p2pIOControlManagerQueue, block);
+}
+
+
 - (void)getMediaInfoWithVideoIndex:(int )arg
 {
     if (!dispatch_get_specific(p2pVideoPlayManagerQueueTag)) return;
@@ -1030,5 +1073,6 @@ unsigned int _getTickCount() {
     }
     
 }
+
 
 @end
