@@ -447,7 +447,6 @@ unsigned int _getTickCount() {
             }else if (ret < 0){
                 LOG(@"send audio data error!");
             }
-
             
             newBuffer += nStandPacketLen;
         }
@@ -617,16 +616,16 @@ unsigned int _getTickCount() {
         [self _setAudioStart:start avIndex:self.avIndex];
     };
     
-    if (dispatch_get_specific(p2pVideoPlayManagerQueueTag))
+    if (dispatch_get_specific(p2pIOControlManagerQueueTag))
         block();
     else
-        dispatch_async(p2pVideoPlayManagerQueue, block);
+        dispatch_async(p2pIOControlManagerQueue, block);
 }
 
 - (void)_setAudioStart:(BOOL)start avIndex:(int)avindex
 {
     
-    if (!dispatch_get_specific(p2pVideoPlayManagerQueueTag)) return;
+    if (!dispatch_get_specific(p2pIOControlManagerQueueTag)) return;
     
     int ret = 0;
     int IOTYPE_USER_IPCAM_AUDIOSTART;
