@@ -430,11 +430,12 @@ unsigned int _getTickCount() {
         
         Byte sendG711AudioBuffer[325];
         Byte sendPcmAudioBuffer[641];
+        Byte cabFrameInfo[16];
         
         int nStandPacketLen = 640;
-        if (0 != _audioPacketSize && 0 == _audioPacketSize%80) {
-            nStandPacketLen = _audioPacketSize*2;
-        }
+//        if (0 != _audioPacketSize && 0 == _audioPacketSize%80) {
+//            nStandPacketLen = _audioPacketSize*2;
+//        }
         DLog(@"%d",nStandPacketLen);
         int nHisiLen;
         NSData *tempAudioData;
@@ -442,22 +443,20 @@ unsigned int _getTickCount() {
             //将标准的pcm数据转换成hisi数据
             nHisiLen = PCMBuf2G711ABuf_HISI(sendG711AudioBuffer,512,(const unsigned char*)pBuffer, nStandPacketLen,G711_BIG_ENDIAN);
             
-            tempAudioData = [NSData dataWithBytes:sendG711AudioBuffer length:nHisiLen];
+            int ret;
+            FRAMEINFO_t frameInfo;
+            ret = avSendAudioData(avIndex, (char *)sendG711AudioBuffer, nHisiLen, (char *)cabFrameInfo, 16);
+            if(ret == AV_ER_NoERROR)
+            {
+                LOG(@"send audio data succeed!");
+            }else if (ret < 0){
+                LOG(@"send audio data error!");
+            }
+
             
-            [self composeRequestPacketWithCommand:CMD_TALK_DATA type:0 body:tempAudioData];
-            
-            pBuffer+=nStandPacketLen;
+            pBuffer += nStandPacketLen;
         }
 
-        int ret;
-        ret = avSendAudioData(avIndex, <#const char *cabAudioData#>, <#int nAudioDataSize#>, <#const void *cabFrameInfo#>, <#int nFrameInfoSize#>);
-        if(ret == AV_ER_NoERROR)
-        {
-            LOG(@"send audio data succeed!");
-        }else if (ret < 0){
-            LOG(@"send audio data error!");
-        }
-        
     }};
     
     if (dispatch_get_specific(p2pIOControlManagerQueueTag))
