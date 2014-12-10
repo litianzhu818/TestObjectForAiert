@@ -112,7 +112,7 @@ int G711ABuf2PCMBuf_HISI(unsigned char* pcmBuf,int pcmBufLen,const unsigned char
 //    int standBufLen =0;
 //    int i=0;
 //    int rlen=0;
-//
+//    unsigned char standBuffer[800];
 //    //分析HISIbuffer的头信息
 //    GetHISIAudioFrameInfo((const unsigned char*)g711Buf,g711BufLen,&afFormat,&afSize,&afNum,blflag);
 //    
@@ -130,7 +130,7 @@ int G711ABuf2PCMBuf_HISI(unsigned char* pcmBuf,int pcmBufLen,const unsigned char
 //    
 //    //将标准g711数据解码成PCM数据
 //    rlen=G7112LinnerPCM((unsigned char*)pcmBuf,pcmBufLen,(const unsigned char*)standBuffer,standBufLen);
-     
+    
     int rlen=G7112LinnerPCM((unsigned char*)pcmBuf,pcmBufLen,g711Buf+4,g711BufLen-4);
 
     return rlen;

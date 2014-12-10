@@ -426,25 +426,20 @@ unsigned int _getTickCount() {
 
 - (void)sendTalkData:(BytePtr)pBuffer length:(int)nBufferLen
 {
+    __block BytePtr newBuffer = pBuffer;
     dispatch_block_t block = ^{@autoreleasepool{
         
-        Byte sendG711AudioBuffer[325];
-        Byte sendPcmAudioBuffer[641];
+        Byte sendG711AudioBuffer[164];
         Byte cabFrameInfo[16];
         
-        int nStandPacketLen = 640;
-//        if (0 != _audioPacketSize && 0 == _audioPacketSize%80) {
-//            nStandPacketLen = _audioPacketSize*2;
-//        }
-        DLog(@"%d",nStandPacketLen);
-        int nHisiLen;
-        NSData *tempAudioData;
+        int nStandPacketLen = 320;
+        
         for (int i=0; i<nBufferLen/nStandPacketLen; ++i) {
             //将标准的pcm数据转换成hisi数据
-            nHisiLen = PCMBuf2G711ABuf_HISI(sendG711AudioBuffer,512,(const unsigned char*)pBuffer, nStandPacketLen,G711_BIG_ENDIAN);
+            int nHisiLen = PCMBuf2G711ABuf_HISI(sendG711AudioBuffer,160,(const unsigned char*)newBuffer, nStandPacketLen,G711_BIG_ENDIAN);
             
             int ret;
-            FRAMEINFO_t frameInfo;
+
             ret = avSendAudioData(avIndex, (char *)sendG711AudioBuffer, nHisiLen, (char *)cabFrameInfo, 16);
             if(ret == AV_ER_NoERROR)
             {
@@ -454,9 +449,8 @@ unsigned int _getTickCount() {
             }
 
             
-            pBuffer += nStandPacketLen;
+            newBuffer += nStandPacketLen;
         }
-
     }};
     
     if (dispatch_get_specific(p2pIOControlManagerQueueTag))
@@ -477,8 +471,10 @@ unsigned int _getTickCount() {
     NSLog(@"[thread_ReceiveVideo] Starting...");
 
 //    char *receiveBuff = malloc(VIDEO_BUF_SIZE);
-    Byte g711AudioBuff[325];
-    Byte pcmAudioBuff[651];
+    Byte g711AudioBuff[148];
+    Byte pcmAudioBuff[400];
+    Byte cabFrameInfo[16];
+    
     int videoBuffLength;
     int audioBuffLength;
     unsigned int frmNo;
@@ -492,7 +488,7 @@ unsigned int _getTickCount() {
     {
         char *receiveBuff = malloc(VIDEO_BUF_SIZE);
 //        ret = avRecvFrameData(arg, receiveBuff, VIDEO_BUF_SIZE, (char *)&frameInfo, sizeof(FRAMEINFO_t), &frmNo);
-        ret = avRecvFrameData2(avIndex, receiveBuff, VIDEO_BUF_SIZE, &frame1, &frame2, (char *)&frameInfo, sizeof(FRAMEINFO_t), &frame3, &frmNo);
+        ret = avRecvFrameData2(avIndex, receiveBuff, VIDEO_BUF_SIZE, &frame1, &frame2, (char *)cabFrameInfo, 16, &frame3, &frmNo);
         if(ret == AV_ER_DATA_NOREADY)
         {
             usleep(30000);
@@ -555,19 +551,19 @@ unsigned int _getTickCount() {
                 LOG(@"%d",audioData.length);
                 LOG(@"length:%d",audioBuffLength);
                 //截取音频流，加上头部信息16字节
-                NSData *data = [audioData subdataWithRange:NSMakeRange(16, audioData.length - 16)];
+                NSData *data = [audioData subdataWithRange:NSMakeRange(16, audioBuffLength - 16)];
                 LOG(@"%d",data.length);
                 // Decode and play
-                [data getBytes:g711AudioBuff length:325];
+                [data getBytes:g711AudioBuff length:148];
                 
                 //将标准的g711数据转换成pcm数据，以320字节分包，得到包的数量
                 int packetNum = G711ABuf2PCMBuf_HISI((unsigned char*)pcmAudioBuff,
-                                                   651,
+                                                   297,
                                                    (const unsigned char*)g711AudioBuff,
-                                                   325,
-                                                   G711_BIG_ENDIAN)/320;
+                                                   148,
+                                                   G711_BIG_ENDIAN)/160;
                 if (self.delegate && [self.delegate respondsToSelector:@selector(p2pManager:didReadAudioData:)]) {
-                    for (int i = 0; i != packetNum; ++i) {
+                    for (int i = 0; i < packetNum; ++i) {
                         [self.delegate p2pManager:self didReadAudioData:[NSData dataWithBytes:pcmAudioBuff+i*320 length:320]];
                     }
                 }

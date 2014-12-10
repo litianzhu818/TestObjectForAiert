@@ -632,28 +632,29 @@
                      channel:(NSInteger)channel
 {
     dispatch_group_async(_group, _talkQueue, ^{
-        [AQRecorderWarp stopRecord];
+        [AQRecorderWarp startRecord];
     });
     
-    NSInteger currentConnectState = [AppData connectionState];
-    
-    if (CameraNetworkStateTransmitConnected == currentConnectState
-        || CameraNetworkStateP2pConnected == currentConnectState)
-    {
-        
-        dispatch_group_async(_group, _streamQueue, ^{
-            
-//            [self.p2pConnection enableTalk:YES];
-        });
-        
-    }else {
-        
-        dispatch_group_async(_group, _streamQueue, ^{
-            
-            [self.zspConnection openMic:YES];
-        });
-    }
-
+//    NSInteger currentConnectState = [AppData connectionState];
+//    
+//    if (CameraNetworkStateTransmitConnected == currentConnectState
+//        || CameraNetworkStateP2pConnected == currentConnectState)
+//    {
+//        
+//        dispatch_group_async(_group, _streamQueue, ^{
+//            
+////            [self.p2pConnection enableTalk:YES];
+//            [AQRecorderWarp startRecord];
+//        });
+//        
+//    }else {
+//        
+//        dispatch_group_async(_group, _streamQueue, ^{
+//            
+//            [self.zspConnection openMic:YES];
+//        });
+//    }
+//
     return 0;
     
 }
@@ -666,24 +667,25 @@
         [AQRecorderWarp stopRecord];
     });
     
-    NSInteger currentConnectState = [AppData connectionState];
-    
-    if (CameraNetworkStateTransmitConnected == currentConnectState
-        || CameraNetworkStateP2pConnected == currentConnectState)
-    {
-        
-        dispatch_group_async(_group, _streamQueue, ^{
-            
-//            [self.p2pConnection enableTalk:NO];
-        });
-        
-    }else {
-        
-        dispatch_group_async(_group, _streamQueue, ^{
-            
-            [self.zspConnection openMic:NO];
-        });
-    }
+//    NSInteger currentConnectState = [AppData connectionState];
+//    
+//    if (CameraNetworkStateTransmitConnected == currentConnectState
+//        || CameraNetworkStateP2pConnected == currentConnectState)
+//    {
+//        
+//        dispatch_group_async(_group, _streamQueue, ^{
+//            
+////            [self.p2pConnection enableTalk:NO];
+////            [AQRecorderWarp stopRecord];
+//        });
+//        
+//    }else {
+//        
+//        dispatch_group_async(_group, _streamQueue, ^{
+//            
+//            [self.zspConnection openMic:NO];
+//        });
+//    }
 
     
     return 0;
@@ -703,7 +705,7 @@
         
         dispatch_group_async(_group, _streamQueue, ^{
             
-//            [self.p2pConnection sendTalkData:pBuffer length:nBufferLen];
+            [self.p2pManager sendTalkData:pBuffer length:nBufferLen];
         });
         
     }else {

@@ -604,6 +604,9 @@ static void ASAudioSessionInterruptionListener(__unused void * inClientData, UIn
         error = AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(category), &category);
         if (error) printf("couldn't set audio category!");
         
+//        UInt32 audioRoute = kAudioSessionOverrideAudioRoute_Speaker;
+//        AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, sizeof(audioRoute), &audioRoute);
+        
         UInt32 audioRouteOverride = kAudioSessionOverrideAudioRoute_Speaker;
         AudioSessionSetProperty (kAudioSessionProperty_OverrideCategoryMixWithOthers, sizeof (audioRouteOverride),&audioRouteOverride);
         

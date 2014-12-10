@@ -270,17 +270,14 @@
 {
     [self setEnableMicrophone:talking];
     
-    if (talking) {
-        if (self.enableMicrophone) {
-            [[LibCoreWrap sharedCore] startTalkWithDeviceId:self.device.deviceID
-                                                    channel:_currentChannel];
-        }
+    if (self.enableMicrophone) {
+        [[LibCoreWrap sharedCore] startTalkWithDeviceId:self.device.deviceID
+                                                channel:_currentChannel];
     }else{
-        if (self.enableMicrophone) {
-            [[LibCoreWrap sharedCore] stopTalkWithDeviceId:self.device.deviceID
-                                                   channel:_currentChannel];
-        }
+        [[LibCoreWrap sharedCore] stopTalkWithDeviceId:self.device.deviceID
+                                               channel:_currentChannel];
     }
+
 }
 - (void)playerView:(PlayerView *)playerView didChangedVolumeWithValue:(float)value
 {
