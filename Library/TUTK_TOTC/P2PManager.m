@@ -507,7 +507,7 @@ unsigned int _getTickCount() {
             }else if (0 == memcmp(receiveBuff, "01wb", 4)){
                 //Audio frame
                 //把字节buff转化成data
-                NSData *audioData = [NSData dataWithBytes:receiveBuff length:VIDEO_BUF_SIZE];
+                NSData *audioData = [NSData dataWithBytes:receiveBuff length:AUDIO_BUF_SIZE];
                 //获取音频流的长度
                 [audioData getBytes:&audioBuffLength range:NSMakeRange(4, 4)];
                 LOG(@"%d",audioData.length);
