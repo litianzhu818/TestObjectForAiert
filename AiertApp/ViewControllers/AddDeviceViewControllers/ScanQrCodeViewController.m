@@ -121,20 +121,6 @@
     }else{
         [self showError:@"不是正确的设备条形码或者二维码"];
     }
-
-    
-//    if (qrCode.length == 10 /*[Utilities checkIdFormat:qrCode]*/) {
-//        [self.readerView stop];
-//        [self.maskView stopMoving];
-//    
-//        if (!_viewHasDisappear) {
-//            [self performSegueWithIdentifier:@"ScanQrCode2InputDevicePassword" sender:self];
-//        }
-//    }
-//    else
-//    {
-//        [self showError:@"不是正确的设备条形码或者二维码"];
-//    }
 }
 
 //解析得到的数据
@@ -142,9 +128,17 @@
 {
     BOOL result = NO;
     //FIXME:这里需要解析判断，并填充deviceInfo的值
+    //扫描字符串格式：ID:V7X1WR7K45BRX4LWCNCJUSER:adminPASSW:111111
     if (value && ![value isEqualToString:@""]) {
         result = YES;
-        deviceInfo.deviceID = value;
+        
+        NSString *userStr = @"USER:";
+        NSString *pwdStr = @"PASSW:";
+        NSRange range1 = [value rangeOfString:userStr];
+        NSRange range2 = [value rangeOfString:pwdStr];
+        
+        deviceInfo.deviceID = [value substringWithRange:NSMakeRange(3, range1.location - 3)];
+        deviceInfo.userInfo = [[AiertUserInfo alloc] initWithUserName:[value substringWithRange:NSMakeRange(range1.location+5, range2.location - range1.location - 5)] userPassword:[value substringWithRange:NSMakeRange(range2.location+6, value.length - (range2.location + 6))]];
     }
     
     return result;

@@ -436,7 +436,15 @@ unsigned int _getTickCount() {
         
         for (int i=0; i<nBufferLen/nStandPacketLen; ++i) {
             //将标准的pcm数据转换成hisi数据
+            
             int nHisiLen = PCMBuf2G711ABuf_HISI(sendG711AudioBuffer,160,(const unsigned char*)newBuffer, nStandPacketLen,G711_BIG_ENDIAN);
+            
+            /**把PCM数据编码成海思标准格式的G711数据
+             *转换后g711数据数据至少是原始g711数据的1/2
+             *返回编码后的数据长度
+             *blflag :大端、小端标示，默认取BIG_ENDIAN
+             */
+            int PCMBuf2G711ABuf_HISI(unsigned char* g711Buf,int g711BufLen,const unsigned char* pcmBuf,int pcmBufLen,int blflag);
             
             int ret;
 
