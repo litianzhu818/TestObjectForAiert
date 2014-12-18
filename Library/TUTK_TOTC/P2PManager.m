@@ -117,8 +117,8 @@ static  P2PManager *sharedInstance = nil ;
         isCameraTurning = NO;
         SID = -999999;
         avIndex = -999999;
-        mirrorUpDownTag = 1;
-        mirrorLeftRightTag = 1;
+        mirrorUpDownTag = 4;
+        mirrorLeftRightTag = 4;
         turnUpDown = 0;
         turnLeftRight = 0;
         self.turnSpeed = DEFAULT_TURN_SPEED;
@@ -922,35 +922,35 @@ unsigned int _getTickCount() {
 {
     if (!dispatch_get_specific(p2pIOControlManagerQueueTag)) return;
     
+    if (mirrorUpDownTag == 4) {
+        mirrorUpDownTag = 2;
+    }else{
+        mirrorUpDownTag = 4;
+    }
+    
     int ret = 0;
     int IOTYPE_USER_IPCAM_SETMIRROR = 0x2008;
     if ((ret = avSendIOCtrl([self avIndex], IOTYPE_USER_IPCAM_SETMIRROR, (char *)&mirrorUpDownTag, sizeof(int)) < 0)) {
         LOG(@"set_mirror_failed[%d]", ret);
         return;
     };
-    
-    if (mirrorUpDownTag == 1) {
-        mirrorUpDownTag = 0;
-    }else{
-        mirrorUpDownTag = 1;
-    }
 }
 - (void)_setMirrorLeftRight
 {
     if (!dispatch_get_specific(p2pIOControlManagerQueueTag)) return;
     
+    if (mirrorLeftRightTag == 4) {
+        mirrorLeftRightTag = 1;
+    }else{
+        mirrorLeftRightTag = 4;
+    }
+    
     int ret = 0;
-    int IOTYPE_USER_IPCAM_SETFLIP = 0x2009;
+    int IOTYPE_USER_IPCAM_SETFLIP = 0x2008;
     if ((ret = avSendIOCtrl([self avIndex], IOTYPE_USER_IPCAM_SETFLIP, (char *)&mirrorLeftRightTag, sizeof(int)) < 0)) {
         LOG(@"set_mirror_failed[%d]", ret);
         return;
     };
-    
-    if (mirrorLeftRightTag == 1) {
-        mirrorLeftRightTag = 0;
-    }else{
-        mirrorLeftRightTag = 1;
-    }
 }
 
 - (void)stopTurnCamera
