@@ -662,7 +662,7 @@ unsigned int _getTickCount() {
     
     if (start) {
         
-        int avServerStart = avServStart(SID, NULL, NULL, 10, 0, 5);
+        int avServerStart = avServStart(SID, NULL, NULL, 50, 0, 1);
         if(avServerStart < 0){
             printf("avServerStart failed[%d]\n", avServerStart);
         }
