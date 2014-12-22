@@ -454,7 +454,7 @@ unsigned int _getTickCount() {
             
             int ret;
 
-            ret = avSendFrameData(avIndex, (char *)sendG711AudioBuffer, sendG711AudioDataLength + 4, &frameInfo, 16);
+            ret = avSendAudioData(avIndex, (char *)sendG711AudioBuffer, sendG711AudioDataLength + 4, &frameInfo, 16);
             if(ret == AV_ER_NoERROR)
             {
                 LOG(@"send audio data succeed!");
@@ -662,10 +662,10 @@ unsigned int _getTickCount() {
     
     if (start) {
         
-        int avServerStart = avServStart(SID, NULL, NULL, 5000, 0, 5);
-        if(avServerStart < 0){
-            printf("avServerStart failed[%d]\n", avServerStart);
-        }
+//        int avServerStart = avServStart(SID, NULL, NULL, 5000, 0, 5);
+//        if(avServerStart < 0){
+//            printf("avServerStart failed[%d]\n", avServerStart);
+//        }
         
     }else{
         avServStop(avIndex);
@@ -779,6 +779,11 @@ unsigned int _getTickCount() {
         return -1;
     }
     
+    int avServerStart = avServStart(SID, NULL, NULL, 10, 0, 5);
+    if(avServerStart < 0){
+        printf("avServerStart failed[%d]\n", avServerStart);
+    }
+
     return 1;
 }
 
