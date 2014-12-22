@@ -426,29 +426,35 @@ unsigned int _getTickCount() {
 
 - (void)sendTalkData:(BytePtr)pBuffer length:(int)nBufferLen
 {
+    LOG(@"PCM语音包大小：%d",nBufferLen);
     __block BytePtr newBuffer = pBuffer;
     dispatch_block_t block = ^{@autoreleasepool{
         
-        Byte sendG711AudioBuffer[164];
-        Byte cabFrameInfo[16];
+        int  sendG711AudioDataLength = 160;
+        Byte sendG711AudioBuffer[sendG711AudioDataLength];
+        FRAMEINFO_t frameInfo;
         
-        int nStandPacketLen = 320;
+        int nStandPacketLen = 2*(sendG711AudioDataLength + 4);
+        
+        memset(&frameInfo, 0, sizeof(frameInfo));
+        frameInfo.codec_id = MEDIA_CODEC_AUDIO_ADPCM;
+        frameInfo.flags = (AUDIO_SAMPLE_8K << 2) | (AUDIO_DATABITS_16 << 1) | AUDIO_CHANNEL_MONO;
         
         for (int i=0; i<nBufferLen/nStandPacketLen; ++i) {
             //将标准的pcm数据转换成hisi数据
             
-            int nHisiLen = PCMBuf2G711ABuf_HISI(sendG711AudioBuffer,160,(const unsigned char*)newBuffer, nStandPacketLen,G711_BIG_ENDIAN);
+            int nHisiLen = PCMBuf2G711ABuf_HISI(sendG711AudioBuffer, sendG711AudioDataLength, (const unsigned char*)newBuffer, nStandPacketLen, G711_BIG_ENDIAN);
             
             /**把PCM数据编码成海思标准格式的G711数据
              *转换后g711数据数据至少是原始g711数据的1/2
              *返回编码后的数据长度
              *blflag :大端、小端标示，默认取BIG_ENDIAN
              */
-            int PCMBuf2G711ABuf_HISI(unsigned char* g711Buf,int g711BufLen,const unsigned char* pcmBuf,int pcmBufLen,int blflag);
+            /*int PCMBuf2G711ABuf_HISI(unsigned char* g711Buf,int g711BufLen,const unsigned char* pcmBuf,int pcmBufLen,int blflag);*/
             
             int ret;
 
-            ret = avSendAudioData(avIndex, (char *)sendG711AudioBuffer, nHisiLen, (char *)cabFrameInfo, 16);
+            ret = avSendFrameData(avIndex, (char *)sendG711AudioBuffer, sendG711AudioDataLength + 4, &frameInfo, 16);
             if(ret == AV_ER_NoERROR)
             {
                 LOG(@"send audio data succeed!");
@@ -458,6 +464,7 @@ unsigned int _getTickCount() {
             
             newBuffer += nStandPacketLen;
         }
+        
     }};
     
     if (dispatch_get_specific(p2pIOControlManagerQueueTag))
@@ -486,16 +493,26 @@ unsigned int _getTickCount() {
     int audioBuffLength;
     unsigned int frmNo;
     int ret;
+    /*
     int frame1 = 32 * 1024;
     int frame2 = 128 * 1024;
     int frame3 = 240;//240/480/720
+    ret = avRecvFrameData2(avIndex, receiveBuff, VIDEO_BUF_SIZE, &frame1, &frame2, (char *)cabFrameInfo, 16, &frame3, &frmNo);
+     */
     FRAMEINFO_t frameInfo;
     
+    int outBufSize = 0;
+    int outFrmSize = 0;
+    int outFrmInfoSize = 0;
+   
     while (!closeConnection)
     {
         char *receiveBuff = malloc(VIDEO_BUF_SIZE);
-//        ret = avRecvFrameData(arg, receiveBuff, VIDEO_BUF_SIZE, (char *)&frameInfo, sizeof(FRAMEINFO_t), &frmNo);
-        ret = avRecvFrameData2(avIndex, receiveBuff, VIDEO_BUF_SIZE, &frame1, &frame2, (char *)cabFrameInfo, 16, &frame3, &frmNo);
+#if 0
+        ret = ret = avRecvFrameData(arg, receiveBuff, VIDEO_BUF_SIZE, (char *)&frameInfo, sizeof(FRAMEINFO_t), &frmNo);
+#else
+        ret = avRecvFrameData2(avIndex, receiveBuff, VIDEO_BUF_SIZE, &outBufSize, &outFrmSize, (char *)&frameInfo, sizeof(FRAMEINFO_t), &outFrmInfoSize, &frmNo);
+#endif
         if(ret == AV_ER_DATA_NOREADY)
         {
             usleep(30000);
@@ -534,7 +551,11 @@ unsigned int _getTickCount() {
         
         if(ret > 0)
         {
+#if 0
+            if (frameInfo.codec_id == MEDIA_CODEC_VIDEO_H264)) {
+#else
             if (0 == memcmp(receiveBuff, "00dc", 4) || 0 == memcmp(receiveBuff, "01dc", 4)) {
+#endif
                 // Video frame
                 //把字节buff转化成data
                 NSData *videoData = [NSData dataWithBytes:receiveBuff length:VIDEO_BUF_SIZE];
@@ -548,8 +569,11 @@ unsigned int _getTickCount() {
                 //释放临时变量
                 videoData = nil;
                 data = nil;
-                
+#if 0
+            }else{
+#else
             }else if (0 == memcmp(receiveBuff, "01wb", 4)){
+#endif
                 //Audio frame
                 //把字节buff转化成data
                 NSData *audioData = [NSData dataWithBytes:receiveBuff length:AUDIO_BUF_SIZE];
@@ -635,6 +659,18 @@ unsigned int _getTickCount() {
     
     if (!dispatch_get_specific(p2pIOControlManagerQueueTag)) return;
     
+    
+    if (start) {
+        
+        int avServerStart = avServStart(SID, NULL, NULL, 5000, 0, 5);
+        if(avServerStart < 0){
+            printf("avServerStart failed[%d]\n", avServerStart);
+        }
+        
+    }else{
+        avServStop(avIndex);
+    }
+    
     int ret = 0;
     int IOTYPE_USER_IPCAM_AUDIOSTART;
     
@@ -646,6 +682,15 @@ unsigned int _getTickCount() {
         LOG(@"set_audio_start_failed[%d]", ret);
         return;
     }
+    
+    int ret1;
+    SMsgAVIoctrlAVStream ioMsg1;
+    memset(&ioMsg1, 0, sizeof(SMsgAVIoctrlAVStream));
+    if((ret1 = avSendIOCtrl(avIndex, (start ? IOTYPE_USER_IPCAM_SPEAKERSTART:IOTYPE_USER_IPCAM_SPEAKERSTOP), (char *)&ioMsg1, sizeof(SMsgAVIoctrlAVStream))) < 0)
+    {
+        printf("StartSpeaker failed[%d]\n", ret1);
+    }
+
 }
 
 
