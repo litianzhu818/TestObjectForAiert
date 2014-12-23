@@ -43,6 +43,7 @@ typedef struct
     unsigned char turnLeftRight;
     
     BOOL isCameraTurning;
+    BOOL isAvServerStart;
 }
 
 @property (nonatomic, assign) int avIndex;
@@ -115,6 +116,7 @@ static  P2PManager *sharedInstance = nil ;
         
         closeConnection = NO;
         isCameraTurning = NO;
+        isAvServerStart = NO;
         SID = -999999;
         avIndex = -999999;
         mirrorUpDownTag = 4;
@@ -430,11 +432,12 @@ unsigned int _getTickCount() {
     __block BytePtr newBuffer = pBuffer;
     dispatch_block_t block = ^{@autoreleasepool{
         
-        int  sendG711AudioDataLength = 160;
+        int  sendG711AudioDataLength = 164;//数组的前四位是固定的，分别为0x0,0x01,0x50,0x00
         Byte sendG711AudioBuffer[sendG711AudioDataLength];
         FRAMEINFO_t frameInfo;
         
-        int nStandPacketLen = 2*(sendG711AudioDataLength + 4);
+        //将PCM数据包拆分成160的2倍
+        int nStandPacketLen = 2 * (sendG711AudioDataLength - 4);
         
         memset(&frameInfo, 0, sizeof(frameInfo));
         frameInfo.codec_id = MEDIA_CODEC_AUDIO_ADPCM;
@@ -443,6 +446,7 @@ unsigned int _getTickCount() {
         for (int i=0; i<nBufferLen/nStandPacketLen; ++i) {
             //将标准的pcm数据转换成hisi数据
             
+            //该方法实际是从sendG711AudioBuffer的第五位开始使用的，将320的PCM转成160的G711数据包（该数据包已经有了前四位，所以还是164位）
             int nHisiLen = PCMBuf2G711ABuf_HISI(sendG711AudioBuffer, sendG711AudioDataLength, (const unsigned char*)newBuffer, nStandPacketLen, G711_BIG_ENDIAN);
             
             /**把PCM数据编码成海思标准格式的G711数据
@@ -454,7 +458,7 @@ unsigned int _getTickCount() {
             
             int ret;
 
-            ret = avSendAudioData(avIndex, (char *)sendG711AudioBuffer, sendG711AudioDataLength + 4, &frameInfo, 16);
+            ret = avSendAudioData(avIndex, (char *)sendG711AudioBuffer, nHisiLen, &frameInfo, 16);
             if(ret == AV_ER_NoERROR)
             {
                 LOG(@"send audio data succeed!");
@@ -659,18 +663,6 @@ unsigned int _getTickCount() {
     
     if (!dispatch_get_specific(p2pIOControlManagerQueueTag)) return;
     
-    
-    if (start) {
-        
-        int avServerStart = avServStart(SID, NULL, NULL, 50, 0, 1);
-        if(avServerStart < 0){
-            printf("avServerStart failed[%d]\n", avServerStart);
-        }
-        
-    }else{
-        avServStop(avIndex);
-    }
-    
     int ret = 0;
     int IOTYPE_USER_IPCAM_AUDIOSTART;
     
@@ -686,6 +678,26 @@ unsigned int _getTickCount() {
     int ret1;
     SMsgAVIoctrlAVStream ioMsg1;
     memset(&ioMsg1, 0, sizeof(SMsgAVIoctrlAVStream));
+    
+    if (start) {
+        
+        ioMsg1.channel = 5;
+        
+        int avServerStart = avServStart(SID, NULL, NULL, 10, 0, 5);
+        if(avServerStart < 0){
+            isAvServerStart = NO;
+            printf("avServerStart failed[%d]\n", avServerStart);
+        }else{
+            isAvServerStart = YES;
+        }
+        
+    }else{
+        if (isAvServerStart) {
+            
+            avServStop(avIndex);
+            isAvServerStart = NO;
+        }
+    }
     if((ret1 = avSendIOCtrl(avIndex, (start ? IOTYPE_USER_IPCAM_SPEAKERSTART:IOTYPE_USER_IPCAM_SPEAKERSTOP), (char *)&ioMsg1, sizeof(SMsgAVIoctrlAVStream))) < 0)
     {
         printf("StartSpeaker failed[%d]\n", ret1);
@@ -779,6 +791,11 @@ unsigned int _getTickCount() {
         return -1;
     }
     
+    if (isAvServerStart) {
+        avServStop(avIndex);
+        isAvServerStart = NO;
+    }
+    
 //    int avServerStart = avServStart(SID, NULL, NULL, 10, 0, 5);
 //    if(avServerStart < 0){
 //        printf("avServerStart failed[%d]\n", avServerStart);
@@ -859,6 +876,8 @@ unsigned int _getTickCount() {
         if (_deviceID == nil)  return;
         
         closeConnection = YES;
+        isAvServerStart = NO;
+        isCameraTurning = NO;
     }
 }
 

@@ -308,8 +308,8 @@ int LinnerPCM2G711(unsigned char* g711Buf,int g711BufLen,const unsigned char* pc
     int i=0;
     short* pbuf =(short*)pcmBuf;
     
-    if(pcmBuf==0x0L || g711Buf ==0x0L)return-1;
-    if(g711BufLen < pcmBufLen/2) return-1;
+    if(pcmBuf==0x0L || g711Buf ==0x0L) return -1;
+    if(g711BufLen < pcmBufLen/2) return -1;
     
     for (i=0;i<pcmBufLen/2;i++)
     {

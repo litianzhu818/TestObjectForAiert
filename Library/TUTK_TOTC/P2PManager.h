@@ -66,7 +66,6 @@ typedef NS_ENUM(NSUInteger, CAMERA_PLAY_TYPE){
 - (void)startWithSID:(int)SID;
 - (void)checkConnectTypeWithDeviceID:(NSString *)deviceID;
 - (void)startIpcamStream:(int)avindex withPlayType:(CAMERA_PLAY_TYPE)playType;
-- (void)start:(NSString *)UID;
 
 - (void)closeConnection;
 

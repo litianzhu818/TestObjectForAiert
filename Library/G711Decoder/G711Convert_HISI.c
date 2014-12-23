@@ -146,8 +146,14 @@ int PCMBuf2G711ABuf_HISI(unsigned char* g711Buf,int g711BufLen,const unsigned ch
     //生成海思的g711数据头
     if (G711_BIG_ENDIAN==blflag)
     {
+        /*//原代码：2014-12-23
         g711Buf[1] = 0x01;
         g711Buf[2] = standG711Len*0.5;
+         */
+        g711Buf[0] = 0x0;
+        g711Buf[1] = 0x01;
+        g711Buf[2] = 0x50;
+        g711Buf[3] = 0x00;
     }
         
     return standG711Len+4;
