@@ -114,9 +114,7 @@ search(
  * For further information see John C. Bellamy's Digital Telephony, 1982,
  * John Wiley & Sons, pps 98-111 and 472-476.
  */
-unsigned char
-linear2alaw(
-            int		pcm_val)	/* 2's complement (16-bit range) */
+unsigned char linear2alaw(int   pcm_val)	/* 2's complement (16-bit range) */
 {
 	int		mask;
 	int		seg;
@@ -150,9 +148,7 @@ linear2alaw(
  * alaw2linear() - Convert an A-law value to 16-bit linear PCM
  *
  */
-int
-alaw2linear(
-            unsigned char	a_val)
+int alaw2linear(unsigned char	a_val)
 {
 	int		t;
 	int		seg;
@@ -206,9 +202,7 @@ alaw2linear(
  * For further information see John C. Bellamy's Digital Telephony, 1982,
  * John Wiley & Sons, pps 98-111 and 472-476.
  */
-unsigned char
-linear2ulaw(
-            int		pcm_val)	/* 2's complement (16-bit range) */
+unsigned char linear2ulaw( int		pcm_val)	/* 2's complement (16-bit range) */
 {
 	int		mask;
 	int		seg;
@@ -298,22 +292,21 @@ int G7112LinnerPCM(unsigned char* pcmBuf,int pcmBufLen,const unsigned char* g711
     
     for (i=0;i<g711BufLen;i++)
     {
-        pbuf[i]=alaw2linear(g711Buf[i]);
+        pbuf[i] = alaw2linear(g711Buf[i]);
     }
     return 2*g711BufLen;
 }
 //转换后g711buf的长度为PCM buf的1/2,缓冲区由调用者负责分配和释放
 int LinnerPCM2G711(unsigned char* g711Buf,int g711BufLen,const unsigned char* pcmBuf,int pcmBufLen)
 {
-    int i=0;
-    short* pbuf =(short*)pcmBuf;
+    int i = 0;
+    short* pbuf = (short*)pcmBuf;
     
-    if(pcmBuf==0x0L || g711Buf ==0x0L) return -1;
+    if(pcmBuf == 0x0L || g711Buf == 0x0L) return -1;
     if(g711BufLen < pcmBufLen/2) return -1;
     
-    for (i=0;i<pcmBufLen/2;i++)
-    {
-        g711Buf[i] = linear2alaw(pbuf[i]);
+    for (i = 0;i < pcmBufLen/2; i++){
+        //g711Buf[i] ;//= linear2alaw(pbuf[i]);
     }
     return pcmBufLen/2;
 }

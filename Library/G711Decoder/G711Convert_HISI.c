@@ -131,7 +131,7 @@ int G711ABuf2PCMBuf_HISI(unsigned char* pcmBuf,int pcmBufLen,const unsigned char
 //    //将标准g711数据解码成PCM数据
 //    rlen=G7112LinnerPCM((unsigned char*)pcmBuf,pcmBufLen,(const unsigned char*)standBuffer,standBufLen);
     
-    int rlen=G7112LinnerPCM((unsigned char*)pcmBuf,pcmBufLen,g711Buf+4,g711BufLen-4);
+    int rlen = G7112LinnerPCM((unsigned char*)pcmBuf, pcmBufLen, g711Buf + 4, g711BufLen - 4);
 
     return rlen;
 }
@@ -139,13 +139,12 @@ int G711ABuf2PCMBuf_HISI(unsigned char* pcmBuf,int pcmBufLen,const unsigned char
 //把PCM数据编码成海思标准格式的G711数据
 //转换后g711数据数据至少是原始g711数据的1/2
 int PCMBuf2G711ABuf_HISI(unsigned char* g711Buf,int g711BufLen,const unsigned char* pcmBuf,int pcmBufLen,int blflag)
-{        
+{
     //编码pcm成标准的g711数据
-    int standG711Len = LinnerPCM2G711(g711Buf+4,g711BufLen,(const unsigned char*)pcmBuf,pcmBufLen);
+    int standG711Len = LinnerPCM2G711(g711Buf + 4, g711BufLen - 4, (const unsigned char*)pcmBuf, pcmBufLen);
     
     //生成海思的g711数据头
-    if (G711_BIG_ENDIAN==blflag)
-    {
+    if (G711_BIG_ENDIAN==blflag){
         /*//原代码：2014-12-23
         g711Buf[1] = 0x01;
         g711Buf[2] = standG711Len*0.5;

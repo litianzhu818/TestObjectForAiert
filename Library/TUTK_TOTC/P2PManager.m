@@ -20,6 +20,10 @@
 
 #define DEFAULT_TURN_SPEED 15
 
+#define G711_AUDIO_DATA_LENGTH 164
+#define PCM_AUDIO_DATA_LENGTH (2*(G711_AUDIO_DATA_LENGTH -4))
+#define STANDARD_PCM_AUDIO_DATA_LENGTH 320
+
 typedef struct
 {
     int brightness;// 亮度 0~255 默认128
@@ -432,22 +436,16 @@ unsigned int _getTickCount() {
     __block BytePtr newBuffer = pBuffer;
     dispatch_block_t block = ^{@autoreleasepool{
         
-        int  sendG711AudioDataLength = 164;//数组的前四位是固定的，分别为0x0,0x01,0x50,0x00
-        Byte sendG711AudioBuffer[sendG711AudioDataLength];
+        //数组的前四位是固定的，分别为0x0,0x01,0x50,0x00
+        Byte sendG711AudioBuffer[G711_AUDIO_DATA_LENGTH];
         FRAMEINFO_t frameInfo;
-        
-        //将PCM数据包拆分成160的2倍
-        int nStandPacketLen = 2 * (sendG711AudioDataLength - 4);
         
         memset(&frameInfo, 0, sizeof(frameInfo));
         frameInfo.codec_id = MEDIA_CODEC_AUDIO_ADPCM;
         frameInfo.flags = (AUDIO_SAMPLE_8K << 2) | (AUDIO_DATABITS_16 << 1) | AUDIO_CHANNEL_MONO;
         
-        for (int i=0; i<nBufferLen/nStandPacketLen; ++i) {
+        for (int i=0; i<nBufferLen/PCM_AUDIO_DATA_LENGTH; ++i) {
             //将标准的pcm数据转换成hisi数据
-            
-            //该方法实际是从sendG711AudioBuffer的第五位开始使用的，将320的PCM转成160的G711数据包（该数据包已经有了前四位，所以还是164位）
-            int nHisiLen = PCMBuf2G711ABuf_HISI(sendG711AudioBuffer, sendG711AudioDataLength, (const unsigned char*)newBuffer, nStandPacketLen, G711_BIG_ENDIAN);
             
             /**把PCM数据编码成海思标准格式的G711数据
              *转换后g711数据数据至少是原始g711数据的1/2
@@ -455,6 +453,9 @@ unsigned int _getTickCount() {
              *blflag :大端、小端标示，默认取BIG_ENDIAN
              */
             /*int PCMBuf2G711ABuf_HISI(unsigned char* g711Buf,int g711BufLen,const unsigned char* pcmBuf,int pcmBufLen,int blflag);*/
+            
+            //该方法实际是从sendG711AudioBuffer的第五位开始使用的，将320的PCM转成160的G711数据包（该数据包已经有了前四位，所以还是164位）
+            int nHisiLen = PCMBuf2G711ABuf_HISI(sendG711AudioBuffer, G711_AUDIO_DATA_LENGTH, (const unsigned char*)newBuffer, PCM_AUDIO_DATA_LENGTH, G711_BIG_ENDIAN);
             
             int ret;
 
@@ -466,7 +467,7 @@ unsigned int _getTickCount() {
                 LOG(@"send audio data error!");
             }
             
-            newBuffer += nStandPacketLen;
+            newBuffer += PCM_AUDIO_DATA_LENGTH;
         }
         
     }};
@@ -488,10 +489,10 @@ unsigned int _getTickCount() {
     
     NSLog(@"[thread_ReceiveVideo] Starting...");
 
-//    char *receiveBuff = malloc(VIDEO_BUF_SIZE);
-    Byte g711AudioBuff[148];
-    Byte pcmAudioBuff[400];
-    Byte cabFrameInfo[16];
+    //char *receiveBuff = malloc(VIDEO_BUF_SIZE);
+    Byte g711AudioBuff[G711_AUDIO_DATA_LENGTH];
+    Byte pcmAudioBuff[PCM_AUDIO_DATA_LENGTH];
+    //Byte cabFrameInfo[16];
     
     int videoBuffLength;
     int audioBuffLength;
@@ -586,20 +587,20 @@ unsigned int _getTickCount() {
                 LOG(@"%d",audioData.length);
                 LOG(@"length:%d",audioBuffLength);
                 //截取音频流，加上头部信息16字节
-                NSData *data = [audioData subdataWithRange:NSMakeRange(16, audioBuffLength - 16)];
+                NSData *data = [audioData subdataWithRange:NSMakeRange(16, audioBuffLength)];
                 LOG(@"%d",data.length);
                 // Decode and play
-                [data getBytes:g711AudioBuff length:148];
+                [data getBytes:g711AudioBuff length:164];
                 
                 //将标准的g711数据转换成pcm数据，以320字节分包，得到包的数量
                 int packetNum = G711ABuf2PCMBuf_HISI((unsigned char*)pcmAudioBuff,
-                                                   297,
+                                                   PCM_AUDIO_DATA_LENGTH,
                                                    (const unsigned char*)g711AudioBuff,
-                                                   148,
-                                                   G711_BIG_ENDIAN)/160;
+                                                   G711_AUDIO_DATA_LENGTH,
+                                                   G711_BIG_ENDIAN)/STANDARD_PCM_AUDIO_DATA_LENGTH;
                 if (self.delegate && [self.delegate respondsToSelector:@selector(p2pManager:didReadAudioData:)]) {
                     for (int i = 0; i < packetNum; ++i) {
-                        [self.delegate p2pManager:self didReadAudioData:[NSData dataWithBytes:pcmAudioBuff+i*320 length:320]];
+                        [self.delegate p2pManager:self didReadAudioData:[NSData dataWithBytes:pcmAudioBuff + i*320 length:320]];
                     }
                 }
                 
