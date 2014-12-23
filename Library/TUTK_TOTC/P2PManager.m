@@ -676,10 +676,17 @@ unsigned int _getTickCount() {
         return;
     }
     
+    //请求对讲打开或者关闭
     int ret1;
     SMsgAVIoctrlAVStream ioMsg1;
     memset(&ioMsg1, 0, sizeof(SMsgAVIoctrlAVStream));
     
+    if((ret1 = avSendIOCtrl(avIndex, (start ? IOTYPE_USER_IPCAM_SPEAKERSTART:IOTYPE_USER_IPCAM_SPEAKERSTOP), (char *)&ioMsg1, sizeof(SMsgAVIoctrlAVStream))) < 0)
+    {
+        printf("StartSpeaker failed[%d]\n", ret1);
+    }
+
+    //开启本地服务或者关闭本地服务
     if (start) {
         
         ioMsg1.channel = 5;
@@ -699,11 +706,6 @@ unsigned int _getTickCount() {
             isAvServerStart = NO;
         }
     }
-    if((ret1 = avSendIOCtrl(avIndex, (start ? IOTYPE_USER_IPCAM_SPEAKERSTART:IOTYPE_USER_IPCAM_SPEAKERSTOP), (char *)&ioMsg1, sizeof(SMsgAVIoctrlAVStream))) < 0)
-    {
-        printf("StartSpeaker failed[%d]\n", ret1);
-    }
-
 }
 
 
