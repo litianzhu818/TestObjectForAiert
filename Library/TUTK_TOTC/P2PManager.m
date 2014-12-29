@@ -540,8 +540,9 @@ unsigned int _getTickCount() {
     }
     
     NSLog(@"[thread_ReceiveVideo] Starting...");
-
-    //char *receiveBuff = malloc(VIDEO_BUF_SIZE);
+    
+    char receiveBuff[VIDEO_BUF_SIZE] = {0};
+    char mediaLengthBuff[4] = {0};
     Byte g711AudioBuff[G711_AUDIO_DATA_LENGTH];
     Byte pcmAudioBuff[PCM_AUDIO_DATA_LENGTH];
     //Byte cabFrameInfo[16];
@@ -564,7 +565,7 @@ unsigned int _getTickCount() {
    
     while (!closeConnection)
     {
-        char *receiveBuff = malloc(VIDEO_BUF_SIZE);
+        //char *receiveBuff = malloc(VIDEO_BUF_SIZE);
 #if 0
         ret = ret = avRecvFrameData(arg, receiveBuff, VIDEO_BUF_SIZE, (char *)&frameInfo, sizeof(FRAMEINFO_t), &frmNo);
 #else
@@ -618,14 +619,16 @@ unsigned int _getTickCount() {
                 NSData *videoData = [NSData dataWithBytes:receiveBuff length:VIDEO_BUF_SIZE];
                 //获取视频流的长度
                 [videoData getBytes:&videoBuffLength range:NSMakeRange(4, 4)];
+    
                 //截取视频流，加上头部信息字节32位
                 NSData *data = [videoData subdataWithRange:NSMakeRange(0, videoBuffLength + 32)];
+        
                 if (self.delegate && [self.delegate respondsToSelector:@selector(p2pManager:didReadVideoData:)]){
                     [self.delegate p2pManager:self didReadVideoData:[data copy]];
                 }
                 //释放临时变量
-                videoData = nil;
-                data = nil;
+                //videoData = nil;
+                //data = nil;
 #if 0
             }else{
 #else
@@ -661,12 +664,12 @@ unsigned int _getTickCount() {
                 }
                 
                 //释放临时变量
-                audioData = nil;
-                data = nil;
+                //audioData = nil;
+                //data = nil;
             }
         }
         
-        free(receiveBuff);
+        //free(receiveBuff);
     }
     
     [self stopP2PWithAvIndex:arg];
@@ -931,6 +934,8 @@ unsigned int _getTickCount() {
     __block int result = 0;
     
     dispatch_block_t block = ^{
+        
+        if (closeConnection) return ;
         
         int ret = 0;
         SMsgAVIoctrlAVStream ioMsg;
