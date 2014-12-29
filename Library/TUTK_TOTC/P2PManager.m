@@ -869,15 +869,9 @@ unsigned int _getTickCount() {
     }
     
     if (isAvServerStart) {
-        avServStop(avIndex);
-        isAvServerStart = NO;
+        [self startAvServer:!isAvServerStart];
     }
     
-//    int avServerStart = avServStart(SID, NULL, NULL, 10, 0, 5);
-//    if(avServerStart < 0){
-//        printf("avServerStart failed[%d]\n", avServerStart);
-//    }
-
     return 1;
 }
 
