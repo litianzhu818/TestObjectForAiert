@@ -16,9 +16,13 @@
 static NSData * copyFrameData(UInt8 *src, int linesize, int width, int height)
 {
     width = MIN(linesize, width);
-    NSMutableData *md = [NSMutableData dataWithLength: width * height];
+    NSMutableData *md = [NSMutableData dataWithLength:(width * height)];
+#warning There is a bug here:the md mybe nil here    
+    if (!md) return nil;
+    
     Byte *dst = md.mutableBytes;
     for (NSUInteger i = 0; i < height; ++i) {
+
         memcpy(dst, src, width);
         dst += width;
         src += linesize;
