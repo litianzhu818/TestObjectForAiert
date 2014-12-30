@@ -542,10 +542,10 @@ unsigned int _getTickCount() {
     NSLog(@"[thread_ReceiveVideo] Starting...");
     
     char receiveBuff[VIDEO_BUF_SIZE] = {0};
-    char mediaLengthBuff[4] = {0};
     Byte g711AudioBuff[G711_AUDIO_DATA_LENGTH];
     Byte pcmAudioBuff[PCM_AUDIO_DATA_LENGTH];
     //Byte cabFrameInfo[16];
+
     
     int videoBuffLength;
     int audioBuffLength;
