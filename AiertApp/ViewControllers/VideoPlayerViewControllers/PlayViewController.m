@@ -103,6 +103,29 @@
 //    [[UIDevice currentDevice] setValue:
 //     [NSNumber numberWithInteger: UIInterfaceOrientationLandscapeRight]
 //                                forKey:@"orientation"];
+    /*
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)])
+    {
+        
+        NSNumber *num = [[NSNumber alloc] initWithInt:UIInterfaceOrientationLandscapeRight];
+        
+        [[UIDevice currentDevice] performSelector:@selector(setOrientation:) withObject:(id)num];
+        
+        [UIViewController attemptRotationToDeviceOrientation];//这行代码是关键
+    }
+    
+    SEL selector=NSSelectorFromString(@"setOrientation:");
+    
+    NSInvocation *invocation =[NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+    
+    [invocation setSelector:selector];
+    
+    [invocation setTarget:[UIDevice currentDevice]];
+    
+    int val =UIInterfaceOrientationLandscapeRight;
+    
+    [invocation setArgument:&val atIndex:2];
+     */
 }
 
 - (void)viewWillDisappear:(BOOL)animated
