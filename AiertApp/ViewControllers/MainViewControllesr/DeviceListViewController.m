@@ -311,10 +311,21 @@
     
     UILabel *deviceStatus = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_WIDTH, 0, FRAME_W(frame), FRAME_H(frame)/2)];
     UILabel *deviceName = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_WIDTH, FRAME_H(frame)/2, FRAME_W(frame), FRAME_H(frame)/2)];
-    [deviceStatus setText:[NSString stringWithFormat:@"%@%@",@"Name:",deviceInfo.deviceName]];
-    [deviceName setText:[NSString stringWithFormat:@"%@%@",@"ID:",deviceInfo.deviceID]];
-    [deviceStatus setFont:font];
-    [deviceName setFont:font];
+    
+    NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@",@"Name:",deviceInfo.deviceName] attributes:@{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName:font}];
+    [attributedTitle addAttribute:NSForegroundColorAttributeName
+                            value:[UIColor colorWithRed:0.122 green:0.475 blue:0.992 alpha:1.000]
+                            range:[attributedTitle.string.lowercaseString rangeOfString:deviceInfo.deviceName.lowercaseString]];
+    
+    [deviceStatus setAttributedText:attributedTitle];
+    
+    NSMutableAttributedString *idTttributedTitle = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@",@"ID:",deviceInfo.deviceID] attributes:@{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName:font}];
+    [idTttributedTitle addAttribute:NSForegroundColorAttributeName
+                            value:[UIColor colorWithRed:0.122 green:0.475 blue:0.992 alpha:1.000]
+                            range:[idTttributedTitle.string.lowercaseString rangeOfString:deviceInfo.deviceID.lowercaseString]];
+    
+    [deviceName setAttributedText:idTttributedTitle];
+    
     [cell.contentView addSubview:deviceStatus];
     [cell.contentView addSubview:deviceName];
     

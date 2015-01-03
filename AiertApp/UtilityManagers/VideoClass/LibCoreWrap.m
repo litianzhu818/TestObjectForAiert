@@ -333,6 +333,14 @@
 - (void)p2pManager:(P2PManager *)p2pManager didStartPlayWithDEviceID:(NSString *)deviceID
 {
     if ([deviceID isEqualToString:self.currentDeviceId]) {
+        
+        [self.streamObersvers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+            
+            if ([obj respondsToSelector:@selector(didStartPlayWithDeviceID:)]) {
+                [obj didStartPlayWithDeviceID:self.currentDeviceId];
+            }
+        }];
+        /*
         //P2P播放开始
         dispatch_group_async(_group, _recordFileQueue, ^{
             @autoreleasepool {
@@ -346,6 +354,7 @@
             }
             
         });
+         */
 
     }
  

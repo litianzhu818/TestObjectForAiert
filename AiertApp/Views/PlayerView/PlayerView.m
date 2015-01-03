@@ -97,8 +97,9 @@
     //init the close button
     self.closeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     self.closeButton.frame = CGRectMake(BUTTON_MARGIN_WIDTH, MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
-    self.closeButton.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
+    self.closeButton.autoresizingMask = UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin;
     self.closeButton.tag = 1;
+    //self.closeButton.backgroundColor = [UIColor whiteColor];
     [self.closeButton addTarget:self action:@selector(touchUpInsideButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.closeButton addTarget:self action:@selector(touchDownInsideButton:) forControlEvents:UIControlEventTouchDown];
     [self.closeButton setSelected:NO];

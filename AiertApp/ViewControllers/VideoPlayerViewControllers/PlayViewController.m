@@ -100,9 +100,9 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     
-    [[UIDevice currentDevice] setValue:
-     [NSNumber numberWithInteger: UIInterfaceOrientationLandscapeRight]
-                                forKey:@"orientation"];
+//    [[UIDevice currentDevice] setValue:
+//     [NSNumber numberWithInteger: UIInterfaceOrientationLandscapeRight]
+//                                forKey:@"orientation"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -138,7 +138,7 @@
 #pragma mark - Autorotate
 
 - (NSUInteger)supportedInterfaceOrientations{
-    return UIInterfaceOrientationMaskLandscapeRight ;
+    return UIInterfaceOrientationMaskPortrait|UIInterfaceOrientationMaskLandscapeRight;
 }
 
 - (BOOL)shouldAutorotate
@@ -549,9 +549,9 @@
     [AppData setConnectionState:CameraNetworkStateP2pConnected];
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        if ([SVProgressHUD isVisible]) {
+        //if ([SVProgressHUD isVisible]) {
             [SVProgressHUD dismiss];
-        }
+        //}
         
     });
 }
