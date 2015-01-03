@@ -311,7 +311,7 @@
     
     UILabel *deviceStatus = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_WIDTH, 0, FRAME_W(frame), FRAME_H(frame)/2)];
     UILabel *deviceName = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_WIDTH, FRAME_H(frame)/2, FRAME_W(frame), FRAME_H(frame)/2)];
-    [deviceStatus setText:[NSString stringWithFormat:@"%@%@",@"IP Camera:",device_status]];
+    [deviceStatus setText:[NSString stringWithFormat:@"%@%@",@"Name:",deviceInfo.deviceName]];
     [deviceName setText:[NSString stringWithFormat:@"%@%@",@"ID:",deviceInfo.deviceID]];
     [deviceStatus setFont:font];
     [deviceName setFont:font];

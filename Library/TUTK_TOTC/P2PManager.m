@@ -559,6 +559,12 @@ unsigned int _getTickCount() {
      */
     FRAMEINFO_t frameInfo;
     
+    memset(&frameInfo, 0, sizeof(frameInfo));
+    /*
+    frameInfo.codec_id = MEDIA_CODEC_AUDIO_ADPCM;
+    frameInfo.flags = (AUDIO_SAMPLE_8K << 2) | (AUDIO_DATABITS_16 << 1) | AUDIO_CHANNEL_MONO;
+     */
+    
     int outBufSize = 0;
     int outFrmSize = 0;
     int outFrmInfoSize = 0;

@@ -187,6 +187,11 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                       reuseIdentifier:CellIdentifier];
     }
+    
+    //remove all subview into
+    for(UIView *subView in cell.contentView.subviews){
+        [subView removeFromSuperview];
+    }
 
     [self configureCell:cell atIndexPath:indexPath];
     
