@@ -70,6 +70,9 @@ typedef struct
     
     BOOL isCameraTurning;
     BOOL isAvServerStart;
+    
+    BOOL startTurnLeftRight;
+    BOOL startTurnUpDown;
 }
 
 @property (nonatomic, assign) int avIndex;
@@ -1156,8 +1159,27 @@ unsigned int _getTickCount() {
     memset(&ioMsg, 0, sizeof(SMsgAVIoctrlPtzCmd));
     
     ioMsg.speed = speed;
-    ioMsg.control = cameraTurnType;
-//    ioMsg.channel = 1;
+    
+    if (cameraTurnType == CAMERA_TURN_TYPE_UP_DOWN) {
+        if (startTurnUpDown) {
+            ioMsg.control = CAMERA_TURN_TYPE_STOP;
+        }else{
+            ioMsg.control = cameraTurnType;
+        }
+        
+        startTurnUpDown = !startTurnUpDown;
+    }else if (cameraTurnType == CAMERA_TURN_TYPE_LEFT_RIGHT){
+        if (startTurnLeftRight) {
+            ioMsg.control = CAMERA_TURN_TYPE_STOP;
+        }else{
+            ioMsg.control = cameraTurnType;
+        }
+        
+        startTurnLeftRight = !startTurnLeftRight;
+    }
+    
+    //ioMsg.control = cameraTurnType;
+    //ioMsg.channel = 1;
     
     if (speed <= 0) {
         speed = self.turnSpeed;

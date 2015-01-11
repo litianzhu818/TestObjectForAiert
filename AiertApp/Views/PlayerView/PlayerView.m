@@ -503,6 +503,10 @@
 - (void)touchUpInsideButton:(UIButton *)btn
 {
     switch (btn.tag) {
+        case 4:
+            break;
+        case 5:
+            break;
         case 9:
         {
             if (!self.talkButton.hidden) {
