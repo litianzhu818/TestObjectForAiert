@@ -135,10 +135,16 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-
+    
     [[UIDevice currentDevice] setValue:
      [NSNumber numberWithInteger: UIInterfaceOrientationPortrait]
                                 forKey:@"orientation"];
+    /*
+    if (!UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
+        [[UIDevice currentDevice] setValue:
+         [NSNumber numberWithInteger: UIInterfaceOrientationPortrait]
+                                    forKey:@"orientation"];
+    }*/
 }
 
 - (void)viewWillDisappear:(BOOL)animated

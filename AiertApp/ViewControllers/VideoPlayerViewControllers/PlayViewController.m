@@ -99,9 +99,16 @@
     [self.navigationController.navigationBar setHidden:YES];
 }
 
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    /*
+    if (!UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+        [[UIDevice currentDevice] setValue:
+         [NSNumber numberWithInteger: UIInterfaceOrientationLandscapeRight]
+                                    forKey:@"orientation"];
+    }*/
     
     [[UIDevice currentDevice] setValue:
      [NSNumber numberWithInteger: UIInterfaceOrientationLandscapeRight]
