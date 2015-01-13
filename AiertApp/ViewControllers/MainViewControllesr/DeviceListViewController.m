@@ -238,7 +238,7 @@
         }];
         
         return;
-    }else if (deviceInfo.deviceStatus != 0){//检测设备是否在线
+    }else if ([deviceInfo.deviceStatus integerValue] != 0){//检测设备是否在线
         WEAKSELF;
         [SVProgressHUD showWithStatus:@"正在查询状态" maskType:SVProgressHUDMaskTypeClear];
         [[P2PManager sharedInstance] checkConnectTypeWithDeviceInfo:[[AiertDeviceInfo alloc] initWithDeviceCoraDataObject:deviceInfo]
