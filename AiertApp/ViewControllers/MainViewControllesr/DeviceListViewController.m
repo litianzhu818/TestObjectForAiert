@@ -237,6 +237,9 @@
         }];
         
         return;
+    }else if (YES){//检测设备是否在线
+        
+    
     }
     
     
@@ -278,7 +281,6 @@
 -(void)clikedOnAiertHeaderView:(AiertHeaderView *)aiertHeaderView
 {
     [_headerView stopRefreshing];
-    //[self performSegueWithIdentifier:@"DeviceList2Add" sender:nil];
     [self performSegueWithIdentifier:@"AddDevice" sender:nil];
 }
 
@@ -296,38 +298,64 @@
     UIFont *font = [UIFont systemFontOfSize:14.0];
     CGRect frame = cell.contentView.frame;
     NSString *device_status = nil;
+    UIColor *device_color = nil;
     switch (deviceInfo.deviceStatus) {
         case 0:
+        {
             device_status = @"在线";
+            device_color = [UIColor colorWithRed:0.122 green:0.475 blue:0.992 alpha:1.000];
+        }
             break;
         case 2:
+        {
             device_status = @"连接超时";
+            device_color = [UIColor lightGrayColor];
+        }
             break;
             
         default:
+        {
             device_status = @"不在线";
+            device_color = [UIColor redColor];
+        }
+            
             break;
     }
     
-    UILabel *deviceStatus = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_WIDTH, 0, FRAME_W(frame), FRAME_H(frame)/2)];
-    UILabel *deviceName = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_WIDTH, FRAME_H(frame)/2, FRAME_W(frame), FRAME_H(frame)/2)];
+    //初始化三个UILabel
+    UILabel *deviceStatus = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_WIDTH, 0, FRAME_W(frame), FRAME_H(frame)/3)];
+    UILabel *deviceName = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_WIDTH, FRAME_H(frame)/3, FRAME_W(frame), FRAME_H(frame)/3)];
+    UILabel *deviceID = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_WIDTH, 2*FRAME_H(frame)/3, FRAME_W(frame), FRAME_H(frame)/3)];
     
-    NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@",@"Name:",deviceInfo.deviceName] attributes:@{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName:font}];
+    //设置设备名称的字体颜色
+    NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@",@"名称:",deviceInfo.deviceName] attributes:@{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName:font}];
     [attributedTitle addAttribute:NSForegroundColorAttributeName
                             value:[UIColor colorWithRed:0.122 green:0.475 blue:0.992 alpha:1.000]
                             range:[attributedTitle.string.lowercaseString rangeOfString:deviceInfo.deviceName.lowercaseString]];
     
     [deviceStatus setAttributedText:attributedTitle];
     
-    NSMutableAttributedString *idTttributedTitle = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@",@"ID:",deviceInfo.deviceID] attributes:@{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName:font}];
+    //设置设备id的字体颜色
+    NSMutableAttributedString *idTttributedTitle = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@",@"设备ID:",deviceInfo.deviceID] attributes:@{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName:font}];
     [idTttributedTitle addAttribute:NSForegroundColorAttributeName
                             value:[UIColor colorWithRed:0.122 green:0.475 blue:0.992 alpha:1.000]
                             range:[idTttributedTitle.string.lowercaseString rangeOfString:deviceInfo.deviceID.lowercaseString]];
     
     [deviceName setAttributedText:idTttributedTitle];
     
+    //设置设备状态的字体颜色
+    NSMutableAttributedString *statusTttributedTitle = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@",@"设备状态:",device_status] attributes:@{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName:font}];
+    [statusTttributedTitle addAttribute:NSForegroundColorAttributeName
+                              value:device_color
+                              range:[statusTttributedTitle.string.lowercaseString rangeOfString:device_status.lowercaseString]];
+    
+    [deviceID setAttributedText:statusTttributedTitle];
+    
+    //添加并显示三个UILabel的视图
     [cell.contentView addSubview:deviceStatus];
     [cell.contentView addSubview:deviceName];
+    [cell.contentView addSubview:deviceID];
+    
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTag:indexPath.row];
@@ -346,7 +374,6 @@
     //TODO:这里根据得到的index做相应处理
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:btn.tag inSection:0];
     AiertDeviceCoreDataStorageObject *device = [self.fetchedResultsController_device objectAtIndexPath:indexPath];
-//    LOG(@"%@",device.deviceAdditionInfo.hardWareVersion);
     AiertDeviceInfo *deviceInfo = [[AiertDeviceInfo alloc] initWithDeviceCoraDataObject:device];
     [self performSegueWithIdentifier:@"device_edit" sender:deviceInfo];
     
