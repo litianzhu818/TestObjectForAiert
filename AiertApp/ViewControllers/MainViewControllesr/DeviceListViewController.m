@@ -129,6 +129,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
 }
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -223,7 +224,6 @@
         
         AiertDeviceCoreDataStorageObject *deviceInfo = [self.fetchedResultsController_device objectAtIndexPath:indexPath];
         [[myAppDelegate aiertDeviceCoreDataManager] deleteDeviceWithDeviceID:deviceInfo.deviceID];
-//        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
     }
 }
 

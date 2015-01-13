@@ -56,7 +56,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    NSLog(@"%@==>%@==>%@",NSStringFromCGRect(self.view.frame),NSStringFromCGRect(self.playerView.frame),NSStringFromCGRect([[UIApplication sharedApplication] keyWindow].frame));
     //默认画质
     self.qualityType = VideoQualityTypeLD;
     
@@ -95,15 +95,18 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:YES];
 }
 
--(void)viewDidAppear:(BOOL)animated{
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     
-//    [[UIDevice currentDevice] setValue:
-//     [NSNumber numberWithInteger: UIInterfaceOrientationLandscapeRight]
-//                                forKey:@"orientation"];
-    /*
+    [[UIDevice currentDevice] setValue:
+     [NSNumber numberWithInteger: UIInterfaceOrientationLandscapeRight]
+                                forKey:@"orientation"];
+   /*
     if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)])
     {
         
@@ -122,14 +125,16 @@
     
     [invocation setTarget:[UIDevice currentDevice]];
     
-    int val =UIInterfaceOrientationLandscapeRight;
+    int val = UIInterfaceOrientationLandscapeRight;
     
     [invocation setArgument:&val atIndex:2];
-     */
+    */
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
     if ([SVProgressHUD isVisible]){
         [SVProgressHUD dismiss];
     }
@@ -138,7 +143,9 @@
 }
 
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     
     [UIView animateWithDuration:duration animations:^{
         if(UIDeviceOrientationIsLandscape(toInterfaceOrientation)) {
@@ -149,6 +156,8 @@
     } completion:^(BOOL finished) {
         
     }];
+    
+    NSLog(@"%@==>%@==>%@",NSStringFromCGRect(self.view.frame),NSStringFromCGRect(self.playerView.frame),NSStringFromCGRect([[UIApplication sharedApplication] keyWindow].frame));
 }
 
 
@@ -161,7 +170,7 @@
 #pragma mark - Autorotate
 
 - (NSUInteger)supportedInterfaceOrientations{
-    return UIInterfaceOrientationMaskPortrait|UIInterfaceOrientationMaskLandscapeRight;
+    return UIInterfaceOrientationMaskLandscapeRight;
 }
 
 - (BOOL)shouldAutorotate
@@ -179,6 +188,7 @@
 }
 
 - (void)initUI
+
 {
     CGRect playerViewFrame = CGRectZero;
     if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
@@ -190,14 +200,18 @@
     
     self.width = self.view.frame.size.width;
     self.height = self.view.frame.size.height;
-    self.view.backgroundColor = [UIColor blackColor];
+    self.view.backgroundColor = [UIColor clearColor];
     [self.defaultImageView setImage:nil];
     self.defaultImageView.backgroundColor = [UIColor blackColor];
     self.playerView = [[PlayerView alloc] initWithFrame:playerViewFrame minValue:0 maxValue:32];
-    self.playerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleWidth;
+    self.playerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleTopMargin|
+    UIViewAutoresizingFlexibleBottomMargin;
     self.playerView.center = self.view.center;
     self.playerView.delegate = self;
+    //self.playerView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.playerView];
+    
+    
 }
 - (void)initData
 {
@@ -255,16 +269,9 @@
         case 2:
 
             break;
-//        case 4:
-//            [[LibCoreWrap sharedCore] setMirrorUpDown];
-//            break;
-//        case 5:
-//            [[LibCoreWrap sharedCore] setMirrorLeftRight];
-//            break;
-            
         case 6:
         case 7:
-            [[LibCoreWrap sharedCore] stopTurnCamera];
+            //[[LibCoreWrap sharedCore] stopTurnCamera];
             break;
         case 9:
         {

@@ -93,7 +93,7 @@
 //    self.topBarView.backgroundColor = [UIColor yellowColor];
     self.topBarView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [self addSubview:self.topBarView];
-    
+             
     //init the close button
     self.closeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     self.closeButton.frame = CGRectMake(BUTTON_MARGIN_WIDTH, MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
