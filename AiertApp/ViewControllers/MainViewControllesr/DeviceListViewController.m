@@ -233,7 +233,7 @@
 {
     AiertDeviceCoreDataStorageObject *deviceInfo = [self.fetchedResultsController_device objectAtIndexPath:indexPath];
     
-    if (!deviceInfo.userName  || !deviceInfo.userPassword) {
+    if (!deviceInfo.userName  || !deviceInfo.userPassword) {//检查设备是否有用户信息
         [self showMessage:@"该设备没有登录用户名和密码，请重新配置该设备再尝试..." title:@"提示" cancelButtonTitle:@"提示" cancleBlock:^{
         }];
         
