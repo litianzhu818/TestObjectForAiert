@@ -2,7 +2,7 @@
 
 #import "DeviceListViewController.h"
 #import "Utilities.h"
-
+#import "P2PManager.h"
 
 
 #define kDeviceListTableViewControllerPopupTipViewAutoDismissInterval 5.0f
@@ -92,6 +92,7 @@
     self.tableView.layer.borderWidth = 0.2f;
     self.tableView.layer.borderColor = [self.tableView backgroundColor].CGColor;
     self.tableView.layer.masksToBounds = YES;
+    [self.tableView setRowHeight:44.0f];
     [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     
     //iOS7 新背景图片设置方法 高度 必需是 64
@@ -237,18 +238,36 @@
         }];
         
         return;
-    }else if (YES){//检测设备是否在线
+    }else if (deviceInfo.deviceStatus != 0){//检测设备是否在线
+        WEAKSELF;
+        [SVProgressHUD showWithStatus:@"正在查询状态" maskType:SVProgressHUDMaskTypeClear];
+        [[P2PManager sharedInstance] checkConnectTypeWithDeviceInfo:[[AiertDeviceInfo alloc] initWithDeviceCoraDataObject:deviceInfo]
+                                                 connectStatusBlock:^(AiertDeviceInfo *device, BOOL connectSucceed, NSError *error) {
+                                                     
+                                                     
+                                                     if (connectSucceed) {
+                                                         device.deviceStatus = DeviceStatusOnline;
+                                                     }else{
+                                                         device.deviceStatus = DeviceStatusOffline;
+                                                     }
+                                                     
+                                                     MAIN_GCD(^{
+                                                         
+                                                         [SVProgressHUD dismiss];
+                                                         [[myAppDelegate aiertDeviceCoreDataManager] editDeviceWithDeviceInfo:device];
+                                                         
+                                                     });
+                                                     
+                                                     [weakSelf.tableView reloadData];
+                                                 }];
+        return;
         
-    
+    }else{
+        AiertDeviceInfo *device = [[AiertDeviceInfo alloc] initWithDeviceCoraDataObject:deviceInfo];
+        
+        [self performSegueWithIdentifier:@"DeviceList2Play"
+                                  sender:device];
     }
-    
-    
-    AiertDeviceInfo *device = [[AiertDeviceInfo alloc] initWithDeviceCoraDataObject:deviceInfo];
-
-    [self performSegueWithIdentifier:@"DeviceList2Play"
-                              sender:device];
-    
-    //TODO:通往视频播放的接口
 }
 
 #pragma mark - Navigation
@@ -318,7 +337,6 @@
             device_status = @"不在线";
             device_color = [UIColor redColor];
         }
-            
             break;
     }
     

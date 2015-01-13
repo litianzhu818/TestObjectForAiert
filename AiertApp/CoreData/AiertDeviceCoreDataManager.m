@@ -247,7 +247,7 @@ Single_implementation(AiertDeviceCoreDataManager);
         
         [dic setObject:aiertDevice.deviceID forKey:@"deviceID"];
         [dic setObject:aiertDevice.deviceName forKey:@"deviceName"];
-        [dic setObject:[NSNumber numberWithInt:aiertDevice.deviceStatus] forKey:@"deviceStatus"];
+        [dic setObject:[NSNumber numberWithInteger:aiertDevice.deviceStatus] forKey:@"deviceStatus"];
         [dic setObject:aiertDevice.userInfo.userName forKey:@"userName"];
         [dic setObject:aiertDevice.userInfo.userPassword forKey:@"userPassword"];
         if (aiertDevice.deviceAdditionInfo) {

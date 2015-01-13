@@ -1056,6 +1056,57 @@ unsigned int _getTickCount() {
     else
         dispatch_async(p2pVideoPlayManagerQueue, block);
 }
+    
+- (void)checkConnectTypeWithDeviceInfo:(AiertDeviceInfo *)device connectStatusBlock:(ConnectStatusBlock)block
+{
+    dispatch_block_t block1 = ^{
+        
+        @autoreleasepool {
+            
+            int ret;
+            NSString *deviceID = device.deviceID;
+            
+            LOG(@"AVStream Client Start");
+            [self setDeviceID:deviceID];
+            
+            // use which Master base on location, port 0 means to get a random port.
+            unsigned short nUdpPort = (unsigned short)(10000 + (_getTickCount() % 10000));
+            ret = IOTC_Initialize(nUdpPort, "50.19.254.134", "122.248.234.207", "m4.iotcplatform.com", "m5.iotcplatform.com");
+            LOG(@"IOTC_Initialize() ret = %d", ret);
+            
+            if (ret != IOTC_ER_NoERROR) {
+                LOG(@"IOTCAPIs exit...");
+                IOTC_DeInitialize();
+                return;
+            }
+            
+            // alloc 4 sessions for video and two-way audio
+            avInitialize(4);
+            
+            SID = IOTC_Connect_ByUID((char *)[[deviceID copy] UTF8String]);
+            
+            struct st_SInfo Sinfo;
+            ret = IOTC_Session_Check(SID, &Sinfo);
+            CONNECT_TYPE connectType;
+            
+            IOTC_Session_Close(SID);
+            NSLog(@"IOTC_Session_Close OK");
+            avDeInitialize();
+            IOTC_DeInitialize();
+            closeConnection = NO;
+            
+            if (block) {
+                block(device, (ret >= 0), nil);
+            }
+        }
+    };
+    
+    if (dispatch_get_specific(p2pVideoPlayManagerQueueTag))
+        block1();
+    else
+        dispatch_async(p2pVideoPlayManagerQueue, block1);
+
+}
 
 - (void)setMirrorUpDown
 {

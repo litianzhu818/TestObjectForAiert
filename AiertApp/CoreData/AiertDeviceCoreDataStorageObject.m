@@ -52,15 +52,15 @@
 - (NSNumber *)deviceStatus
 {
     [self willAccessValueForKey:@"deviceStatus"];
-    NSString *value = [self primitiveValueForKey:@"deviceStatus"];
+    NSNumber *value = [self primitiveValueForKey:@"deviceStatus"];
     [self didAccessValueForKey:@"deviceStatus"];
     return value;
 }
 
-- (void)setDeviceStatus:(NSString *)value
+- (void)setDeviceStatus:(NSNumber *)value
 {
     [self willChangeValueForKey:@"deviceStatus"];
-    [self setPrimitiveValue:value forKey:@"deviceStatus"];
+    [self setPrimitiveValue:value forKey:@"deviceStatus"];;
     [self didChangeValueForKey:@"deviceStatus"];
 }
 

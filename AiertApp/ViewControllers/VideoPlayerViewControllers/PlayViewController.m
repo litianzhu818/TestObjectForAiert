@@ -562,12 +562,13 @@
     self.isStopPlaying = YES;
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        if ([SVProgressHUD isVisible]) {
-            [SVProgressHUD dismiss];
-        }
+        [SVProgressHUD dismiss];
+        
         typeof(self) __weak weakObject = self;
-        [self showMessage:@"连接失败！请检查设备连接后重试..." title:@"提示" cancelButtonTitle:@"我知道了" cancleBlock:^{
+        [weakObject showMessage:@"连接失败！请检查设备连接后重试..." title:@"提示" cancelButtonTitle:@"我知道了" cancleBlock:^{
             weakObject.playingFailed = YES;
+            weakObject.device.deviceStatus = DeviceStatusOffline;
+            [[myAppDelegate aiertDeviceCoreDataManager] editDeviceWithDeviceInfo:weakObject.device];
         }];
         
     });

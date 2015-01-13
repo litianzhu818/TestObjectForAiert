@@ -131,6 +131,7 @@ static AiertDeviceCoreDataStorage *sharedInstance;
         if (device){
             [device setDeviceID:deviceID];
             [device setDeviceName:[dic objectForKey:@"deviceName"]];
+            [device setDeviceStatus:[dic objectForKey:@"deviceStatus"]];
             [device setUserName:[dic objectForKey:@"userName"]];
             [device setUserPassword:[dic objectForKey:@"userPassword"]];
             [device setDeviceAdditionInfo:[dic objectForKey:@"deviceAdditionInfo"]];

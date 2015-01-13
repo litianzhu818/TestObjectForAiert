@@ -44,6 +44,8 @@ typedef NS_ENUM(NSUInteger, CAMERA_PLAY_TYPE){
     CAMERA_PLAY_TYPE_720 = 2
 };
 
+typedef void(^ConnectStatusBlock)(AiertDeviceInfo *device, BOOL connectSucceed, NSError *error);
+
 @protocol P2PManagerDelegate;
 
 @interface P2PManager : NSObject
@@ -58,14 +60,17 @@ typedef NS_ENUM(NSUInteger, CAMERA_PLAY_TYPE){
 - (dispatch_queue_t)p2pVideoPlayManagerQueue;
 - (void *)p2pVideoPlayManagerQueueTag;
 
+
+- (void)startWithSID:(int)SID;
 /**
  *  用设备id连接进行网络连接
  *
  *  @param deviceID 设备ID
  */
-- (void)startWithSID:(int)SID;
 - (void)checkConnectTypeWithDeviceID:(NSString *)deviceID;
 - (void)startIpcamStream:(int)avindex withPlayType:(CAMERA_PLAY_TYPE)playType;
+
+- (void)checkConnectTypeWithDeviceInfo:(AiertDeviceInfo *)device connectStatusBlock:(ConnectStatusBlock)block;
 
 - (void)closeConnection;
 
