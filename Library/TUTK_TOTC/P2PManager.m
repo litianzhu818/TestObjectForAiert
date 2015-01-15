@@ -683,7 +683,7 @@ unsigned int _getTickCount() {
     
     [self stopP2PWithAvIndex:arg];
     avClientStop(arg);
-    avServExit(self.SID, arg);
+    //avServExit(self.SID, arg);
     NSLog(@"avClientStop OK");
     IOTC_Session_Close(self.SID);
     NSLog(@"IOTC_Session_Close OK");
