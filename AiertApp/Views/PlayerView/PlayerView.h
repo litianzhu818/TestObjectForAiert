@@ -55,8 +55,6 @@ typedef NS_ENUM(NSUInteger, SettingSliderType) {
 
 @property (strong, nonatomic) UISlider *settingSlider;
 
-@property (strong, nonatomic) UIActivityIndicatorView *activityIndicatorView;
-
 @property (weak, nonatomic) id<PlayerViewDelegate> delegate;
 
 - (id)initWithFrame:(CGRect)frame minValue:(int)miniValue maxValue:(int)_MaxValue;

@@ -21,6 +21,12 @@
 #define kBottomLiveBkView_HorizontalScreenHeightWithPageCtrl           50.0
 #define kBottomLiveBkView_VerticalScreenHeightWithPageCtrl             49.0
 
+#define IOS_VERSION_8_OR_ABOVE (([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)? (YES):(NO))
+
+#define _IPHONE_VERSION_ABOVE_8_0 1
+
+#define __IPHONE_CURRENT_MAX_VERSION_ALLOWED __IPHONE_7_1
+
 @interface PlayViewController ()<DisplayImageViewProtocol>
 {
     __block NSInteger _currentChannel;
@@ -56,7 +62,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    NSLog(@"%@==>%@==>%@",NSStringFromCGRect(self.view.frame),NSStringFromCGRect(self.playerView.frame),NSStringFromCGRect([[UIApplication sharedApplication] keyWindow].frame));
+    
     //默认画质
     self.qualityType = VideoQualityTypeLD;
     
@@ -83,7 +89,6 @@
                                                 timeout:0];
     [SVProgressHUD showWithStatus:@"正在连接..."];
     
-    _showSomeMenu = YES;
     _verticalScreen = YES;
     self.enableMicrophone = NO;
     self.enableSound = NO;
@@ -93,49 +98,76 @@
     
 }
 
+- (void)initUI
+
+{
+    CGRect playerViewFrame = CGRectZero;
+    
+#if _IPHONE_VERSION_ABOVE_8_0
+    if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation]))
+    {
+        playerViewFrame = CGRectMake(0, 20, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height - 20);
+    }else{
+        playerViewFrame = CGRectMake(0, 20, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width - 20);
+    }
+#else
+    if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation]))
+    {
+        playerViewFrame = CGRectMake(0, 106, self.view.frame.size.width, 268);
+    }else/* if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation))*/{
+        playerViewFrame = CGRectMake(0, 20, self.view.frame.size.height, self.view.frame.size.width - 20);
+    }
+
+#endif
+    
+    self.view.backgroundColor = [UIColor clearColor];
+    
+    self.playerView = [[PlayerView alloc] initWithFrame:playerViewFrame minValue:0 maxValue:32];
+    self.playerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin|
+    UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleWidth;
+    self.playerView.center = self.view.center;
+    self.playerView.delegate = self;
+    [self.view addSubview:self.playerView];
+    [self.view bringSubviewToFront:self.playerView];
+}
+
+- (void)initData
+{
+    self.isStopPlaying = YES;
+    self.playingFailed = NO;
+    self.turnCameraSpeed = 15;
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:YES];
 }
 
+#if _IPHONE_VERSION_ABOVE_8_0
+//支持自动旋转
+- (BOOL)shouldAutorotate
+{
+    return YES;
+}
+//支持旋转的方向
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskLandscapeRight; //否者只支持横屏
+}
+
+#else
+
+#endif
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    /*
-    if (!UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
-        [[UIDevice currentDevice] setValue:
-         [NSNumber numberWithInteger: UIInterfaceOrientationLandscapeRight]
-                                    forKey:@"orientation"];
-    }*/
     
     [[UIDevice currentDevice] setValue:
-     [NSNumber numberWithInteger: UIInterfaceOrientationLandscapeRight]
+     [NSNumber numberWithInteger: UIDeviceOrientationLandscapeLeft]
                                 forKey:@"orientation"];
-   /*
-    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)])
-    {
-        
-        NSNumber *num = [[NSNumber alloc] initWithInt:UIInterfaceOrientationLandscapeRight];
-        
-        [[UIDevice currentDevice] performSelector:@selector(setOrientation:) withObject:(id)num];
-        
-        [UIViewController attemptRotationToDeviceOrientation];//这行代码是关键
-    }
     
-    SEL selector=NSSelectorFromString(@"setOrientation:");
-    
-    NSInvocation *invocation =[NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
-    
-    [invocation setSelector:selector];
-    
-    [invocation setTarget:[UIDevice currentDevice]];
-    
-    int val = UIInterfaceOrientationLandscapeRight;
-    
-    [invocation setArgument:&val atIndex:2];
-    */
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -149,82 +181,10 @@
     [self.navigationController.navigationBar setHidden:NO];
 }
 
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    
-    [UIView animateWithDuration:duration animations:^{
-        if(UIDeviceOrientationIsLandscape(toInterfaceOrientation)) {
-            self.playerView.frame = CGRectMake(0, 20, self.height, self.width - 20);
-        } else {
-            self.playerView.frame = CGRectMake(0, 106, self.width, 268);
-        }
-    } completion:^(BOOL finished) {
-        
-    }];
-    
-    NSLog(@"%@==>%@==>%@",NSStringFromCGRect(self.view.frame),NSStringFromCGRect(self.playerView.frame),NSStringFromCGRect([[UIApplication sharedApplication] keyWindow].frame));
-}
-
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - Autorotate
-
-- (NSUInteger)supportedInterfaceOrientations{
-    return UIInterfaceOrientationMaskLandscapeRight;
-}
-
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-- (void)viewWillLayoutSubviews
-{
-    if(UIDeviceOrientationIsLandscape(self.interfaceOrientation)) {
-        self.playerView.frame = CGRectMake(0, 20, self.height, self.width - 20);
-    } else {
-        self.playerView.frame = CGRectMake(0, 106, self.width, 268);
-    }
-}
-
-- (void)initUI
-
-{
-    CGRect playerViewFrame = CGRectZero;
-    if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
-    {
-        playerViewFrame = CGRectMake(0, 106, self.width, 268);
-    }else/* if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation))*/{
-        playerViewFrame = CGRectMake(0, 20, self.height, self.width - 20);
-    }
-    
-    self.width = self.view.frame.size.width;
-    self.height = self.view.frame.size.height;
-    self.view.backgroundColor = [UIColor clearColor];
-    [self.defaultImageView setImage:nil];
-    self.defaultImageView.backgroundColor = [UIColor blackColor];
-    self.playerView = [[PlayerView alloc] initWithFrame:playerViewFrame minValue:0 maxValue:32];
-    self.playerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleTopMargin|
-    UIViewAutoresizingFlexibleBottomMargin;
-    self.playerView.center = self.view.center;
-    self.playerView.delegate = self;
-    //self.playerView.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:self.playerView];
-    
-    
-}
-- (void)initData
-{
-    self.isStopPlaying = YES;
-    self.playingFailed = NO;
-    self.turnCameraSpeed = 15;
 }
 
 #pragma mark - PlayerViewDelegate methods
@@ -570,13 +530,23 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         
         [SVProgressHUD dismiss];
-        
+        UIAlertView *aiert = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                        message:@"连接失败！请检查设备连接后重试..."
+                                                       delegate:self
+                                              cancelButtonTitle:@"我知道了"
+                                              otherButtonTitles:nil, nil];
+        [aiert show];
+        self.playingFailed = YES;
+        self.device.deviceStatus = DeviceStatusOffline;
+        [[myAppDelegate aiertDeviceCoreDataManager] editDeviceWithDeviceInfo:self.device];
+        /*
         typeof(self) __weak weakObject = self;
         [weakObject showMessage:@"连接失败！请检查设备连接后重试..." title:@"提示" cancelButtonTitle:@"我知道了" cancleBlock:^{
             weakObject.playingFailed = YES;
             weakObject.device.deviceStatus = DeviceStatusOffline;
             [[myAppDelegate aiertDeviceCoreDataManager] editDeviceWithDeviceInfo:weakObject.device];
         }];
+         */
         
     });
 }

@@ -683,6 +683,7 @@ unsigned int _getTickCount() {
     
     [self stopP2PWithAvIndex:arg];
     avClientStop(arg);
+    avServExit(self.SID, arg);
     NSLog(@"avClientStop OK");
     IOTC_Session_Close(self.SID);
     NSLog(@"IOTC_Session_Close OK");
@@ -761,6 +762,7 @@ unsigned int _getTickCount() {
 - (void)startAvServer:(BOOL)start
 {
     dispatch_block_t block = ^{@autoreleasepool{
+        /*//这里有问题
         
         //开启本地服务或者关闭本地服务
         if (start) {
@@ -779,12 +781,12 @@ unsigned int _getTickCount() {
             
         }else{
             if (isAvServerStart) {
-                
+                avServExit(self.SID, avIndex);
                 avServStop(avIndex);
                 isAvServerStart = NO;
             }
         }
-        
+         */
     }
     };
     

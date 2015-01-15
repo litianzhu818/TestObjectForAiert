@@ -21,27 +21,18 @@
 @end
 
 @class ZMDevice;
-@interface PlayViewController : BaseViewController <SelectQualityViewDelegate, CMPopTipViewDelegate, UIScrollViewDelegate,PlayViewControllerDelegate>
+@interface PlayViewController : UIViewController <SelectQualityViewDelegate, CMPopTipViewDelegate, UIScrollViewDelegate,PlayViewControllerDelegate>
 {
     BOOL _enableSound;
     BOOL _enableMicrophone;
     BOOL _pageControlUsed;
     
+    
     BOOL _verticalScreen;
-    
-    CGRect _orgCameraNameLabelFrame;
-    CGRect _orgAlarmMessageButtonFrame;
-    CGRect _orgScrollVewFrame;
-    CGRect _orgScrollViewFrameWithHorizontalScreen;
-    CGRect _orgliveInformationHolderViewFrame;
-    CGRect _orgPlayBottomViewFrame;
-    
-    BOOL   _showSomeMenu;
 }
 
 @property (strong, nonatomic) AiertDeviceInfo *device;
-@property (assign, nonatomic) CGFloat width;
-@property (assign, nonatomic) CGFloat height;
+
 @property (assign, nonatomic) int turnCameraSpeed;
 
 @property (strong, nonatomic) PlayerView *playerView;

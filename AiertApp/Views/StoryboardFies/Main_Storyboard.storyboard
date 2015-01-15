@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="ejh-sA-jkk">
     <dependencies>
+        <development version="5100" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
@@ -152,31 +153,11 @@
                     <view key="view" contentMode="scaleToFill" id="cIP-gd-4qS">
                         <rect key="frame" x="0.0" y="44" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <view multipleTouchEnabled="YES" contentMode="scaleToFill" id="f8z-Il-y02">
-                                <rect key="frame" x="0.0" y="267" width="320" height="93"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" id="dyX-BA-ECM">
-                                        <rect key="frame" x="0.0" y="25" width="320" height="1"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </view>
-                                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="4" id="H17-68-5T3" customClass="UIPageControlEx">
-                                        <rect key="frame" x="-1" y="20" width="320" height="37"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </pageControl>
-                                </subviews>
-                            </view>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="Pk0-d5-wlK">
-                        <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" image="video_stop_btn.png" id="EO1-oy-HHu"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="K2Q-0q-ZD3"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -554,7 +535,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" id="W2j-vg-wOH" customClass="AiertHeaderView">
                                 <rect key="frame" x="16" y="72" width="288" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="5.png" id="glK-Co-Ef8">
                                         <rect key="frame" x="18" y="4" width="50" height="33"/>
@@ -766,7 +747,6 @@
         <image name="navigationbar_refresh_selected.png" width="21" height="20"/>
         <image name="navigationbar_refresh_unselected.png" width="21" height="20"/>
         <image name="pic_tabar.png" width="29" height="29"/>
-        <image name="video_stop_btn.png" width="71" height="86"/>
         <image name="video_tabbar.png" width="29" height="29"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

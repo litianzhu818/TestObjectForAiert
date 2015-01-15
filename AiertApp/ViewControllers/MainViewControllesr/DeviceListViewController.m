@@ -1,5 +1,3 @@
-
-
 #import "DeviceListViewController.h"
 #import "Utilities.h"
 #import "P2PManager.h"
@@ -273,6 +271,13 @@
         
         [self performSegueWithIdentifier:@"DeviceList2Play"
                                   sender:device];
+        
+        /*
+        PlayViewController *playController = [[PlayViewController alloc] init];
+        playController.delegatePlayViewController = self;
+        playController.device = device;
+        [self presentViewController:playController animated:YES completion:^{}];
+         */
     }
 }
 
