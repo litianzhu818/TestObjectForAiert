@@ -120,7 +120,7 @@
 
 #endif
     
-    self.view.backgroundColor = [UIColor clearColor];
+    self.view.backgroundColor = [UIColor blackColor];
     
     self.playerView = [[PlayerView alloc] initWithFrame:playerViewFrame minValue:0 maxValue:32];
     self.playerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin|

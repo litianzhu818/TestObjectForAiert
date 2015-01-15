@@ -264,7 +264,7 @@
     
     CGRect orientationFrame = [UIScreen mainScreen].bounds;
     CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
-    
+    /*
     if(UIInterfaceOrientationIsLandscape(orientation)) {
         float temp = orientationFrame.size.width;
         orientationFrame.size.width = orientationFrame.size.height;
@@ -273,7 +273,7 @@
         temp = statusBarFrame.size.width;
         statusBarFrame.size.width = statusBarFrame.size.height;
         statusBarFrame.size.height = temp;
-    }
+    }*/
     
     CGFloat activeHeight = orientationFrame.size.height;
     

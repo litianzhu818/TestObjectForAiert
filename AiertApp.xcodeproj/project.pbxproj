@@ -3718,7 +3718,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = AiertApp;
-				PROVISIONING_PROFILE = "d7dad8e3-d793-475e-bcfb-5d01c0219423";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
@@ -3767,7 +3767,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = AiertApp;
-				PROVISIONING_PROFILE = "d7dad8e3-d793-475e-bcfb-5d01c0219423";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;

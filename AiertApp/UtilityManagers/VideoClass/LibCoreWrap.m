@@ -486,6 +486,7 @@
     dispatch_group_async(_group, _decodeQueue, ^{
         [VideoFrameExtractor releaseVideoFrameExtractor:self.videoDecoder];
     });
+    [self.p2pManager startIpcamStream:self.currentChannel withPlayType:dstMediaType];
 //    
 //    NSInteger currentConnectState = [AppData connectionState];
 //    
@@ -518,7 +519,7 @@
         //            if (CameraStateAudioPlaying&[AppData cameraState]) {
         //                [self.p2pConnection enableSound:YES];
         //            }
-        [self.p2pManager startIpcamStream:self.currentChannel withPlayType:dstMediaType];
+        //[self.p2pManager startIpcamStream:self.currentChannel withPlayType:dstMediaType];
         
     });
 
