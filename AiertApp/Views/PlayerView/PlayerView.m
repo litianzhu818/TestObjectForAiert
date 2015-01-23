@@ -13,10 +13,10 @@
 
 #define STATUS_HEIGHT 20.0f
 
-#define MARGIN_WIDTH 10.0f
+#define MARGIN_WIDTH 4.0f
 
 #define ROW_NUM 8
-#define BUTTON_MARGIN_WIDTH 8.0f
+#define BUTTON_MARGIN_WIDTH 2.0f
 
 #define SCREEN_BOUNDS [[UIScreen mainScreen] bounds]
 #define PLAYER_VIEW_WIDTH SCREEN_BOUNDS.size.width
@@ -221,14 +221,14 @@
     self.playerView.userInteractionEnabled = YES;
     [self addSubview:self.playerView];
     
-    self.noticeLabel = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_WIDTH/2, PLAYER_VIEW_HEIGHT - BAR_HEIGHT, 200, BAR_HEIGHT)];
+    self.noticeLabel = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_WIDTH/2, self.frame.size.height - BAR_HEIGHT-BUTTON_HEIGHT, 200, BAR_HEIGHT)];
     self.noticeLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
     [self.noticeLabel setFont:[UIFont systemFontOfSize:14.0]];
     [self.noticeLabel setText:@"请按住右边的麦克风进行语音对话"];
     [self.playerView addSubview:self.noticeLabel];
     
     self.talkButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.talkButton.frame = CGRectMake(PLAYER_VIEW_WIDTH - MARGIN_WIDTH - BAR_HEIGHT, PLAYER_VIEW_HEIGHT - BAR_HEIGHT, BAR_HEIGHT, BAR_HEIGHT);
+    self.talkButton.frame = CGRectMake(PLAYER_VIEW_WIDTH - MARGIN_WIDTH - BAR_HEIGHT, self.frame.size.height - BAR_HEIGHT-BUTTON_HEIGHT, BAR_HEIGHT, BAR_HEIGHT);
     self.talkButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin| UIViewAutoresizingFlexibleTopMargin;
     [self.talkButton addTarget:self action:@selector(talkButtonClosed:) forControlEvents:UIControlEventTouchUpInside];
     [self.talkButton addTarget:self action:@selector(talkButtonOpened:) forControlEvents:UIControlEventTouchDown];
@@ -241,7 +241,7 @@
     
     
     /*****************init the bottomBarView*******************/
-    self.bottomBarView = [[UIView alloc] initWithFrame:CGRectMake(0, BAR_HEIGHT+PLAYER_VIEW_HEIGHT, BAR_WIDTH, BAR_HEIGHT)];
+    self.bottomBarView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height- BAR_HEIGHT, BAR_WIDTH, BAR_HEIGHT)];
     self.bottomBarView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleTopMargin;
 //    self.bottomBarView.backgroundColor = [UIColor redColor];
     [self addSubview:self.bottomBarView];

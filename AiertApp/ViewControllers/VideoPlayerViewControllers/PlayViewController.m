@@ -134,13 +134,13 @@
         
         //在这里设置view.transform需要匹配的旋转角度的大小就可以了。
         self.playerView.transform = transfrom;
-        self.playerView.layer.position = CGPointMake(self.view.center.x, self.view.center.y);
-        self.playerView.bounds = CGRectMake(0, 0, self.view.bounds.size.height, self.view.bounds.size.width);
+        self.playerView.layer.position = CGPointMake(self.view.center.x, self.view.center.y+20);
+        self.playerView.bounds = CGRectMake(0, 0, self.view.bounds.size.height-40, self.view.bounds.size.width);
 
     } completion:^(BOOL finished) {
         
         _isPlayerViewPortrait = NO;
-        
+        [self.view setNeedsDisplay];
     }];
 
 }
@@ -164,6 +164,7 @@
         
     } completion:^(BOOL finished) {
         _isPlayerViewPortrait = YES;
+        [self.view setNeedsDisplay];
     }];
 }
 
