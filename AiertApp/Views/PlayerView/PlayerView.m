@@ -39,6 +39,7 @@
 @property (assign, nonatomic) int minValue;
 @property (assign, nonatomic) int maxValue;
 @property (assign, nonatomic) BOOL isSettingSliderShowing;
+@property (assign, nonatomic) BOOL isPlayerViewFullScreen;
 @property (assign, nonatomic) SettingSliderType settingSliderType;
 
 @end
@@ -204,15 +205,15 @@
     [self.button3 addTarget:self action:@selector(touchUpInsideButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.button3 addTarget:self action:@selector(touchDownInsideButton:) forControlEvents:UIControlEventTouchDown];
     [self.button3 setSelected:NO];
-    [self.button3 setBackgroundImage:[UIImage imageNamed:@"video_14_selected"] forState:UIControlStateSelected];
-    [self.button3 setBackgroundImage:[UIImage imageNamed:@"video_14"] forState:UIControlStateNormal];
+    [self.button3 setBackgroundImage:[UIImage imageNamed:@"fullscreen"] forState:UIControlStateSelected];
+    [self.button3 setBackgroundImage:[UIImage imageNamed:@"fullscreen"] forState:UIControlStateNormal];
     [self.button3 setTintColor:[UIColor clearColor]];
     [self.button3 setUserInteractionEnabled:YES];
     [self.topBarView addSubview:self.button3];
     
     /*****************init the playerView*******************/
-    self.playerView = [[DisplayImageView alloc] initWithFrame:CGRectMake(0, BAR_HEIGHT,PLAYER_VIEW_WIDTH,PLAYER_VIEW_HEIGHT)];
-    self.playerView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    self.playerView = [[DisplayImageView alloc] initWithFrame:CGRectMake(0, 0,self.frame.size.width,self.frame.size.height)];
+    self.playerView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleTopMargin;
 #warning this is the test code
     //self.playerView.image = [UIImage imageNamed:@"通用头像"];
     self.playerView.contentMode = UIViewContentModeScaleAspectFit;
@@ -369,7 +370,8 @@
     [self.playerView addSubview:self.settingSlider];
 
     NSLog(NSStringFromCGRect(self.button9.frame));
-    
+    [self bringSubviewToFront:self.topBarView];
+    [self bringSubviewToFront:self.bottomBarView];
     [self setupConstraints];
     [self showBars:YES];
     [self hidenTalkViews:YES];
@@ -404,6 +406,7 @@
 {
     self.backgroundColor = [UIColor blackColor];
     self.isFullScreen = NO;
+    self.isPlayerViewFullScreen = NO;
     self.qualityType = VideoQualityTypeLD;
     self.isSettingSliderShowing = NO;
     self.settingSliderType = SettingSliderTypeBrightness;
@@ -441,25 +444,19 @@
     __weak __typeof(self) weakself = self;
     if (self.isFullScreen) {//显示工具栏
         if (show) {
-            CGRect playerFrame = self.playerView.frame;
-            playerFrame.origin.y = BAR_HEIGHT;
-            playerFrame.size.height = self.frame.size.height - 2*BAR_HEIGHT ;
+            
             [UIView animateWithDuration:0.3 animations:^{
                 weakself.topBarView.alpha = 1;
                 weakself.bottomBarView.alpha = 1;
-                weakself.playerView.frame = playerFrame;
                 weakself.isFullScreen = !show;
             }];
         }
     }else{//影藏工具栏
         if(!show) {
-            CGRect playerFrame = self.playerView.frame;
-            playerFrame.origin = self.topBarView.frame.origin;
-            playerFrame.size.height = self.frame.size.height;
+    
             [UIView animateWithDuration:0.3 animations:^{
                 weakself.topBarView.alpha = 0;
                 weakself.bottomBarView.alpha = 0;
-                weakself.playerView.frame = playerFrame;
                 weakself.isFullScreen = !show;
             }];
         }
@@ -559,6 +556,22 @@
             self.isSettingSliderShowing = !self.isSettingSliderShowing;
         }
             break;
+        case 8:
+        {
+            if (self.isPlayerViewFullScreen) {
+                [self.button3 setBackgroundImage:[UIImage imageNamed:@"fullscreen"] forState:UIControlStateSelected];
+                [self.button3 setBackgroundImage:[UIImage imageNamed:@"fullscreen"] forState:UIControlStateNormal];
+
+            }else{
+                [self.button3 setBackgroundImage:[UIImage imageNamed:@"mini_size"] forState:UIControlStateSelected];
+                [self.button3 setBackgroundImage:[UIImage imageNamed:@"mini_size"] forState:UIControlStateNormal];
+            }
+            
+            [self setIsPlayerViewFullScreen:!self.isPlayerViewFullScreen];
+            
+        }
+            break;
+            
         case 14:
         {
             [self.settingSlider setHidden:self.isSettingSliderShowing];

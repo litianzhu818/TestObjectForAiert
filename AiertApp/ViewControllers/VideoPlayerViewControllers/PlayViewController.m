@@ -21,6 +21,9 @@
 #define kBottomLiveBkView_HorizontalScreenHeightWithPageCtrl           50.0
 #define kBottomLiveBkView_VerticalScreenHeightWithPageCtrl             49.0
 
+#define DEFAULT_PLAYER_VIEW_WIDTH self.view.frame.size.width
+#define DEFAULT_PLAYER_VIEW_HEIGHT DEFAULT_PLAYER_VIEW_WIDTH*3/4
+
 #define IOS_VERSION_8_OR_ABOVE (([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)? (YES):(NO))
 
 #define _IPHONE_VERSION_ABOVE_8_0 1
@@ -32,6 +35,7 @@
     __block NSInteger _currentChannel;
     
     FILE *_fp;
+    BOOL _isPlayerViewPortrait;
     
 }
 @property (strong, nonatomic) NSMutableArray *views;
@@ -90,6 +94,7 @@
     [SVProgressHUD showWithStatus:@"正在连接..."];
     
     _verticalScreen = YES;
+    _isPlayerViewPortrait = YES;
     self.enableMicrophone = NO;
     self.enableSound = NO;
     
@@ -101,30 +106,9 @@
 - (void)initUI
 
 {
-    CGRect playerViewFrame = CGRectZero;
-    
-#if _IPHONE_VERSION_ABOVE_8_0
-    if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation]))
-    {
-        playerViewFrame = CGRectMake(0, 20, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height - 20);
-    }else{
-        playerViewFrame = CGRectMake(0, 20, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width - 20);
-    }
-#else
-    if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation]))
-    {
-        playerViewFrame = CGRectMake(0, 106, self.view.frame.size.width, 268);
-    }else/* if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation))*/{
-        playerViewFrame = CGRectMake(0, 20, self.view.frame.size.height, self.view.frame.size.width - 20);
-    }
-
-#endif
-    
     self.view.backgroundColor = [UIColor blackColor];
     
-    self.playerView = [[PlayerView alloc] initWithFrame:playerViewFrame minValue:0 maxValue:32];
-    self.playerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin|
-    UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleWidth;
+    self.playerView = [[PlayerView alloc] initWithFrame:CGRectMake(0, 106, DEFAULT_PLAYER_VIEW_WIDTH, DEFAULT_PLAYER_VIEW_HEIGHT) minValue:0 maxValue:32];
     self.playerView.center = self.view.center;
     self.playerView.delegate = self;
     [self.view addSubview:self.playerView];
@@ -138,36 +122,82 @@
     self.turnCameraSpeed = 15;
 }
 
+- (void)startPlayFullScreen
+{
+    if (!_isPlayerViewPortrait) {
+        return;
+    }
+    
+    CGAffineTransform transfrom = CGAffineTransformMakeRotation(M_PI/2);
+    
+    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+        
+        //在这里设置view.transform需要匹配的旋转角度的大小就可以了。
+        self.playerView.transform = transfrom;
+        self.playerView.layer.position = CGPointMake(self.view.center.x, self.view.center.y);
+        self.playerView.bounds = CGRectMake(0, 0, self.view.bounds.size.height, self.view.bounds.size.width);
+
+    } completion:^(BOOL finished) {
+        
+        _isPlayerViewPortrait = NO;
+        
+    }];
+
+}
+
+- (void)resumeFromFullScreen
+{
+    if (_isPlayerViewPortrait) {
+        return;
+    }
+    
+    CGAffineTransform transfrom = CGAffineTransformIdentity;
+    
+    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+        
+        //在这里设置view.transform需要匹配的旋转角度的大小就可以了。
+        self.playerView.transform = transfrom;
+        self.playerView.layer.position = CGPointMake(self.view.center.x, self.view.center.y);
+        self.playerView.bounds = CGRectMake(0, 0, DEFAULT_PLAYER_VIEW_WIDTH, DEFAULT_PLAYER_VIEW_HEIGHT);
+        self.playerView.frame = CGRectMake(0, 106, DEFAULT_PLAYER_VIEW_WIDTH, DEFAULT_PLAYER_VIEW_HEIGHT);
+        self.playerView.center = self.view.center;
+        
+    } completion:^(BOOL finished) {
+        _isPlayerViewPortrait = YES;
+    }];
+}
+
+- (void)startAnimation
+{
+    if (_isPlayerViewPortrait) {
+        [self startPlayFullScreen];
+    }else{
+        [self resumeFromFullScreen];
+    }
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:YES];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
 }
 
-#if _IPHONE_VERSION_ABOVE_8_0
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+}
+
 //支持自动旋转
 - (BOOL)shouldAutorotate
 {
-    return YES;
+    return NO;
 }
 //支持旋转的方向
 - (NSUInteger)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskLandscapeRight; //否者只支持横屏
-}
-
-#else
-
-#endif
-
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    [[UIDevice currentDevice] setValue:
-     [NSNumber numberWithInteger: UIDeviceOrientationLandscapeLeft]
-                                forKey:@"orientation"];
-    
+    return UIInterfaceOrientationMaskPortrait; //否者只支持横屏
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -239,6 +269,9 @@
         case 6:
         case 7:
             //[[LibCoreWrap sharedCore] stopTurnCamera];
+            break;
+        case 8:
+            [self startAnimation];
             break;
         case 9:
         {

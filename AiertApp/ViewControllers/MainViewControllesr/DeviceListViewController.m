@@ -135,10 +135,11 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
+    /*
     [[UIDevice currentDevice] setValue:
      [NSNumber numberWithInteger: UIInterfaceOrientationPortrait]
                                 forKey:@"orientation"];
+     */
     /*
     if (!UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
         [[UIDevice currentDevice] setValue:
@@ -180,7 +181,7 @@
 
 - (BOOL)shouldAutorotate
 {
-    return YES;
+    return NO;
 }
 
 #pragma mark - Table view data source

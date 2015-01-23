@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="ejh-sA-jkk">
     <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
         <development version="5100" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
@@ -594,7 +595,7 @@
                         <outlet property="editButton" destination="be4-vp-eq6" id="Jkc-wa-Ykb"/>
                         <outlet property="headerView" destination="W2j-vg-wOH" id="UMe-C0-iNv"/>
                         <outlet property="tableView" destination="v2k-qX-4zG" id="9WX-zn-A9x"/>
-                        <segue destination="xFh-89-xaM" kind="modal" identifier="DeviceList2Play" id="y4b-Ik-iat"/>
+                        <segue destination="xFh-89-xaM" kind="push" identifier="DeviceList2Play" id="y4b-Ik-iat"/>
                         <segue destination="GC4-xq-4VT" kind="push" identifier="AddDevice" id="5T7-c7-jYh"/>
                         <segue destination="lCN-Le-wfj" kind="push" identifier="device_edit" id="knS-A8-ekG"/>
                     </connections>

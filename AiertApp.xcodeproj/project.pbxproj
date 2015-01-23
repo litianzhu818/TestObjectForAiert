@@ -208,6 +208,10 @@
 		E7323AC319ED27DD00FEBF38 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = E7323ABE19ED27DD00FEBF38 /* Segment.m */; };
 		E7323AC419ED27DD00FEBF38 /* SegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = E7323AC019ED27DD00FEBF38 /* SegmentedControl.m */; };
 		E7323AC519ED27DD00FEBF38 /* SegmentIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = E7323AC219ED27DD00FEBF38 /* SegmentIndicator.m */; };
+		E73858CC1A727822003D864D /* fullscreen.png in Resources */ = {isa = PBXBuildFile; fileRef = E73858C81A727821003D864D /* fullscreen.png */; };
+		E73858CD1A727822003D864D /* fullscreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E73858C91A727821003D864D /* fullscreen@2x.png */; };
+		E73858CE1A727822003D864D /* mini_size.png in Resources */ = {isa = PBXBuildFile; fileRef = E73858CA1A727821003D864D /* mini_size.png */; };
+		E73858CF1A727822003D864D /* mini_size@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E73858CB1A727822003D864D /* mini_size@2x.png */; };
 		E7419DAB19E64DC500B5B764 /* CompanyInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = E7419DAA19E64DC500B5B764 /* CompanyInfo.plist */; };
 		E7419DF219E653D700B5B764 /* 10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E7419DAD19E653D700B5B764 /* 10@2x.png */; };
 		E7419DF319E653D700B5B764 /* 12@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E7419DAE19E653D700B5B764 /* 12@2x.png */; };
@@ -831,6 +835,10 @@
 		E7323AC019ED27DD00FEBF38 /* SegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SegmentedControl.m; sourceTree = "<group>"; };
 		E7323AC119ED27DD00FEBF38 /* SegmentIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentIndicator.h; sourceTree = "<group>"; };
 		E7323AC219ED27DD00FEBF38 /* SegmentIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SegmentIndicator.m; sourceTree = "<group>"; };
+		E73858C81A727821003D864D /* fullscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fullscreen.png; sourceTree = "<group>"; };
+		E73858C91A727821003D864D /* fullscreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fullscreen@2x.png"; sourceTree = "<group>"; };
+		E73858CA1A727821003D864D /* mini_size.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mini_size.png; sourceTree = "<group>"; };
+		E73858CB1A727822003D864D /* mini_size@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini_size@2x.png"; sourceTree = "<group>"; };
 		E7419DA719E64DB700B5B764 /* AllHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllHeader.h; sourceTree = "<group>"; };
 		E7419DA819E64DB700B5B764 /* DefineValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefineValues.h; sourceTree = "<group>"; };
 		E7419DAA19E64DC500B5B764 /* CompanyInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CompanyInfo.plist; sourceTree = "<group>"; };
@@ -1442,6 +1450,10 @@
 		35A17A751883BD0A00ABC41C /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E73858C81A727821003D864D /* fullscreen.png */,
+				E73858C91A727821003D864D /* fullscreen@2x.png */,
+				E73858CA1A727821003D864D /* mini_size.png */,
+				E73858CB1A727822003D864D /* mini_size@2x.png */,
 				E7419DAC19E653D700B5B764 /* Images */,
 				F47E818B19076DB2003C0F1B /* PlayViewBottom */,
 				F47E8182190752D5003C0F1B /* talk_show.png */,
@@ -3185,6 +3197,7 @@
 				E7AF4B4A19EA4E8300699BA1 /* btn_close_selected.png in Resources */,
 				E7419E2C19E653D700B5B764 /* video_4@2x.png in Resources */,
 				3543F3B9188A7BF000107A48 /* icon_littlearrow_right.png in Resources */,
+				E73858CF1A727822003D864D /* mini_size@2x.png in Resources */,
 				F47E81A819076E14003C0F1B /* live_101_sel.png in Resources */,
 				3543F41A188A7BF000107A48 /* navigationbar_setting_selected@2x.png in Resources */,
 				3543F3F1188A7BF000107A48 /* live_stream_hd_selected.png in Resources */,
@@ -3196,6 +3209,7 @@
 				E7419DF919E653D700B5B764 /* 5@2x.png in Resources */,
 				3543F3B2188A7BF000107A48 /* camera_picture@2x.png in Resources */,
 				3647098418DD7D6700BBD125 /* svSuccess@2x.png in Resources */,
+				E73858CC1A727822003D864D /* fullscreen.png in Resources */,
 				F47E81B519076E14003C0F1B /* live_103_close_sel@2x.png in Resources */,
 				F47E81A919076E14003C0F1B /* live_101_sel@2x.png in Resources */,
 				3641E65918EC1091005527C7 /* blackArrow@2x.png in Resources */,
@@ -3257,6 +3271,7 @@
 				3543F3FB188A7BF000107A48 /* live_stream_sd_unselected.png in Resources */,
 				E7419E3519E653D700B5B764 /* video_tabbar@2x.png in Resources */,
 				F435581C1904F806007D2B21 /* VBottom_101-sel.png in Resources */,
+				E73858CD1A727822003D864D /* fullscreen@2x.png in Resources */,
 				F47E81AF19076E14003C0F1B /* live_102_close@2x.png in Resources */,
 				3543F3DD188A7BF000107A48 /* live_snapshot_selected.png in Resources */,
 				E77F632B1A2DA0BD007CEC3E /* 增加的协议.rtf in Resources */,
@@ -3346,6 +3361,7 @@
 				E7AF4C1D19EA507300699BA1 /* Main_Storyboard.storyboard in Resources */,
 				E7419DAB19E64DC500B5B764 /* CompanyInfo.plist in Resources */,
 				E7419DFE19E653D700B5B764 /* about_all_tabar@2x.png in Resources */,
+				E73858CE1A727822003D864D /* mini_size.png in Resources */,
 				E7E3054B19ECB94900F80D06 /* libavformat.pc in Resources */,
 				E7419E2519E653D700B5B764 /* video_13@2x.png in Resources */,
 				E7419E3019E653D700B5B764 /* video_8@2x.png in Resources */,
@@ -3702,7 +3718,7 @@
 					"$(PROJECT_DIR)/AiertApp/UtilityManagers/CoreDataStorage/include",
 				);
 				INFOPLIST_FILE = "AiertApp/AiertApp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Library/ZBarSDK/lib",
@@ -3751,7 +3767,7 @@
 					"$(PROJECT_DIR)/AiertApp/UtilityManagers/CoreDataStorage/include",
 				);
 				INFOPLIST_FILE = "AiertApp/AiertApp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Library/ZBarSDK/lib",

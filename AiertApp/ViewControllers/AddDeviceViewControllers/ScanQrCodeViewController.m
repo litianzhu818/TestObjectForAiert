@@ -8,6 +8,22 @@
 #import "UIColor+AppTheme.h"
 #import "InputDeviceInfoTableViewController.h"
 
+@interface NSString (Contains)
+
+- (BOOL)existedSubString:(NSString*)subString;
+
+@end
+
+@implementation NSString (Contains)
+
+- (BOOL)existedSubString:(NSString*)subString
+{
+    NSRange range = [self rangeOfString:subString];
+    return range.length != 0;
+}
+
+@end
+
 @interface ScanQrCodeViewController ()
 {
     NSString *qrCode;
@@ -124,12 +140,12 @@
 }
 
 //解析得到的数据
--(BOOL)parseDataFromQRValue:(NSString*)value destinationDeviceInfo:(AiertDeviceInfo *)deviceInfo
+-(BOOL)parseDataFromQRValue:(NSString *)value destinationDeviceInfo:(AiertDeviceInfo *)deviceInfo
 {
     BOOL result = NO;
     //FIXME:这里需要解析判断，并填充deviceInfo的值
     //扫描字符串格式：ID:V7X1WR7K45BRX4LWCNCJUSER:adminPASSW:111111
-    if (value && ![value isEqualToString:@""]) {
+    if (value && ![value isEqualToString:@""] && [value existedSubString:@"ID:"] && [value existedSubString:@"USER:"] && [value existedSubString:@"PASSW:"]) {
         result = YES;
         
         NSString *userStr = @"USER:";
@@ -143,7 +159,6 @@
     
     return result;
 }
-
 
 #pragma mark - Show and Hide Error
 - (void)showError:(NSString *)message
