@@ -128,14 +128,18 @@
         return;
     }
     
-    CGAffineTransform transfrom = CGAffineTransformMakeRotation(M_PI/2);
+    [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeRight animated:YES];
     
-    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+    CGFloat duration = [UIApplication sharedApplication].statusBarOrientationAnimationDuration;//（获取当前电池条动画改变的时间）
+    
+    CGAffineTransform transfrom = [self currentTransform];
+    
+    [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
         
         //在这里设置view.transform需要匹配的旋转角度的大小就可以了。
         self.playerView.transform = transfrom;
-        self.playerView.layer.position = CGPointMake(self.view.center.x, self.view.center.y+20);
-        self.playerView.bounds = CGRectMake(0, 0, self.view.bounds.size.height-40, self.view.bounds.size.width);
+        self.playerView.layer.position = CGPointMake(self.view.center.x, self.view.center.y);
+        self.playerView.bounds = CGRectMake(0, 0, self.view.bounds.size.height, self.view.bounds.size.width);
 
     } completion:^(BOOL finished) {
         
@@ -151,9 +155,13 @@
         return;
     }
     
-    CGAffineTransform transfrom = CGAffineTransformIdentity;
+    [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:YES];
     
-    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+    CGFloat duration = [UIApplication sharedApplication].statusBarOrientationAnimationDuration;//（获取当前电池条动画改变的时间）
+    
+    CGAffineTransform transfrom = [self currentTransform];
+    
+    [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
         
         //在这里设置view.transform需要匹配的旋转角度的大小就可以了。
         self.playerView.transform = transfrom;
@@ -166,6 +174,23 @@
         _isPlayerViewPortrait = YES;
         [self.view setNeedsDisplay];
     }];
+}
+
+- (CGAffineTransform)currentTransform
+{
+    CGAffineTransform currentTransform = CGAffineTransformIdentity;
+    
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    
+    if (orientation == UIInterfaceOrientationLandscapeLeft) {
+        currentTransform = CGAffineTransformMakeRotation(M_PI*1.5);
+    } else if (orientation == UIInterfaceOrientationLandscapeRight) {
+        currentTransform = CGAffineTransformMakeRotation(M_PI/2);
+    } else if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
+        currentTransform = CGAffineTransformMakeRotation(-M_PI);
+    }
+    
+    return currentTransform;
 }
 
 - (void)startAnimation
@@ -181,13 +206,27 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:YES];
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    if ([UIApplication sharedApplication].statusBarOrientation != UIInterfaceOrientationPortrait) {
+        [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:NO];
+    }
+    
+    if ([SVProgressHUD isVisible]){
+        [SVProgressHUD dismiss];
+    }
+    
+    [self.navigationController.navigationBar setHidden:NO];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
 }
 
 //支持自动旋转
@@ -199,17 +238,6 @@
 - (NSUInteger)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskPortrait; //否者只支持横屏
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-    if ([SVProgressHUD isVisible]){
-        [SVProgressHUD dismiss];
-    }
-    
-    [self.navigationController.navigationBar setHidden:NO];
 }
 
 - (void)didReceiveMemoryWarning

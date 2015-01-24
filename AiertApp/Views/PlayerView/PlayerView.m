@@ -23,16 +23,16 @@
 #define PLAYER_VIEW_HEIGHT  180.0f
 
 #define BAR_WIDTH PLAYER_VIEW_WIDTH
-#define BAR_HEIGHT 44.0f
+#define BAR_HEIGHT 40.0f
 
-#define BUTTON_HEIGHT (BAR_HEIGHT - 2 * MARGIN_WIDTH)
-#define BUTTON_WIDTH (BAR_WIDTH - (ROW_NUM + 1) * BUTTON_MARGIN_WIDTH)/ROW_NUM
+#define BUTTON_HEIGHT 30.0
+#define BUTTON_WIDTH 38.0
 
 #define SELF_WIDTH PLAYER_VIEW_WIDTH
 #define SELF_HEIGHT (2 * 44 + PLAYER_VIEW_HEIGHT)
 
 #define SLIDER_HEIGHT BUTTON_HEIGHT
-#define SLIDER_WIDTH (PLAYER_VIEW_WIDTH - 8 * BUTTON_MARGIN_WIDTH - 6 * BUTTON_WIDTH)
+#define SLIDER_WIDTH (PLAYER_VIEW_WIDTH - ROW_NUM * BUTTON_MARGIN_WIDTH - (ROW_NUM-2) * BUTTON_WIDTH)
 
 @interface PlayerView ()
 
@@ -357,7 +357,7 @@
     self.popupQualityView.qualityView.delegate = self;
     self.popupQualityView.delegate = self;
     
-    self.settingSlider  =[[UISlider alloc] initWithFrame:CGRectMake(0,0,100,44)];
+    self.settingSlider  =[[UISlider alloc] initWithFrame:CGRectMake(0,0,200,44)];
     self.settingSlider.center = self.playerView.center;
     self.settingSlider.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.settingSlider.backgroundColor = [UIColor clearColor];
@@ -372,7 +372,7 @@
     NSLog(NSStringFromCGRect(self.button9.frame));
     [self bringSubviewToFront:self.topBarView];
     [self bringSubviewToFront:self.bottomBarView];
-    [self setupConstraints];
+
     [self showBars:YES];
     [self hidenTalkViews:YES];
 }
@@ -380,26 +380,8 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    /*
-    self.topBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, BAR_WIDTH, BAR_HEIGHT)];
-    self.closeButton.frame = CGRectMake(BUTTON_MARGIN_WIDTH, MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
-    self.button1.frame = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.closeButton), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
-    self.button2.frame = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.button1), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
-    self.left_right_btn.frame = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.button2), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
-    self.up_down_btn.frame = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.left_right_btn), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
-    self.turn_left_right_btn.frame = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.up_down_btn), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
-    self.turn_up_down_btn.frame = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.turn_left_right_btn), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
-    self.button3.frame = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.turn_up_down_btn), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
-    self.playerView.frame = CGRectMake(0, BAR_HEIGHT,PLAYER_VIEW_WIDTH,PLAYER_VIEW_HEIGHT);
-    self.button4.frame = CGRectMake(BUTTON_MARGIN_WIDTH, MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
-    self.button5.frame = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.button4), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
-    self.button6.frame = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.button5), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
-    self.button7.frame = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.button6), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
-    self.button8.frame = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.button7), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
-    self.button9.frame = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.button8), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
-    self.volumeSlider.frame  = CGRectMake(BUTTON_MARGIN_WIDTH + VIEW_END_X(self.button9), MARGIN_WIDTH, SLIDER_WIDTH, SLIDER_HEIGHT);
-    self.settingSlider.frame = CGRectMake(0,0,100,44);
-     */
+
+    [self setupConstraints];
 }
 
 - (void)initData
@@ -415,7 +397,45 @@
 
 -(void) setupConstraints
 {
-
+    
+    CGFloat margin_left_right_width = 2.0f;
+    CGFloat margin_between_buttons_top_bar = 2.0f;
+    CGFloat margin_between_buttons_bottom_bar = 2.0f;
+    CGFloat slider_width_bottom_bar = SLIDER_WIDTH;
+    
+    if ([UIApplication sharedApplication].statusBarOrientation != UIInterfaceOrientationPortrait) {
+        margin_left_right_width = 30.0f;
+        slider_width_bottom_bar = 100.0f;
+        margin_between_buttons_top_bar = (self.frame.size.height - ROW_NUM*BUTTON_WIDTH - 2*margin_left_right_width)/(ROW_NUM -1);
+        margin_between_buttons_bottom_bar = (self.frame.size.height - slider_width_bottom_bar - 2*margin_left_right_width - (ROW_NUM-2)*BUTTON_WIDTH )/(ROW_NUM -2);
+        
+        self.topBarView.frame = CGRectMake(0, STATUS_HEIGHT, self.frame.size.height, BAR_HEIGHT);
+    }else{
+        margin_left_right_width = 2.0f;
+        margin_between_buttons_top_bar = (self.frame.size.width - ROW_NUM*BUTTON_WIDTH - 2*margin_left_right_width)/(ROW_NUM -1);
+        slider_width_bottom_bar = (self.frame.size.width - ROW_NUM * BUTTON_MARGIN_WIDTH - (ROW_NUM-2) * BUTTON_WIDTH);
+        margin_between_buttons_bottom_bar = (self.frame.size.width - slider_width_bottom_bar - 2*margin_left_right_width - (ROW_NUM-2)*BUTTON_WIDTH )/(ROW_NUM -2);
+        
+        self.topBarView.frame = CGRectMake(0, 0, BAR_WIDTH, BAR_HEIGHT);
+    }
+    
+    self.closeButton.frame = CGRectMake(margin_left_right_width, MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
+    self.button1.frame = CGRectMake(margin_between_buttons_top_bar + VIEW_END_X(self.closeButton), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
+    self.button2.frame = CGRectMake(margin_between_buttons_top_bar + VIEW_END_X(self.button1), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
+    self.left_right_btn.frame = CGRectMake(margin_between_buttons_top_bar + VIEW_END_X(self.button2), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
+    self.up_down_btn.frame = CGRectMake(margin_between_buttons_top_bar + VIEW_END_X(self.left_right_btn), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
+    self.turn_left_right_btn.frame = CGRectMake(margin_between_buttons_top_bar + VIEW_END_X(self.up_down_btn), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
+    self.turn_up_down_btn.frame = CGRectMake(margin_between_buttons_top_bar + VIEW_END_X(self.turn_left_right_btn), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
+    self.button3.frame = CGRectMake(margin_between_buttons_top_bar + VIEW_END_X(self.turn_up_down_btn), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
+    
+    self.button4.frame = CGRectMake(margin_left_right_width, MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
+    self.button5.frame = CGRectMake(margin_between_buttons_bottom_bar + VIEW_END_X(self.button4), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
+    self.button6.frame = CGRectMake(margin_between_buttons_bottom_bar + VIEW_END_X(self.button5), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
+    self.button7.frame = CGRectMake(margin_between_buttons_bottom_bar + VIEW_END_X(self.button6), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
+    self.button8.frame = CGRectMake(margin_between_buttons_bottom_bar + VIEW_END_X(self.button7), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
+    self.button9.frame = CGRectMake(margin_between_buttons_bottom_bar + VIEW_END_X(self.button8), MARGIN_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT);
+    self.volumeSlider.frame  = CGRectMake(margin_between_buttons_bottom_bar + VIEW_END_X(self.button9), MARGIN_WIDTH, slider_width_bottom_bar, SLIDER_HEIGHT);
+    //self.settingSlider.frame = CGRectMake(0,0,100,44);
 }
 - (void)hidenBarsWhenShowing
 {
